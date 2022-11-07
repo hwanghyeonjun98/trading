@@ -1,3 +1,13 @@
+import win32com.client
+import pandas as pd
+import time
+from tqdm import tqdm
+from module.get import get_stock_info
+from module.search import search_by_code
+from datetime import datetime
+from datetime import timedelta
+instCpCybos = win32com.client.Dispatch('CpUtil.CpCybos')
+
 # 전체 일자 분봉 종목 데이터 가져와서 csv 파일로 저장
 def save_stock_info_auto(stock_code, end_day, type):
     
