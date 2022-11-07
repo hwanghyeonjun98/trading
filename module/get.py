@@ -1,5 +1,9 @@
+instCpStockCode = win32com.client.Dispatch('CpUtil.CpStockCode')
+instCpCodeMgr = win32com.client.Dispatch('CpUtil.CpCodeMgr')
+instStockChart = win32com.client.Dispatch('CpSysDib.StockChart')
+
 # [종목명 리스트]
-def get_stock_list():
+def get_stock_list(instCpStockCode):
     count = instCpStockCode.GetCount()
     stock_list = []
     
@@ -10,7 +14,7 @@ def get_stock_list():
 
 
 # 코드, 종목명 분리 => []로 추출
-def get_code_name_list():
+def get_code_name_list(instCpCodeMgr):
     codelist = instCpCodeMgr.GetStockListByMarket(1)
     code_name_list = [] 
     code_list = []
