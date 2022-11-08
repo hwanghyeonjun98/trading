@@ -47,7 +47,7 @@ def get_name_list():
 def get_empty_list():
     current_list = []
 
-    for list in os.listdir(r'\\DESKTOP-H2H6JNB\data):
+    for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\data'):
         current_list.append('A'+list.split('_')[0])
 
     current_set = set(current_list)
