@@ -1,9 +1,9 @@
-instCpStockCode = win32com.client.Dispatch('CpUtil.CpStockCode')
-instCpCodeMgr = win32com.client.Dispatch('CpUtil.CpCodeMgr')
-instStockChart = win32com.client.Dispatch('CpSysDib.StockChart')
+from module.setting import instCpStockCode, instCpCodeMgr, instStockChart
+import pandas as pd
 
-# [종목명 리스트]
-def get_stock_list(instCpStockCode):
+# [종목명 리스트] : 코스피+ 코스닥
+def get_stock_list():
+    
     count = instCpStockCode.GetCount()
     stock_list = []
     
@@ -13,18 +13,6 @@ def get_stock_list(instCpStockCode):
     return stock_list
 
 
-# 코드, 종목명 분리 => []로 추출
-def get_code_name_list(instCpCodeMgr):
-    codelist = instCpCodeMgr.GetStockListByMarket(1)
-    code_name_list = [] 
-    code_list = []
-    for i, code in enumerate(codelist):
-        secondCode = instCpCodeMgr.GetStockSectionKind(code)
-        name = instCpCodeMgr.CodeToName(code)
-        code_list.append(code)
-        code_name_list.append(name)
-
-
 # 코스피 가져오기 => { 코드 : 종목명}
 def get_kospy():
     codelist = instCpCodeMgr.GetStockListByMarket(1)
@@ -32,8 +20,31 @@ def get_kospy():
     for code in codelist:
         name = instCpCodeMgr.CodeToName(code)
         kospi[code] = name
-
         
+    return kospi
+
+
+# 코드 []로 추출 : 코스피
+def get_code_list():
+    codelist = instCpCodeMgr.GetStockListByMarket(1)
+    code_list = []
+    for code in codelist:
+        code_list.append(code)
+        
+    return code_list
+  
+        
+
+# 종목명 []로 추출 : 코스피
+def get_name_list():
+    codelist = instCpCodeMgr.GetStockListByMarket(1)
+    code_name_list = [] 
+    for code in codelist:
+        name = instCpCodeMgr.CodeToName(code)
+        code_name_list.append(name)
+        
+    return code_name_list
+
         
 
 # 특정 범위 일자 종목 데이터 가져오기   
