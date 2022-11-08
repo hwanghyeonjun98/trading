@@ -26,10 +26,9 @@ def get_kospy():
 
 # 코드 []로 추출 : 코스피
 def get_code_list():
-    codelist = instCpCodeMgr.GetStockListByMarket(1)
-    code_list = []
-    for code in codelist:
-        code_list.append(code)
+    kospi = instCpCodeMgr.GetStockListByMarket(1)
+    kosdaq = instCpCodeMgr.GetStockListByMarket(2)
+    code_list = kospi + kosdaq
         
     return code_list
   
