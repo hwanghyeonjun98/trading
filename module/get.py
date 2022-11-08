@@ -51,7 +51,7 @@ def get_empty_list():
         current_list.append('A'+list.split('_')[0])
 
     current_set = set(current_list)
-    empty_list = [x for x in get.get_code_list() if x not in current_set]
+    empty_list = [x for x in get_code_list() if x not in current_set]
     
     return empty_list
 
