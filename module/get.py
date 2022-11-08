@@ -1,5 +1,6 @@
 from module.setting import instCpStockCode, instCpCodeMgr, instStockChart
 import pandas as pd
+import os
 
 # [종목명 리스트] : 코스피+ 코스닥
 def get_stock_list():
@@ -26,10 +27,8 @@ def get_kospy():
 
 # 코드 []로 추출 : 코스피
 def get_code_list():
-    kospi = instCpCodeMgr.GetStockListByMarket(1)
-    kosdaq = instCpCodeMgr.GetStockListByMarket(2)
-    code_list = kospi + kosdaq
-        
+    code_list = list(instCpCodeMgr.GetStockListByMarket(1) + instCpCodeMgr.GetStockListByMarket(2))
+
     return code_list
   
         
@@ -44,7 +43,17 @@ def get_name_list():
         
     return code_name_list
 
-        
+# 코스피, 코스닥 수집 안된 리스트 가져오기(네트워크 경로 기반)
+def get_empty_list():
+    current_list = []
+
+    for list in os.listdir(r'\\DESKTOP-H2H6JNB\data') + os.listdir(r'\\DESKTOP-H2H6JNB\data'):
+        current_list.append('A'+list.split('_')[0])
+
+    current_set = set(current_list)
+    empty_list = [x for x in get.get_code_list() if x not in current_set]
+    
+    return empty_list
 
 # 특정 범위 일자 종목 데이터 가져오기   
 def get_stock_info(stock_code, start_day, end_day, type):
