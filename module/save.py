@@ -1,12 +1,15 @@
-import win32com.client
-import pandas as pd
-import time
-from tqdm import tqdm
+from module.setting import instCpCybos
 from module.get import get_stock_info
 from module.search import search_by_code
+from module.update import update_stock_list
+
+from tqdm import tqdm
 from datetime import datetime
 from datetime import timedelta
-instCpCybos = win32com.client.Dispatch('CpUtil.CpCybos')
+import pandas as pd
+import os
+import time
+
 
 # 전체 일자 분봉 종목 데이터 가져와서 csv 파일로 저장
 def save_stock_info_auto(stock_code, end_day, type):
@@ -36,14 +39,41 @@ def save_stock_info_auto(stock_code, end_day, type):
         if  instCpCybos.GetLimitRemainCount(1) < 5:
             time.sleep(10)
     
-    stock_df.to_csv('../data/{0}_{1}.csv'.format(stock_name[0][1:],stock_name[1]), encoding='utf-8-sig')
+    stock_df.to_csv(r'\\DESKTOP-H2H6JNB\data\{0}_{1}.csv'.format(stock_name[0][1:],stock_name[1]), encoding='utf-8-sig')
 
     return stock_df
 
 
-# 분봉 일봉 합친 것 저장
-def save_min_day_concat(concat_list):
-        for c, code in tqdm(enumerate(concat_list)):
-                globals()[f'data_m{c}'].to_csv('../data_concat/concat_{0}_{1}.csv'.format(
-                                search_by_code(code)[0],search_by_code(code)[1]
-                        ), encoding='utf-8-sig')
+# 리스트 수정본 저장
+def save_stock_list_real(n, code, end_day, type):
+    for code in stock_list_real[n:]:
+        save_stock_info_auto(code, end_day, type)
+        
+
+# 분봉 일봉 합쳐서 저장
+def save_min_day_concat():
+    # 파일 불러오기
+    files_m = os.listdir('../data')
+    files_d = os.listdir('../data_day') 
+    
+    # 파일 정렬하기
+    files_m.sort()
+    files_d.sort()
+    
+    for j, (min_df, day_df) in enumerate(zip(files_m, files_d)):
+        globals()[f'data_m{j}'] = pd.read_csv(f'../data/{min_df}', index_col='Unnamed: 0')
+        globals()[f'data_d{j}'] = pd.read_csv(f'../data_day/{day_df}', index_col='Unnamed: 0')
+        
+        concat_list = []
+        concat_list.append('A' + files_m[j].split('_')[-2])
+        
+        for v in tqdm(globals()[f'data_m{j}'].index):
+            input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
+                    ,'외국인주문가능수량','외국인현보유수량','외국인현보유비율'
+                    ,'수정주가일자','수정주가비율','기관순매수량','기관누적순매수량']
+            
+            globals()[f'data_m{j}'].loc[v, input_list] = globals()[f'data_d{j}'].loc[v, input_list].values
+        for code in concat_list:        
+            globals()[f'data_m{j}'].to_csv('../data_concat/concat_{0}_{1}.csv'.format(
+                            search_by_code(code)[0][1:],search_by_code(code)[1]
+                            ), encoding='utf-8-sig') 

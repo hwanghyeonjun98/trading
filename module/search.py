@@ -1,3 +1,5 @@
+from module.setting import instCpStockCode
+
 # 종목 이름 => [코드, 종목명]
 def search_by_name(stock_name):
     count = instCpStockCode.GetCount()

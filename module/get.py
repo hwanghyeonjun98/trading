@@ -1,9 +1,10 @@
-instCpStockCode = win32com.client.Dispatch('CpUtil.CpStockCode')
-instCpCodeMgr = win32com.client.Dispatch('CpUtil.CpCodeMgr')
-instStockChart = win32com.client.Dispatch('CpSysDib.StockChart')
+from module.setting import instCpStockCode, instCpCodeMgr, instStockChart
+import pandas as pd
+import os
 
-# [종목명 리스트]
-def get_stock_list(instCpStockCode):
+# [종목명 리스트] : 코스피+ 코스닥
+def get_stock_list():
+    
     count = instCpStockCode.GetCount()
     stock_list = []
     
@@ -13,18 +14,6 @@ def get_stock_list(instCpStockCode):
     return stock_list
 
 
-# 코드, 종목명 분리 => []로 추출
-def get_code_name_list(instCpCodeMgr):
-    codelist = instCpCodeMgr.GetStockListByMarket(1)
-    code_name_list = [] 
-    code_list = []
-    for i, code in enumerate(codelist):
-        secondCode = instCpCodeMgr.GetStockSectionKind(code)
-        name = instCpCodeMgr.CodeToName(code)
-        code_list.append(code)
-        code_name_list.append(name)
-
-
 # 코스피 가져오기 => { 코드 : 종목명}
 def get_kospy():
     codelist = instCpCodeMgr.GetStockListByMarket(1)
@@ -32,9 +21,39 @@ def get_kospy():
     for code in codelist:
         name = instCpCodeMgr.CodeToName(code)
         kospi[code] = name
+        
+    return kospi
 
+
+# 코드 []로 추출 : 코스피
+def get_code_list():
+    code_list = list(instCpCodeMgr.GetStockListByMarket(1) + instCpCodeMgr.GetStockListByMarket(2))
+
+    return code_list
+  
         
+
+# 종목명 []로 추출 : 코스피
+def get_name_list():
+    codelist = instCpCodeMgr.GetStockListByMarket(1)
+    code_name_list = [] 
+    for code in codelist:
+        name = instCpCodeMgr.CodeToName(code)
+        code_name_list.append(name)
         
+    return code_name_list
+
+# 코스피, 코스닥 수집 안된 리스트 가져오기(네트워크 경로 기반)
+def get_empty_list():
+    current_list = []
+
+    for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\코스피') + os.listdir(r'\\DESKTOP-H2H6JNB\data\코스닥'):
+        current_list.append('A'+list.split('_')[0])
+
+    current_set = set(current_list)
+    empty_list = [x for x in get_code_list() if x not in current_set]
+    
+    return empty_list
 
 # 특정 범위 일자 종목 데이터 가져오기   
 def get_stock_info(stock_code, start_day, end_day, type):
