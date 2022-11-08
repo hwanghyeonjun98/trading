@@ -39,7 +39,7 @@ def save_stock_info_auto(stock_code, end_day, type):
         if  instCpCybos.GetLimitRemainCount(1) < 5:
             time.sleep(10)
     
-    stock_df.to_csv(r'\\DESKTOP-H2H6JNB\data\{0}_{1}.csv'.format(stock_name[0][1:],stock_name[1]), encoding='utf-8-sig')
+    stock_df.to_csv(r'\\DESKTOP-H2H6JNB\data\data\{0}_{1}.csv'.format(stock_name[0][1:],stock_name[1]), encoding='utf-8-sig')
 
     return stock_df
 
