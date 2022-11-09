@@ -81,11 +81,11 @@ def save_min_day_concat():
             
 def save_label_stock_info():
 
-    stock_list = os.listdir('../../data_concat/')
+    stock_list = os.listdir('../data/concat_data/')
     
     for stock in stock_list:
 
-        stock_info = pd.read_csv(f'../../data_concat/{stock}', index_col=0)
+        stock_info = pd.read_csv(f'../data/concat_data/{stock}', index_col=0)
         
         concat_list =  []
         concat_list.append('A' + stock.split('_')[-2])
@@ -114,6 +114,6 @@ def save_label_stock_info():
             
             update_stock_info = pd.concat([update_stock_info,select_day])
         for code in concat_list:
-            update_stock_info.to_csv('../../data_label/label_{0}_{1}.csv'.format(
+            update_stock_info.to_csv('../data/label/label_{0}_{1}.csv'.format(
                 search_by_code(code)[0][1:],search_by_code(code)[1]
                 ), encoding='utf-8-sig')
