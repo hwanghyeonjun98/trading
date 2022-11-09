@@ -77,3 +77,43 @@ def save_min_day_concat():
             globals()[f'data_m{j}'].to_csv('../data_concat/concat_{0}_{1}.csv'.format(
                             search_by_code(code)[0][1:],search_by_code(code)[1]
                             ), encoding='utf-8-sig') 
+            
+            
+def save_label_stock_info():
+
+    stock_list = os.listdir('../../data_concat/')
+    
+    for stock in stock_list:
+
+        stock_info = pd.read_csv(f'../../data_concat/{stock}', index_col=0)
+        
+        concat_list =  []
+        concat_list.append('A' + stock.split('_')[-2])
+
+        # for문 1 => 날짜를 반복
+        date = stock_info.index.unique()
+        stock_info['label'] = 0
+
+        update_stock_info = pd.DataFrame()
+
+        for day in tqdm(date):
+            select_day = stock_info.loc[day].copy() # 특정일
+            select_day['label'] = 0
+            
+            # for i in range(len(select_day)):
+            for row in range(len(select_day)):
+            # for문 2 => 시간을 반복
+                pre_price = select_day.iloc[-row-1].values[2] # 선택된 분봉(ROW)의 고가를 가져온다
+                # for i in range(len(select_day)-i):
+                # print('인덱스 : {0}, 분봉 시간 : {1}'.format(row,select_day.iloc[-row-1].values[0]))
+                # print('해당 분봉의 고가 : {0}'.format(pre_price))
+                next_price = select_day[-row-1::-1]['고가'].max()
+                # print('이후 최대 고가 : {0}'.format(next_price))
+                select_day.iloc[-row-1,-1] = next_price
+                next_price = 0
+            
+            update_stock_info = pd.concat([update_stock_info,select_day])
+        for code in concat_list:
+            update_stock_info.to_csv('../../data_label/label_{0}_{1}.csv'.format(
+                search_by_code(code)[0][1:],search_by_code(code)[1]
+                ), encoding='utf-8-sig')
