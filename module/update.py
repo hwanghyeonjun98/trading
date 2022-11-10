@@ -21,7 +21,7 @@ def update_stock_list():
 
 
 # 코스피 코스닥 보통주 옮기기 -
-def update_kospi_kosdaq_list():
+def update_kospi_kosdaq_list(folder_org, folder_re):
     kospi = pd.read_csv('../data/kospi_20221110.csv', encoding='euc-kr')
     kosdaq = pd.read_csv('../data/kosdaq_20221110.csv', encoding='euc-kr')
 
@@ -31,8 +31,8 @@ def update_kospi_kosdaq_list():
     
     kospi_kosdaq_list = pd.concat([kospi,kosdaq]).to_list()
 
-    file_source = '../data/test/'
-    file_destination = '../data/test2/'
+    file_source = f'../data/{folder_org}/'
+    file_destination = f'../data/{folder_re}/'
     
     files_list = os.listdir(file_source)
     
