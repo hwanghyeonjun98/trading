@@ -129,8 +129,10 @@ def save_min_day_concat():
                             ), encoding='utf-8-sig') 
             
             
+# Concat 완료된 데이터 Labeling 추가
 def save_label_stock_info():
 
+    # Concat 데이터 불러오기
     files_list = os.listdir('../data/concat_data/')
     
     for file_name in files_list:
@@ -140,30 +142,87 @@ def save_label_stock_info():
         concat_list =  []
         concat_list.append('A' + file_name.split('_')[-2])
 
-        # for문 1 => 날짜를 반복
+        # 데이터 프레임에서 날짜 인덱스 추출
         date = stock_info.index.unique()
+
+        # label 컬럼 추가 후 0으로 초기화
         stock_info['label'] = 0
 
+        # 업데이트에 사용할 데이터 프레임 생성
         update_stock_info = pd.DataFrame()
 
+        # labeling
         for day in tqdm(date):
-            select_day = stock_info.loc[day].copy() # 특정일
+
+            # 특정일의 Data 추출
+            select_day = stock_info.loc[day].copy()
             select_day['label'] = 0
             
-            # for i in range(len(select_day)):
+            # 특정일의 Row 만큼 반복
             for row in range(len(select_day)):
-            # for문 2 => 시간을 반복
-                pre_price = select_day.iloc[-row-1].values[2] # 선택된 분봉(ROW)의 고가를 가져온다
-                # for i in range(len(select_day)-i):
-                # print('인덱스 : {0}, 분봉 시간 : {1}'.format(row,select_day.iloc[-row-1].values[0]))
-                # print('해당 분봉의 고가 : {0}'.format(pre_price))
+                
+                # 특정일의 현재 row 이후 최대 고가를 추출
                 next_price = select_day[-row-1::-1]['고가'].max()
-                # print('이후 최대 고가 : {0}'.format(next_price))
+
+                # 추출한 최대 고가를 label 컬럼에 대입
                 select_day.iloc[-row-1,-1] = next_price
                 next_price = 0
             
-            update_stock_info = pd.concat([update_stock_info,select_day])
+            # 특정일 label이 추가된 DF를 업데이트할 DF에 concat
+            update_stock_info = pd.concat([update_stock_info, select_day])
+        
+        # 업데이트된 DF 저장
         for code in concat_list:
             update_stock_info.to_csv('../data/label/label_{0}_{1}.csv'.format(
+                search_by_code(code)[0][1:],search_by_code(code)[1]
+                ), encoding='utf-8-sig')
+
+####################################################################################
+# Modeling 테스트용 label 함수 => 삭제 예정
+####################################################################################
+def test_save_label_stock_info():
+
+    # Concat 데이터 불러오기
+    files_list = os.listdir('../data/test/')
+    
+    for file_name in files_list:
+
+        stock_info = pd.read_csv(f'../data/test/{file_name}', index_col=0)
+        
+        concat_list =  []
+        concat_list.append('A' + file_name.split('_')[-2])
+
+        # 데이터 프레임에서 날짜 인덱스 추출
+        date = stock_info.index.unique()
+
+        # label 컬럼 추가 후 0으로 초기화
+        stock_info['label'] = 0
+
+        # 업데이트에 사용할 데이터 프레임 생성
+        update_stock_info = pd.DataFrame()
+
+        # labeling
+        for day in tqdm(date):
+
+            # 특정일의 Data 추출
+            select_day = stock_info.loc[day].copy()
+            select_day['label'] = 0
+            
+            # 특정일의 Row 만큼 반복
+            for row in range(len(select_day)):
+                
+                # 특정일의 현재 row 이후 최대 고가를 추출
+                next_price = select_day[-row-1::-1]['고가'].max()
+
+                # 추출한 최대 고가를 label 컬럼에 대입
+                select_day.iloc[-row-1,-1] = next_price
+                next_price = 0
+            
+            # 특정일 label이 추가된 DF를 업데이트할 DF에 concat
+            update_stock_info = pd.concat([update_stock_info, select_day])
+        
+        # 업데이트된 DF 저장
+        for code in concat_list:
+            update_stock_info.to_csv('../data/test_label/label_{0}_{1}.csv'.format(
                 search_by_code(code)[0][1:],search_by_code(code)[1]
                 ), encoding='utf-8-sig')
