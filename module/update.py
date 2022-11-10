@@ -1,4 +1,4 @@
-from module.setting import instCpCybos
+from module.setting import instCpCodeMgr
 
 import pandas as pd
 import re
