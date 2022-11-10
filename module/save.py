@@ -85,22 +85,22 @@ def save_stock_list_real(n, code, end_day, type):
 
 # 분봉과 일봉 사이에 이름이 일치하는 것만 가져오기
 def choice_stock_same():
+    files_m = os.listdir('../data/data')
+    files_d = os.listdir('../data/day_data') 
 
-    files_m = os.listdir('../data')
-    files_d = os.listdir('../day_data') 
-
-    for min_df, day_df in tqdm(zip(files_m, files_d)):
-        stock_min = pd.read_csv(f'../data/{min_df}', index_col='Unnamed: 0')
-        stock_day = pd.read_csv(f'../data_day/{day_df}', index_col='Unnamed: 0')
-        
-        if min_df.split('_')[-2] == day_df.split('_')[-2]:
-            stock_min.to_csv(f'../stock_min/{min_df}')
-            stock_day.to_csv(f'../stock_day/{day_df}')
+    for min_df in tqdm(files_m):
+        for day_df in files_d:
+            stock_min = pd.read_csv(f'../data/data/{min_df}', index_col='Unnamed: 0')
+            stock_day = pd.read_csv(f'../data/day_data/{day_df}', index_col='Unnamed: 0')
+            
+            if min_df.split('_')[-2] == day_df.split('_')[-2]:
+                stock_min.to_csv(f'../data/stock_min/{min_df}')
+                stock_day.to_csv(f'../data/stock_day/{day_df}')
             
         
 
 # 분봉 일봉 합쳐서 저장
-def save_min_day_concat():
+def save_min_day_concat(): 
     # 파일 불러오기
     files_min = os.listdir('../data/stock_min')
     files_day = os.listdir('../data/stock_day') 
@@ -115,8 +115,8 @@ def save_min_day_concat():
         
     
         concat_list = []
-        concat_list.append('A' + files_min[j].split('_')[-2])
-        
+        concat_list.append('A' + files_min.split('_')[-2])
+         
         for v in stock_min_df.index:
             input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
                     ,'외국인주문가능수량','외국인현보유수량','외국인현보유비율'
