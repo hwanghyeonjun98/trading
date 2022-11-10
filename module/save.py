@@ -135,7 +135,7 @@ def save_label_stock_info():
     # Concat 데이터 불러오기
     files_list = os.listdir('../data/concat_data/')
     
-    for file_name in files_list:
+    for file_name in tqdm(files_list):
 
         stock_info = pd.read_csv(f'../data/concat_data/{file_name}', index_col=0)
         
@@ -152,7 +152,7 @@ def save_label_stock_info():
         update_stock_info = pd.DataFrame()
 
         # labeling
-        for day in tqdm(date):
+        for day in date:
 
             # 특정일의 Data 추출
             select_day = stock_info.loc[day].copy()
@@ -185,7 +185,7 @@ def test_save_label_stock_info():
     # Concat 데이터 불러오기
     files_list = os.listdir('../data/test/')
     
-    for file_name in files_list:
+    for file_name in tqdm(files_list):
 
         stock_info = pd.read_csv(f'../data/test/{file_name}', index_col=0)
         
@@ -202,7 +202,7 @@ def test_save_label_stock_info():
         update_stock_info = pd.DataFrame()
 
         # labeling
-        for day in tqdm(date):
+        for day in date:
 
             # 특정일의 Data 추출
             select_day = stock_info.loc[day].copy()
