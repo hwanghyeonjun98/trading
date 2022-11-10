@@ -46,7 +46,7 @@ def save_stock_info_auto(stock_code, end_day, type):
 
 # 리스트 수정본 저장
 def save_stock_list_real(n, code, end_day, type):
-    for code in stock_list_real[n:]:
+    for code in update_stock_list()[n:]:
         save_stock_info_auto(code, end_day, type)
         
 
@@ -60,14 +60,14 @@ def save_min_day_concat():
     files_m.sort()
     files_d.sort()
     
-    for j, (min_df, day_df) in enumerate(zip(files_m, files_d)):
+    for j, (min_df, day_df) in tqdm(enumerate(zip(files_m, files_d))):
         globals()[f'data_m{j}'] = pd.read_csv(f'../data/{min_df}', index_col='Unnamed: 0')
         globals()[f'data_d{j}'] = pd.read_csv(f'../data_day/{day_df}', index_col='Unnamed: 0')
         
         concat_list = []
         concat_list.append('A' + files_m[j].split('_')[-2])
         
-        for v in tqdm(globals()[f'data_m{j}'].index):
+        for v in globals()[f'data_m{j}'].index:
             input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
                     ,'외국인주문가능수량','외국인현보유수량','외국인현보유비율'
                     ,'수정주가일자','수정주가비율','기관순매수량','기관누적순매수량']
