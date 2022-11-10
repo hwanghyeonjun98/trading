@@ -81,33 +81,50 @@ def save_stock_info_auto(stock_code, end_day, type):
 def save_stock_list_real(n, code, end_day, type):
     for code in update_stock_list()[n:]:
         save_stock_info_auto(code, end_day, type)
+
+
+# 분봉과 일봉 사이에 이름이 일치하는 것만 가져오기
+def choice_stock_same():
+
+    files_m = os.listdir('../data')
+    files_d = os.listdir('../day_data') 
+
+    for min_df, day_df in tqdm(zip(files_m, files_d)):
+        stock_min = pd.read_csv(f'../data/{min_df}', index_col='Unnamed: 0')
+        stock_day = pd.read_csv(f'../data_day/{day_df}', index_col='Unnamed: 0')
+        
+        if min_df.split('_')[-2] == day_df.split('_')[-2]:
+            stock_min.to_csv(f'../stock_min/{min_df}')
+            stock_day.to_csv(f'../stock_day/{day_df}')
+            
         
 
 # 분봉 일봉 합쳐서 저장
 def save_min_day_concat():
     # 파일 불러오기
-    files_m = os.listdir('../data')
-    files_d = os.listdir('../data_day') 
+    files_min = os.listdir('../data/stock_min')
+    files_day = os.listdir('../data/stock_day') 
     
     # 파일 정렬하기
-    files_m.sort()
-    files_d.sort()
+    files_min.sort()
+    files_day.sort()
     
-    for j, (min_df, day_df) in tqdm(enumerate(zip(files_m, files_d))):
-        globals()[f'data_m{j}'] = pd.read_csv(f'../data/{min_df}', index_col='Unnamed: 0')
-        globals()[f'data_d{j}'] = pd.read_csv(f'../data_day/{day_df}', index_col='Unnamed: 0')
+    for min_df, day_df in tqdm(zip(files_min, files_day)):
+        stock_min_df = pd.read_csv(f'../data/stock_min/{min_df}', index_col='Unnamed: 0')
+        stock_day_df = pd.read_csv(f'../data/stock_day/{day_df}', index_col='Unnamed: 0')
         
+    
         concat_list = []
-        concat_list.append('A' + files_m[j].split('_')[-2])
+        concat_list.append('A' + files_min[j].split('_')[-2])
         
-        for v in globals()[f'data_m{j}'].index:
+        for v in stock_min_df.index:
             input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
                     ,'외국인주문가능수량','외국인현보유수량','외국인현보유비율'
                     ,'수정주가일자','수정주가비율','기관순매수량','기관누적순매수량']
             
-            globals()[f'data_m{j}'].loc[v, input_list] = globals()[f'data_d{j}'].loc[v, input_list].values
+            stock_min_df.loc[v, input_list] = stock_day_df.loc[v, input_list].values
         for code in concat_list:        
-            globals()[f'data_m{j}'].to_csv('../data_concat/concat_{0}_{1}.csv'.format(
+            stock_min_df.to_csv('../data/concat_data/concat_{0}_{1}.csv'.format(
                             search_by_code(code)[0][1:],search_by_code(code)[1]
                             ), encoding='utf-8-sig') 
             
