@@ -2,7 +2,7 @@ from module.setting import instCpCybos
 from module.get import get_stock_info
 from module.search import search_by_code
 from module.update import update_stock_list
-
+from random import *
 from tqdm import tqdm
 from datetime import datetime
 from datetime import timedelta
@@ -60,7 +60,7 @@ def save_stock_info_auto(stock_code, end_day, type):
 
         info_second = get_stock_info(stock_code, pre_day, pre_day, type) # '20221023' '20221027'
 
-        time.sleep(0.15)
+        time.sleep(uniform(0.15,0.3))
         end_day = pre_day
         print(pre_day)
 
