@@ -60,7 +60,7 @@ def save_stock_info_auto(stock_code, end_day, type):
 
         info_second = get_stock_info(stock_code, pre_day, pre_day, type) # '20221023' '20221027'
 
-        time.sleep(uniform(0.15,0.3))
+        time.sleep(uniform(0.3,0.5))
         end_day = pre_day
         print(pre_day)
 

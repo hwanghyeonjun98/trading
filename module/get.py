@@ -43,17 +43,43 @@ def get_name_list():
         
     return code_name_list
 
+# # 코스피, 코스닥 수집 안된 리스트 가져오기(네트워크 경로 기반)
+# def get_empty_list():
+#     current_list = []
+
+#     for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\data'):
+#         current_list.append('A'+list.split('_')[0])
+
+#     current_set = set(current_list)
+#     empty_list = [x for x in get_code_list() if x not in current_set]
+    
+#     return empty_list
+
+
 # 코스피, 코스닥 수집 안된 리스트 가져오기(네트워크 경로 기반)
 def get_empty_list():
+
+    # 코스피 코스닥 보통주 리스트
+    kospi = pd.read_csv('../data/kospi_20221110.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv('../data/kosdaq_20221110.csv', encoding='euc-kr')
+
+    kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
+    kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
+
+    kospi_kosdaq_list = pd.concat([kospi,kosdaq]).to_list()
+
+    # 현재 가지고 있는 리스트
     current_list = []
 
     for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\data'):
-        current_list.append('A'+list.split('_')[0])
+        current_list.append(list.split('_')[0])
 
     current_set = set(current_list)
-    empty_list = [x for x in get_code_list() if x not in current_set]
+
+    empty_list = [x for x in kospi_kosdaq_list if x not in current_set]
     
     return empty_list
+
 
 # 특정 범위 일자 종목 데이터 가져오기   
 def get_stock_info(stock_code, start_day, end_day, type):
