@@ -80,6 +80,29 @@ def get_empty_list():
     
     return empty_list
 
+def get_day_empty_list():
+
+    # 코스피 코스닥 보통주 리스트
+    kospi = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kospi_20221110.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kosdaq_20221110.csv', encoding='euc-kr')
+
+    kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
+    kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
+
+    kospi_kosdaq_list = pd.concat([kospi,kosdaq]).to_list()
+
+    # 현재 가지고 있는 리스트
+    current_list = []
+
+    for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\day_data'):
+        current_list.append(list.split('_')[1])
+
+    current_set = set(current_list)
+
+    empty_list = [x for x in kospi_kosdaq_list if x not in current_set]
+    
+    return empty_list
+
 
 # 특정 범위 일자 종목 데이터 가져오기   
 def get_stock_info(stock_code, start_day, end_day, type):
