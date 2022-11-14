@@ -56,7 +56,7 @@ def get_name_list():
 #     return empty_list
 
 
-# 코스피, 코스닥 수집 안된 리스트 가져오기(네트워크 경로 기반)
+# 코스피, 코스닥(분봉) 수집 안된 리스트 가져오기(네트워크 경로 기반)
 def get_empty_list():
 
     # 코스피 코스닥 보통주 리스트
@@ -72,7 +72,7 @@ def get_empty_list():
     current_list = []
 
     for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\data'):
-        current_list.append(list.split('_')[0])
+        current_list.append(list.split('_')[-2])
 
     current_set = set(current_list)
 
@@ -80,6 +80,7 @@ def get_empty_list():
     
     return empty_list
 
+# 코스피, 코스닥(일봉) 수집 안된 리스트 가져오기(네트워크 경로 기반)
 def get_day_empty_list():
 
     # 코스피 코스닥 보통주 리스트
@@ -95,7 +96,7 @@ def get_day_empty_list():
     current_list = []
 
     for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\day_data'):
-        current_list.append(list.split('_')[1])
+        current_list.append(list.split('_')[-2])
 
     current_set = set(current_list)
 
