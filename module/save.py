@@ -11,17 +11,17 @@ import os
 import time
 
 
-# 전체 일자 분봉 종목 데이터 가져와서 csv 파일로 저장
-def save_stock_info_auto(stock_code, end_day, type):
+# 전체 일자 일봉 종목 데이터 가져와서 csv 파일로 저장
+def save_day_stock_info_auto(stock_code, end_day, type):
     
     day_format = '%Y%m%d'
-    minus_day = timedelta(days=1)
+    minus_day = timedelta(days=5) # 5일치
     
-    stock_df = get_stock_info(stock_code, end_day, end_day, type) # 첫번째 DF 생성 => pre_day '20221028' end_day '20221103'
+    stock_df = pd.DataFrame()
     
     stock_name = search_by_code(stock_code)
 
-    for day in range(740): # range 범위 수정하지 말 것
+    for day in range(150): # range 범위 수정하지 말 것
         transfer_pre_day = datetime.strptime(end_day, day_format) # '20221028' '20221023'
         pre_day = datetime.strftime(transfer_pre_day - minus_day, day_format) # '20221023' '20221018'
 
@@ -39,7 +39,7 @@ def save_stock_info_auto(stock_code, end_day, type):
         if  instCpCybos.GetLimitRemainCount(1) < 5:
             time.sleep(10)
     
-    stock_df.to_csv(r'\\DESKTOP-H2H6JNB\data\data\{0}_{1}.csv'.format(stock_name[0][1:],stock_name[1]), encoding='utf-8-sig')
+    stock_df.to_csv(r'\\DESKTOP-H2H6JNB\data\day_data\day_{0}_{1}.csv'.format(stock_name[0][1:],stock_name[1]), encoding='utf-8-sig')
 
     return stock_df
 
@@ -115,7 +115,7 @@ def save_min_day_concat():
         
     
         concat_list = []
-        concat_list.append('A' + files_min.split('_')[-2])
+        concat_list.append('A' + min_df.split('_')[-2])
          
         for v in stock_min_df.index:
             input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
