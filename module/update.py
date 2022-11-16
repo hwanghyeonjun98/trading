@@ -72,7 +72,7 @@ def update_day_stock_info(file_name):
     
     stock_code = file_name.split('_')[-2]
     # 경로 수정 필요
-    temp_df = pd.read_csv(f'../data/test1/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
+    temp_df = pd.read_csv(f'../data/day_보통주/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
     start_day = str(temp_df.index[0])
 
     today = str(datetime.today().year) + str(datetime.today().month) + str(datetime.today().day)
@@ -103,7 +103,7 @@ def update_day_stock_info(file_name):
 
     temp_df = pd.concat([stock_info, temp_df])
     
-    temp_df.to_csv(f'../data/temp/{file_name}', encoding='utf-8 sig')
+    temp_df.to_csv(f'../data/update/20221116/일봉/{file_name}', encoding='utf-8 sig')
 
     if instCpCybos.GetLimitRemainCount(1) < 3:
             time.sleep(10)
@@ -117,7 +117,7 @@ def update_day_stock_info(file_name):
 def update_stock_info(file_name):
     
     stock_code = file_name.split('_')[-2]
-    temp_df = pd.read_csv(f'../data/test1/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
+    temp_df = pd.read_csv(f'../data/data_보통주/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
     
     last_day = str(temp_df.index[0]) # 20221031
 
@@ -168,7 +168,7 @@ def update_stock_info(file_name):
             time.sleep(10)
 
         if start_day == transfer_end_day:
-            temp_df.to_csv(f'../data/temp/{file_name}', encoding='utf-8 sig')
+            temp_df.to_csv(f'../data/update/20221116/분봉/{file_name}', encoding='utf-8 sig')
             break
 
     return temp_df
