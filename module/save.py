@@ -115,7 +115,7 @@ def save_min_day_concat():
         
     
         concat_list = []
-        concat_list.append('A' + files_min.split('_')[-2])
+        concat_list.append('A' + min_df.split('_')[-2])
          
         for v in stock_min_df.index:
             input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
