@@ -1,4 +1,4 @@
-from module.def_mg import file_open
+from module.def_mg_kyw import file_open
 
 dir_min_open        = '../data/data_보통주/'          # 분봉 데이터 불러오기
 dir_day_open        = '../data/day_보통주/'          # 일봉 데이터 불러오기
