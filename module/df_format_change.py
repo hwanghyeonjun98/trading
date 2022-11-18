@@ -4,10 +4,6 @@
 import numpy as np
 import pandas as pd
 
-# 시간 관련
-import time
-from tqdm import tqdm
-
 # 파일, 텍스트 관련
 import re
 import os
@@ -18,9 +14,9 @@ import glob
 # 실제 파일 이름 공백 제거
 # path: 파일 경로 (파일 이름 전)
 # file_extension : 파일 확장자 (. 제외)
-# delete_str : 파일 이름 리스트에서 제외할 문자열
+# delete_str : 파일 이름 리스트에서 제외할 문자열 default: ''(빈문자열)
 # file_list, file_names list, tuple로 반환
-def file_name_list(path: str, file_extension: str, delete_str: str):
+def file_name_list(path: str, file_extension: str, delete_str=''):
 	file_names = []
 	temp_path = glob.glob(path + '/*.' + file_extension)
 
@@ -36,14 +32,8 @@ def file_name_list(path: str, file_extension: str, delete_str: str):
 
 	for file in file_list:
 		file_name = file.split('/')[-1].split('.')[0]
-		if delete_str.find('_'):
-			name = file_name.replace('_' + delete_str, '')
-		else:
-			name = name = file_name.replace(delete_str, '')
+		name = file_name.replace('_' + delete_str, '')
 		file_names.append(name)
-
-	print(file_list)
-	print(file_names)
 
 	return file_list, file_names
 
@@ -53,7 +43,7 @@ def file_name_list(path: str, file_extension: str, delete_str: str):
 # file_names : 파일 이름 리스트
 # concat_df_name : 최종 반환할 데이터 프레임 이름
 # axis : concat 방향, default 1
-def dataframe_conact(file_list: list, file_names: list, concat_df_name: str, axis=1):
+def df_conact(file_list: list, file_names: list, concat_df_name: str, axis=1):
 	temp_list = []
 
 	for idx, file in enumerate(file_list):
@@ -77,14 +67,13 @@ def dataframe_conact(file_list: list, file_names: list, concat_df_name: str, axi
 # df_name: 저장 할 이름
 # save_path: 저장 경로
 # file_extension: 파일 확장자 defualt : csv
-def dataframe_save(df_list: list, df_names: list, save_path: str, file_extension='csv'):
-	for idx, dataframe in enumerate(tqdm(df_list)):
+def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv'):
+	for idx, dataframe in enumerate(df_list):
+		print(dataframe)
 		try:
-			dataframe.to_csv(save_path + df_names[idx] + '.' + file_extension)
+			dataframe.to_csv(save_path + '/' + df_names[idx] + '.' + file_extension)
 		except:
 			print('저장 오류')
-
-	return print('파일 저장됨!')
 
 
 # 날짜 형식 숫자로만 바꾸기
@@ -93,7 +82,7 @@ def dataframe_save(df_list: list, df_names: list, save_path: str, file_extension
 # 데이터프레임 리스트 반환
 def data_format_change(file_list: list):
 	df_list = []
-	for idx, file in enumerate(tqdm(file_list)):
+	for idx, file in enumerate(file_list):
 		date_regx = '\D?\s?'
 		persent_regx = '\d+[%]$'
 
@@ -121,7 +110,7 @@ def data_format_change(file_list: list):
 				volumes.append(n)
 			elif cash_unit == 'K':
 				k = volume.replace(cash_unit, '')
-				k_result = float(k) * 1000
+				k_result = round(float(k) * 1000)
 				volumes.append(k_result)
 			elif cash_unit == 'M':
 				m = volume.replace(cash_unit, '')
