@@ -130,19 +130,20 @@ def save_min_day_concat_info():
         input_list = ['전일대비','상장주식수','시가총액','외국인주문한도수량'
                     ,'외국인주문가능수량','외국인현보유수량','외국인현보유비율'
                     ,'수정주가일자','수정주가비율','기관순매수량','기관누적순매수량'
-                    ,'등락주선','등락비율','예탁금','주식회전율','거래성립률']
+                    ,'등락주선','등락비율','예탁금','주식회전율','거래성립률']                                  
         list_ = ['시간','시가','고가','저가','종가','거래량','거래대금','누적체결매도수량'
                  ,'등락주선','등락비율','예탁금','주식회전율','거래성립률']
             
         stock_min_df = stock_min_df.drop(input_list, axis=1)
         stock_day_df = stock_day_df.drop(list_, axis=1)
         
-        # if stock_min_df.index == stock_day_df.index
-        concat_df = pd.merge(stock_min_df, stock_day_df,on='Unnamed: 0')
         
-        # concat_df = pd.concat([stock_min_df, stock_day_df], axis=1)
-        concat_df.to_csv(f'{dir_concat_save}concat_{min_df}', encoding='utf-8 sig')          
-             
+        concat_df = pd.merge(stock_min_df, stock_day_df,on='Unnamed: 0')
+        concat_df = concat_df.rename(columns={'Unnamed: 0':'날짜'})
+        
+        concat_df.to_csv(f'{dir_concat_save}concat_{min_df}', encoding='utf-8 sig', index=False)          
+        
+    return concat_df
             
 # 라벨링 처리
 def save_label_stock_info():
