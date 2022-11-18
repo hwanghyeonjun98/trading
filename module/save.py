@@ -25,7 +25,7 @@ def save_day_stock_info_auto(stock_code, end_day, type):
         transfer_pre_day = datetime.strptime(end_day, day_format) # '20221028' '20221023'
         pre_day = datetime.strftime(transfer_pre_day - minus_day, day_format) # '20221023' '20221018'
 
-        info_second = get_stock_info(stock_code, pre_day, pre_day, type) # '20221023' '20221027'
+        info_second = get_stock_info(stock_code, pre_day, end_day, type) # '20221023' '20221027'
 
         time.sleep(0.15)
         end_day = pre_day
