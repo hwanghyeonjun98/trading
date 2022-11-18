@@ -1,4 +1,4 @@
-# dataframe_contact.py
+# df_format_change.py
 
 # 데이터프레임 관련
 import numpy as np
@@ -18,9 +18,9 @@ import glob
 # 실제 파일 이름 공백 제거
 # path: 파일 경로 (파일 이름 전)
 # file_extension : 파일 확장자 (. 제외)
-# delete_ste : 파일 이름 리스트에서 제외할 문자열
+# delete_str : 파일 이름 리스트에서 제외할 문자열
 # file_list, file_names list, tuple로 반환
-def file_list_make(path: str, file_extension: str, delete_str: str):
+def file_name_list(path: str, file_extension: str, delete_str: str):
 	file_names = []
 	temp_path = glob.glob(path + '/*.' + file_extension)
 
@@ -73,36 +73,72 @@ def dataframe_conact(file_list: list, file_names: list, concat_df_name: str, axi
 
 
 # 데이터프레임 저장하기
+# df_list: 데이터프레임 리스트
 # df_name: 저장 할 이름
 # save_path: 저장 경로
 # file_extension: 파일 확장자 defualt : csv
-def dataframe_save(df_name, save_path, file_extension='csv'):
-	pd.to_csv(save_path + df_name + '.' + file_extension)
+def dataframe_save(df_list: list, df_names: list, save_path: str, file_extension='csv'):
+	for idx, dataframe in enumerate(tqdm(df_list)):
+		try:
+			dataframe.to_csv(save_path + df_names[idx] + '.' + file_extension)
+		except:
+			print('저장 오류')
+
 	return print('파일 저장됨!')
 
 
 # 날짜 형식 숫자로만 바꾸기
-def date_format_change(file_list):
-	regx = '[가-힣]'
+# 데이터 형식 바꾸기
+# file_list : 파일 리스트
+# 데이터프레임 리스트 반환
+def data_format_change(file_list: list):
+	df_list = []
+	for idx, file in enumerate(tqdm(file_list)):
+		date_regx = '\D?\s?'
+		persent_regx = '\d+[%]$'
 
-	for idx, file in enumerate(file_list):
-		df = pd.read_csv(file)
-		df['날짜'] = df['날짜'].apply(lambda x: re.sub(regx, '', x))
-		df['날짜'] = df['날짜'].apply(lambda x: x.replace(' ', ''))
+		prices = ['종가', '오픈', '고가', '저가']
+
+		volumes = []
+
+		load_df = pd.read_csv(file)
+		df = load_df.astype(str)
+
+		df.rename(columns={'변동 %': '변동'}, inplace=True)
+
+		df['날짜'] = df['날짜'].apply(lambda x: re.sub(date_regx, '', x))
+
+		for price in prices:
+			df[price] = df[price].apply(lambda x: x.replace(',', '')).astype('float')
+
+		df['거래량'] = df['거래량'].apply(lambda x: x.replace(',', ''))
+
+		for volume in df['거래량'].values:
+			cash_unit = list(volume)[-1]
+
+			if str(volume) == 'nan':
+				n = str(volume).replace('nan', '0')
+				volumes.append(n)
+			elif cash_unit == 'K':
+				k = volume.replace(cash_unit, '')
+				k_result = float(k) * 1000
+				volumes.append(k_result)
+			elif cash_unit == 'M':
+				m = volume.replace(cash_unit, '')
+				m_result = round(float(m) * 1000000)
+				volumes.append(m_result)
+			elif cash_unit == 'B':
+				b = volume.replace(cash_unit, '')
+				b_result = round(float(b) * 1000000000)
+				volumes.append(b_result)
+
+		df['거래량'] = volumes
+
+		if not bool(re.match(persent_regx, list(df['변동'])[0])):
+			df['변동'] = df['변동'].apply(lambda x: x.replace('%', '')).astype('float')
+
 		df.sort_values(['날짜'], inplace=True)
-		df.to_csv('/Users/hwanghyeonjun/Documents/GitHub/data/selenium/' + file_names[idx], index=False)
 
+		df_list.append(df)
 
-# 날짜 순서로 오름차순정렬
-def dataframe_srot(file_list):
-	file_names = []
-
-	for path in tqdm(file_list):
-		file_name = path.split('/')[-1]
-		file_names.append(file_name)
-
-	for idx, file in tqdm(enumerate(file_list)):
-		df = pd.read_csv(file)
-		df.sort_values(['날짜'], inplace=True)
-		df['날짜'] = df['날짜'].apply(lambda x: x.replace(' ', ''))
-		df.to_csv('/Users/hwanghyeonjun/Documents/GitHub/data/selenium/' + file_names[idx], index=False)
+	return df_list
