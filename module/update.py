@@ -174,3 +174,46 @@ def update_stock_info(file_name):
                 break
 
     return temp_df
+
+
+# 코스피 코스닥(일봉&분봉) SQL 업데이트
+def update_sql_stock(stock_code): # 대상 종목
+    
+    start_day = str(temp_df.index[0])
+
+    today = str(datetime.today().year) + str(datetime.today().month) + str(datetime.today().day)
+
+    instStockChart.SetInputValue(0, 'A'+stock_code) # 종목명
+    instStockChart.SetInputValue(1, ord('1')) # 1 : 기간으로 요청, 2: 개수로 요청
+    instStockChart.SetInputValue(3, start_day) # 요청 시작일
+    instStockChart.SetInputValue(2, today) # 요청 종료일
+    instStockChart.SetInputValue(5, [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17,18, 19,20,21,22,23,24,25,26])
+    instStockChart.SetInputValue(6, ord('D')) # 'D' : 일봉, 'm' : 분봉
+    instStockChart.SetInputValue(9, ord('1'))
+
+    instStockChart.BlockRequest() # 위 정보로 요청
+
+    numrow, numcolumn = instStockChart.GetHeaderValue(3), instStockChart.GetHeaderValue(2)
+
+    index = []
+    for i in range(numrow):
+        index_ = str(instStockChart.GetDataValue(0,i))
+        index.append(index_)
+
+    stock_info = pd.DataFrame(columns=numcolumn[1:], index=index)
+
+    for num in range(numrow):
+        for col in range(len(numcolumn)):
+            # 1,2,3,4,5,6,7,8,9, 10
+            stock_info.iloc[num, col-1] = str(instStockChart.GetDataValue(col,num))
+
+    temp_df = pd.concat([stock_info, temp_df])
+    
+    temp_df.to_csv(f'../data/update/20221116/일봉/{file_name}', encoding='utf-8 sig')
+
+    if instCpCybos.GetLimitRemainCount(1) < 3:
+            time.sleep(10)
+
+    time.sleep(uniform(0.15,0.3))
+
+    return temp_df
