@@ -7,9 +7,9 @@ from module.dir import dir_label_save
 from module.dir import file_min, file_day
 from module.dir import file_min_update, file_day_update, file_concat
 
-from module.setting import instCpCybos
+from module.setting import instCpCybos, instStockChart
 
- 
+from random import uniform
 from tqdm import tqdm
 from datetime import datetime
 from datetime import timedelta
@@ -148,7 +148,7 @@ def save_min_day_concat_info():
 # 라벨링 처리
 def save_label_stock_info():
     
-    for file_name in tqdm(files_concat):
+    for file_name in tqdm(file_concat):
         stock_info = pd.read_csv(f'{dir_concat_open}{file_name}', index_col=0)
         
         concat_list =  []
