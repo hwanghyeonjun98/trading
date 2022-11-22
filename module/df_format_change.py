@@ -1,5 +1,5 @@
 # df_format_change.py
-#-*- coding:utf-8 -*-
+import time
 
 # 데이터프레임 관련
 import numpy as np
@@ -10,6 +10,8 @@ import re
 import os
 import glob
 
+from unicodedata import normalize
+
 # 파일 리스트 만들기
 # 실제 파일 이름 공백 제거
 # path: 파일 경로 (파일 이름 전)
@@ -18,22 +20,14 @@ import glob
 # file_list, file_names list, tuple로 반환
 def file_name_list(path: str, file_extension: str, delete_str=''):
 	file_names = []
-	temp_path = glob.glob(path + '/*.' + file_extension)
 
-	# 파일 이름 공백 제거
-	for file_path in temp_path:
-		if file_path.find(' '):
-			path = file_path.replace(' ', '_')
-			os.rename(file_path, path)
-		else:
-			pass
-
-	file_list = temp_path
+	file_list = glob.glob(path + '/*.' + file_extension)
 
 	for file in file_list:
 		file_name = file.split('/')[-1].split('.')[0]
-		name = file_name.replace('_' + delete_str, '')
-		file_names.append(name)
+		name = file_name.replace(' ' + delete_str, '')
+		normalize_name = normalize('NFC', name)
+		file_names.append(normalize_name)
 
 	return file_list, file_names
 
