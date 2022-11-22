@@ -1,4 +1,5 @@
 # df_format_change.py
+#-*- coding:utf-8 -*-
 
 # 데이터프레임 관련
 import numpy as np
@@ -150,7 +151,11 @@ def data_format_change(file_list: list):
 # db : database 이름
 # df_list : data_format_change 반환값
 # file_names : file_name_list 반환값
-def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list):
+# if_exists : to_sql 시 같은 이름의 테이블이 있으면
+#             fail => pass
+#             replace => 기존 테이블을 삭제하고 새로 테이블 생성
+#             append => 테이블이 존재하면 기본 테이블에 데이터 삽입
+def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list, if_exists='replace'):
 	engine = create_engine(
 		"mysql+pymysql://{user}:{password}@{host}:{port}/{db}?charset=utf8".format(
 			user=user, password=password, host=host, port=port, db=db
@@ -159,4 +164,4 @@ def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list
 	)
 
 	for idx, df in enumerate(df_list):
-		df.to_sql(name=file_names[idx], con=engine, if_exists='replace', index=False)
+		df.to_sql(name=file_names[idx], con=engine, if_exists=if_exists, index=False)
