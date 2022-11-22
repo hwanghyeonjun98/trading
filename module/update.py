@@ -26,8 +26,8 @@ def update_stock_list():
 
 # 코스피 코스닥(분봉) 보통주 옮기기 -
 def update_kospi_kosdaq_list(folder_org, folder_re):
-    kospi = pd.read_csv('../data/kospi_20221110.csv', encoding='euc-kr')
-    kosdaq = pd.read_csv('../data/kosdaq_20221110.csv', encoding='euc-kr')
+    kospi = pd.read_csv('../data/kospi_20221122.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv('../data/kosdaq_20221122.csv', encoding='euc-kr')
 
     kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
     kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
@@ -48,8 +48,8 @@ def update_kospi_kosdaq_list(folder_org, folder_re):
 
 # 코스피 코스닥(일봉) 보통주 옮기기 -
 def update_day_kospi_kosdaq_list(folder_org, folder_re):
-    kospi = pd.read_csv('../data/kospi_20221110.csv', encoding='euc-kr')
-    kosdaq = pd.read_csv('../data/kosdaq_20221110.csv', encoding='euc-kr')
+    kospi = pd.read_csv('../data/kospi_20221122.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv('../data/kosdaq_20221122.csv', encoding='euc-kr')
 
     kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
     kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
@@ -75,7 +75,7 @@ def update_day_stock_info(file_name):
     temp_df = pd.read_csv(f'../data/day_보통주/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
     start_day = str(temp_df.index[0])
 
-    today = str(datetime.today().year) + str(datetime.today().month) + str(datetime.today().day)
+    today = str(datetime.today().year) + str(datetime.today().month) + str((datetime.today() - timedelta(1)).day)
 
     instStockChart.SetInputValue(0, 'A'+stock_code) # 종목명
     instStockChart.SetInputValue(1, ord('1')) # 1 : 기간으로 요청, 2: 개수로 요청
@@ -117,7 +117,7 @@ def update_day_stock_info(file_name):
 def update_stock_info(file_name):
     
     stock_code = file_name.split('_')[-2]
-    temp_df = pd.read_csv(f'../data/data_보통주/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
+    temp_df = pd.read_csv(f'../data/update/20221116/분봉/{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
 
     if len(temp_df.index) != 0:
 
@@ -163,7 +163,7 @@ def update_stock_info(file_name):
             
             
             start_day = datetime.strftime(datetime.strptime(start_day, day_format) + timedelta(days=1), day_format)
-            transfer_end_day = datetime.strftime(datetime.strptime(today, day_format) + timedelta(days=1), day_format) # 20221116
+            transfer_end_day = datetime.strftime(datetime.strptime(today, day_format), day_format) # 20221116
             time.sleep(uniform(0.15, 0.3))
 
             if instCpCybos.GetLimitRemainCount(1) < 3:
