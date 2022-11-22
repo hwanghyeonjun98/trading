@@ -60,8 +60,8 @@ def get_name_list():
 def get_empty_list():
 
     # 코스피 코스닥 보통주 리스트
-    kospi = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kospi_20221110.csv', encoding='euc-kr')
-    kosdaq = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kosdaq_20221110.csv', encoding='euc-kr')
+    kospi = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kospi_20221122.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kosdaq_20221122.csv', encoding='euc-kr')
 
     kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
     kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
@@ -84,8 +84,8 @@ def get_empty_list():
 def get_day_empty_list():
 
     # 코스피 코스닥 보통주 리스트
-    kospi = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kospi_20221110.csv', encoding='euc-kr')
-    kosdaq = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kosdaq_20221110.csv', encoding='euc-kr')
+    kospi = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kospi_20221122.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\kosdaq_20221122.csv', encoding='euc-kr')
 
     kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
     kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
