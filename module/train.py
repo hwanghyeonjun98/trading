@@ -35,7 +35,7 @@ def file_open(file_open):
 
 #######################################################################################################################################
 # 전체 일자 일봉 종목 데이터 가져와서 csv 파일로 저장
-def save_day_stock_info_auto(stock_code, end_day, type, day_path):
+def save_day_stock_info_auto(stock_code, end_day, type, day_path=day_path):
     
     day_format = '%Y%m%d'
     minus_day = timedelta(days=5) # 5일치
@@ -68,7 +68,7 @@ def save_day_stock_info_auto(stock_code, end_day, type, day_path):
 
 
 # 전체 일자 분봉 종목 데이터 가져와서 csv 파일로 저장
-def save_stock_info_auto(stock_code, end_day, type, min_path):
+def save_stock_info_auto(stock_code, end_day, type, min_path=min_path):
     
     day_format = '%Y%m%d'
     minus_day = timedelta(days=1)
@@ -102,7 +102,7 @@ def save_stock_info_auto(stock_code, end_day, type, min_path):
 #######################################################################################################################################
 
 # 코스피 코스닥(일봉) 보통주 옮기기 -
-def update_day_kospi_kosdaq_list(day_path, day_ord_path):
+def update_day_kospi_kosdaq_list(day_path=day_path, day_ord_path=day_ord_path):
     # 코스피/ 코스닥 리스트 불러오기
     kospi = pd.read_csv('../data/kospi_20221121.csv', encoding='euc-kr')
     kosdaq = pd.read_csv('../data/kosdaq_20221121.csv', encoding='euc-kr')
@@ -139,7 +139,7 @@ def update_kospi_kosdaq_list(min_path, min_ord_path):
 
 
 # 코스피 코스닥(일봉) 업데이트
-def update_day_stock_info(day_ord_path, day_update_path):
+def update_day_stock_info(day_ord_path=day_ord_path, day_update_path=day_update_path):
     day_ord_list = file_open(day_ord_path)
     for file_name in tqdm(day_ord_list):
         temp_df = pd.read_csv(f'{day_ord_path}{file_name}', index_col='Unnamed: 0', encoding='utf-8 sig')
@@ -183,7 +183,7 @@ def update_day_stock_info(day_ord_path, day_update_path):
 
 
 # 코스피 코스닥(분봉) 업데이트
-def update_min_stock_info(min_ord_path, min_update_path):
+def update_min_stock_info(min_ord_path=min_ord_path, min_update_path=min_update_path):
     min_ord_list = file_open(min_ord_path)
     for file_name in min_ord_list:
         stock_code = file_name.split('_')[-2]
@@ -247,7 +247,7 @@ def update_min_stock_info(min_ord_path, min_update_path):
 ######################################################################################################################################
 
 # 분봉의 빈 로우 채우기
-def update_fillrow(min_update_path, min_fill_path):
+def update_fillrow(min_update_path=min_update_path, min_fill_path=min_fill_path):
     
     template = pd.read_csv(f'{min_update_path}005930_삼성전자.csv', encoding='utf-8 sig')
     template = template.set_index(['Unnamed: 0', '시간'])
@@ -283,8 +283,10 @@ def update_fillrow(min_update_path, min_fill_path):
 
 ######################################################################################################################################
 
+
+
 # 분봉 일봉 합치기
-def save_min_day_concat_info(min_fill_path, day_update_path, concat_path):
+def save_min_day_concat_info(min_fill_path = min_fill_path,day_update_path=day_update_path, concat_path= concat_path):
     min_fill_list = file_open(min_fill_path)
     day_update_list = file_open(day_update_path)
     for min_df, day_df in zip(min_fill_list, day_update_list):
@@ -312,7 +314,7 @@ def save_min_day_concat_info(min_fill_path, day_update_path, concat_path):
 ######################################################################################################################################
 
 # Concat 완료된 데이터 Labeling 추가
-def save_label_stock_info(concat_path, label_path):
+def save_label_stock_info(concat_path=concat_path, label_path=label_path):
     concat_list = file_open(concat_path)
     for file_name in concat_list:
         stock_info = pd.read_csv(f'{concat_path}{file_name}', index_col=0)
