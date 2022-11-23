@@ -7,7 +7,6 @@ import pandas as pd
 
 # 파일, 텍스트 관련
 import re
-import os
 import glob
 
 from unicodedata import normalize
