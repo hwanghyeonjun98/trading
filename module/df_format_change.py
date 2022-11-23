@@ -18,7 +18,7 @@ from unicodedata import normalize
 # file_extension : 파일 확장자 (. 제외)
 # delete_str : 파일 이름 리스트에서 제외할 문자열 default: ''(빈문자열)
 # file_list, file_names list, tuple로 반환
-def file_name_list(path: str, file_extension: str, delete_str=''):
+def file_name_list(path: str, file_extension: str, delete_str='') -> tuple:
 	file_names = []
 
 	file_list = glob.glob(path + '/*.' + file_extension)
@@ -37,7 +37,7 @@ def file_name_list(path: str, file_extension: str, delete_str=''):
 # file_names : 파일 이름 리스트
 # concat_df_name : 최종 반환할 데이터 프레임 이름
 # axis : concat 방향, default 1
-def df_conact(file_list: list, file_names: list, concat_df_name: str, axis=1):
+def df_conact(file_list: list, file_names: list, concat_df_name: str, axis=1) -> pd.DataFrame:
 	temp_list = []
 
 	for idx, file in enumerate(file_list):
@@ -51,8 +51,6 @@ def df_conact(file_list: list, file_names: list, concat_df_name: str, axis=1):
 		temp_list.append(temp)
 		concat_df_name = pd.concat(temp_list, axis=axis, join='inner').reset_index()
 
-	print('concat 완료!!!!')
-
 	return concat_df_name
 
 
@@ -61,7 +59,7 @@ def df_conact(file_list: list, file_names: list, concat_df_name: str, axis=1):
 # df_name: 저장 할 이름
 # save_path: 저장 경로
 # file_extension: 파일 확장자 defualt : csv
-def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv'):
+def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv') -> None:
 	for idx, dataframe in enumerate(df_list):
 		print(dataframe)
 		try:
@@ -74,7 +72,7 @@ def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv')
 # 데이터 형식 바꾸기
 # file_list : 파일 리스트
 # 데이터프레임 리스트 반환
-def data_format_change(file_list: list):
+def data_format_change(file_list: list) -> list:
 	df_list = []
 	for idx, file in enumerate(file_list):
 		date_regx = '\D?\s?'
