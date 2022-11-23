@@ -118,7 +118,7 @@ def get_stock_info(stock_code, start_day, end_day, type):
     0 : 날짜, 1 : 시간 - hhmm, 2 : 시가, 3 : 고가, 4 : 저가, 5 : 종가
     6 : 전일대비, 8 : 거래량, 9 : 거래대금, 13 : 시가총액
     '''
-    instStockChart.SetInputValue(5, [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 14, 15, 16, 17,18, 19,20,21,22,23,24,25,26])
+    instStockChart.SetInputValue(5, [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,18, 19,20,21,22,23,24,25,26])
     instStockChart.SetInputValue(6, ord(type)) # 'D' : 일봉, 'm' : 분봉
     instStockChart.SetInputValue(9, ord('1'))
 
