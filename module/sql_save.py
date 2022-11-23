@@ -1,5 +1,8 @@
 # sql_save.py
 
+import numpy as np
+import pandas as pd
+
 # sql 관련
 import pymysql
 from sqlalchemy import create_engine
