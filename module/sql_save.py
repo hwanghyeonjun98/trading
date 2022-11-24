@@ -7,6 +7,7 @@ import pandas as pd
 import pymysql
 from sqlalchemy import create_engine
 
+
 # 데이터 프레임 sql로 저장
 # user : sql 사용자 이름
 # password : sql 사용자의 비밀번호
@@ -19,7 +20,7 @@ from sqlalchemy import create_engine
 #             fail => 기존 내용이 있으면 적용 안함
 #             replace => 기존 테이블을 삭제하고 새로 테이블 생성
 #             append => 테이블이 존재하면 기본 테이블에 데이터 삽입
-def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list, if_exists='replace'):
+def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list, if_exists='replace') -> None:
 	engine = create_engine(
 		"mysql+pymysql://{user}:{password}@{host}:{port}/{db}?charset=utf8".format(
 			user=user, password=password, host=host, port=port, db=db
