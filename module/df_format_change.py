@@ -11,6 +11,7 @@ import glob
 
 from unicodedata import normalize
 
+
 # 파일 리스트 만들기
 # 실제 파일 이름 공백 제거
 # path: 파일 경로 (파일 이름 전)
@@ -71,7 +72,7 @@ def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv')
 # 데이터 형식 바꾸기
 # file_list : 파일 리스트
 # 데이터프레임 리스트 반환
-def data_format_change(file_list: list) -> list:
+def data_format_change(file_list: list, file_nams: list) -> list:
 	df_list = []
 	for idx, file in enumerate(file_list):
 		date_regx = '\D?\s?'
@@ -123,6 +124,11 @@ def data_format_change(file_list: list) -> list:
 			df['변동'] = df['변동'].apply(lambda x: x.replace('%', '')).astype('float')
 
 		df.sort_values(['날짜'], inplace=True)
+
+		col_name = df.columns[1:]
+
+		for col in col_name:
+			df.rename(columns={col: file_nams[idx] + '_' + col}, inplace=True)
 
 		df_list.append(df)
 
