@@ -33,3 +33,6 @@ module/__pycache__/
 
 # sql 테스트 노트북 무시
 데이터 수집 노트북/sql_test.ipynb
+
+# 스프링 help.md 무시
+web-dev/trading-web/HELP.md
