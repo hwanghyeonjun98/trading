@@ -43,5 +43,8 @@ def new_data_sql_save(user: str, password: str, host: str, port: str, db: str, d
 	)
 
 	for idx, df in enumerate(df_list):
-		last_df = df.iloc[-1:,:]
-		last_df.to_sql(name=file_names[idx], con=engine, if_exists=if_exists, index=False)
+		try:
+			last_df = df.iloc[-1:, :]
+			last_df.to_sql(name=file_names[idx], con=engine, if_exists=if_exists, index=False)
+		except:
+			pass

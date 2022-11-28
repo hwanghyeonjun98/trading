@@ -98,11 +98,9 @@ def day_calc(num: int) -> str:
 def investing_crawling(middel_url: str, names: list, start_date: str, driver: webdriver, suffix='') -> None:
 	start_date = start_date
 	calender_btn = '.DatePickerWrapper_icon-wrap__cwTu_'
-	start_year_input = '//*[@id="__next"]/div/div/div/div[2]/main/div/div[4]/div/div[1]/div/div[2]/div[2]/div[2]/div[2]/div[1]/div/div[1]/input'
+	start_year_input = '.NativeDateInput_root__wbgyP > input'
 	apply_btn = 'HistoryDatePicker_apply-button__fPr_G'
 	csv_download_btn = '.download-data_download-data__jxNYT > a'
-
-	side_menu = 'sticky-side-bar_stickyBar__IiRu0'
 
 	suffix_ = suffix
 
@@ -121,8 +119,8 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			driver.execute_script('window.scrollTo(0, 320)')
 			driver.find_element(By.CSS_SELECTOR, calender_btn).click()
 			time.sleep(2)
-			driver.find_element(By.XPATH, start_year_input).clear()
-			driver.find_element(By.XPATH, start_year_input).send_keys(start_date)
+			driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
+			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 			time.sleep(2)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
 			time.sleep(3)

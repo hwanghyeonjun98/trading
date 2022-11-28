@@ -74,11 +74,12 @@ def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv')
 # 날짜 형식 숫자로만 바꾸기
 # 데이터 형식 바꾸기
 # file_list : 파일 리스트
+# file_name : 파일 이름 리스트
 # 데이터프레임 리스트 반환
-def data_format_change(file_list: list, file_nams: list) -> list:
+def data_format_change(file_list: list, file_names: list) -> list:
 	df_list = []
-	try:
-		for idx, file in enumerate(file_list):
+	for idx, file in enumerate(file_list):
+		try:
 			date_regx = '\D?\s?'
 			persent_regx = '\d+[%]$'
 
@@ -88,6 +89,12 @@ def data_format_change(file_list: list, file_nams: list) -> list:
 
 			load_df = pd.read_csv(file)
 			df = load_df.astype(str)
+
+			if str(list(load_df['날짜'].values)[0]) == '결과를 찾을 수 없습니다':
+				file_list.pop(idx)
+				file_names.pop(idx)
+			else:
+				pass
 
 			df.rename(columns={'변동 %': '변동'}, inplace=True)
 
@@ -132,11 +139,10 @@ def data_format_change(file_list: list, file_nams: list) -> list:
 			col_name = df.columns[1:]
 
 			for col in col_name:
-				df.rename(columns={col: file_nams[idx] + '_' + col}, inplace=True)
+				df.rename(columns={col: file_names[idx] + '_' + col}, inplace=True)
 
 			df_list.append(df)
-
-	except:
-		pass
+		except:
+			pass
 
 	return df_list
