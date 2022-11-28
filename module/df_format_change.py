@@ -18,16 +18,19 @@ from unicodedata import normalize
 # file_extension : 파일 확장자 (. 제외)
 # delete_str : 파일 이름 리스트에서 제외할 문자열 default: ''(빈문자열)
 # file_list, file_names list, tuple로 반환
-def file_name_list(path: str, file_extension: str, delete_str='') -> tuple:
+def file_name_list(path: str, file_extension: str) -> tuple:
 	file_names = []
 
 	file_list = glob.glob(path + '/*.' + file_extension)
 
 	for file in file_list:
-		file_name = file.split('/')[-1].split('.')[0]
-		name = file_name.replace(' ' + delete_str, '')
-		normalize_name = normalize('NFC', name)
-		file_names.append(normalize_name)
+		try:
+			file_name = file.split('/')[-1].split('.')[0]
+			name = file_name.replace(' ', '').replace('_', '')
+			normalize_name = normalize('NFC', name)
+			file_names.append(normalize_name)
+		except:
+			pass
 
 	return file_list, file_names
 
@@ -74,62 +77,66 @@ def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv')
 # 데이터프레임 리스트 반환
 def data_format_change(file_list: list, file_nams: list) -> list:
 	df_list = []
-	for idx, file in enumerate(file_list):
-		date_regx = '\D?\s?'
-		persent_regx = '\d+[%]$'
+	try:
+		for idx, file in enumerate(file_list):
+			date_regx = '\D?\s?'
+			persent_regx = '\d+[%]$'
 
-		prices = ['종가', '오픈', '고가', '저가']
+			prices = ['종가', '오픈', '고가', '저가']
 
-		volumes = []
+			volumes = []
 
-		load_df = pd.read_csv(file)
-		df = load_df.astype(str)
+			load_df = pd.read_csv(file)
+			df = load_df.astype(str)
 
-		df.rename(columns={'변동 %': '변동'}, inplace=True)
+			df.rename(columns={'변동 %': '변동'}, inplace=True)
 
-		df['날짜'] = df['날짜'].apply(lambda x: re.sub(date_regx, '', x))
+			df['날짜'] = df['날짜'].apply(lambda x: re.sub(date_regx, '', x))
 
-		for price in prices:
-			df[price] = df[price].apply(lambda x: x.replace(',', '')).astype('float')
+			for price in prices:
+				df[price] = df[price].apply(lambda x: x.replace(',', '')).astype('float')
 
-		if '거래량' in list(df.columns):
-			df['거래량'] = df['거래량'].apply(lambda x: x.replace(',', ''))
+			if '거래량' in list(df.columns):
+				df['거래량'] = df['거래량'].apply(lambda x: x.replace(',', ''))
 
-			for volume in df['거래량'].values:
-				cash_unit = list(volume)[-1]
+				for volume in df['거래량'].values:
+					cash_unit = list(volume)[-1]
 
-				if str(volume) == 'nan':
-					n = str(volume).replace('nan', '0')
-					volumes.append(n)
-				elif cash_unit == 'K':
-					k = volume.replace(cash_unit, '')
-					k_result = round(float(k) * 1000)
-					volumes.append(k_result)
-				elif cash_unit == 'M':
-					m = volume.replace(cash_unit, '')
-					m_result = round(float(m) * 1000000)
-					volumes.append(m_result)
-				elif cash_unit == 'B':
-					b = volume.replace(cash_unit, '')
-					b_result = round(float(b) * 1000000000)
-					volumes.append(b_result)
+					if str(volume) == 'nan':
+						n = str(volume).replace('nan', '0')
+						volumes.append(n)
+					elif cash_unit == 'K':
+						k = volume.replace(cash_unit, '')
+						k_result = round(float(k) * 1000)
+						volumes.append(k_result)
+					elif cash_unit == 'M':
+						m = volume.replace(cash_unit, '')
+						m_result = round(float(m) * 1000000)
+						volumes.append(m_result)
+					elif cash_unit == 'B':
+						b = volume.replace(cash_unit, '')
+						b_result = round(float(b) * 1000000000)
+						volumes.append(b_result)
 
-			df['거래량'] = volumes
-		else:
-			df.insert(5, '거래량', '0', allow_duplicates=False)
+				df['거래량'] = volumes
+			else:
+				df.insert(5, '거래량', '0', allow_duplicates=False)
 
-		df['변동'] = df['변동'].apply(lambda x: x.replace(',', ''))
+			df['변동'] = df['변동'].apply(lambda x: x.replace(',', ''))
 
-		if not bool(re.match(persent_regx, list(df['변동'])[0])):
-			df['변동'] = df['변동'].apply(lambda x: x.replace('%', '')).astype('float')
+			if not bool(re.match(persent_regx, list(df['변동'])[0])):
+				df['변동'] = df['변동'].apply(lambda x: x.replace('%', '')).astype('float')
 
-		df.sort_values(['날짜'], inplace=True)
+			df.sort_values(['날짜'], inplace=True)
 
-		col_name = df.columns[1:]
+			col_name = df.columns[1:]
 
-		for col in col_name:
-			df.rename(columns={col: file_nams[idx] + '_' + col}, inplace=True)
+			for col in col_name:
+				df.rename(columns={col: file_nams[idx] + '_' + col}, inplace=True)
 
-		df_list.append(df)
+			df_list.append(df)
+
+	except:
+		pass
 
 	return df_list
