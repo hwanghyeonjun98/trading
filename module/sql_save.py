@@ -34,7 +34,7 @@ def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list
 
 # 최신 데이터 SQL 저장
 # if_exists='append' 기존 테이블에 마지막 행에 추가 됨
-def last_data_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list, if_exists='append') -> None:
+def new_data_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list, if_exists='append') -> None:
 	engine = create_engine(
 		"mysql+pymysql://{user}:{password}@{host}:{port}/{db}?charset=utf8".format(
 			user=user, password=password, host=host, port=port, db=db
