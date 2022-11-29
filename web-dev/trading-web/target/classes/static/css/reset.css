@@ -1,1 +1,20 @@
 @charset "utf-8";
+
+ul, ol {
+	list-style : none;
+}
+
+button {
+	background: transparent;
+	border: 0;
+}
+
+a {
+	display: inline-block;
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #333;
+}
