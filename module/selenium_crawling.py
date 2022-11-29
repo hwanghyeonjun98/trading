@@ -2,6 +2,7 @@
 
 import time
 from datetime import datetime
+from datetime import timedelta
 
 # 셀리움 import
 from selenium import webdriver
@@ -71,12 +72,21 @@ def login(email: str, password: str, driver) -> None:
 	driver.find_element(By.XPATH, login_btn).click()
 
 
+# 현재 날짜
 def now_date() -> str:
 	now = datetime.now()
 	datetime_ = now.strftime('%Y-%m-%d')
-	start_date = datetime_
+	days = datetime_
 
-	return start_date
+	return days
+
+# 현재 날짜 - 일수
+def day_calc(num: int) -> str:
+	day = datetime.now() - timedelta(days=num)
+	datetime_ = day.strftime('%Y-%m-%d')
+	days = datetime_
+
+	return days
 
 
 # 인베스팅 과거 버전 페이지 크롤링
@@ -106,11 +116,12 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			urlopen(req)
 			time.sleep(5)
 
+			driver.execute_script('window.scrollTo(0, 320)')
 			driver.find_element(By.CSS_SELECTOR, calender_btn).click()
+			time.sleep(2)
 			driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
-			driver.implicitly_wait(1)
 			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
-			driver.implicitly_wait(5)
+			time.sleep(2)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
 			time.sleep(3)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
