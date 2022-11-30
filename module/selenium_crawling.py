@@ -2,6 +2,7 @@
 
 import time
 from datetime import datetime
+from datetime import timedelta
 
 # 셀리움 import
 from selenium import webdriver
@@ -33,11 +34,8 @@ def selenium_driver_load(driver_path: str, url: str, file_save_path: str) -> web
 		}
 	)
 
-	# 크롬 시크릿 모드로 실행
-	options.add_argument('incognito')
-
 	# user agent 설정
-	user_agent = "Chrome/71.0.3578.83"
+	user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
 	options.add_argument('user-agent=' + user_agent)
 
 	driver = webdriver.Chrome(driver_path, options=options)
@@ -71,12 +69,21 @@ def login(email: str, password: str, driver) -> None:
 	driver.find_element(By.XPATH, login_btn).click()
 
 
+# 현재 날짜
 def now_date() -> str:
 	now = datetime.now()
 	datetime_ = now.strftime('%Y-%m-%d')
-	start_date = datetime_
+	days = datetime_
 
-	return start_date
+	return days
+
+# 현재 날짜 - 일수
+def day_calc(num: int) -> str:
+	day = datetime.now() - timedelta(days=num)
+	datetime_ = day.strftime('%Y-%m-%d')
+	days = datetime_
+
+	return days
 
 
 # 인베스팅 과거 버전 페이지 크롤링
@@ -101,14 +108,15 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			url = f'https://kr.investing.com/{middel_url}/{name_}{suffix_}-historical-data'
 
 			driver.get(url)
-			headers = {'User-Agent': 'Chrome/107.0.5304.87'}
+			headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
 			req = urllib.request.Request(url, headers=headers)
 			urlopen(req)
 			time.sleep(5)
 
+			driver.execute_script('window.scrollTo(0, 320)')
 			driver.find_element(By.CSS_SELECTOR, calender_btn).click()
+			driver.implicitly_wait(5)
 			driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
-			driver.implicitly_wait(1)
 			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
@@ -127,6 +135,9 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 	apply_new_btn = '#applyBtn'
 	csv_download_new_btn = '#column-content > div.float_lang_base_2.downloadDataWrap > div > a'
 
+	modal = '.allow-notifications-popup'
+	modal_close = '/html/body/div[6]/div/button'
+
 	suffix_ = suffix
 
 	# 셀리움 실행 코드
@@ -136,10 +147,14 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			url = f'https://kr.investing.com/{middel_url}/{name_}{suffix_}-historical-data'
 
 			driver.get(url)
-			headers = {'User-Agent': 'Chrome/107.0.5304.87'}
+			headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
 			req = urllib.request.Request(url, headers=headers)
 			urlopen(req)
 			time.sleep(5)
+
+			allow_modal = driver.find_element(By.CSS_SELECTOR, modal)
+			if allow_modal.is_displayed():
+				driver.find_element(By.XPATH, modal_close).click()
 
 			driver.find_element(By.CSS_SELECTOR, calender_new_btn).click()
 			driver.find_element(By.CSS_SELECTOR, start_year_new_input).clear()
@@ -171,7 +186,7 @@ def investing_coins(coins: list, start_date: str, driver: webdriver) -> None:
 
 			driver.get(url)
 
-			headers = {'User-Agent': 'Chrome/107.0.5304.87'}
+			headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
 			req = urllib.request.Request(url, headers=headers)
 			urlopen(req)
 			time.sleep(5)

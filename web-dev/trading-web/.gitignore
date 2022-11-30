@@ -31,3 +31,7 @@
 
 ### VS Code ###
 .vscode/
+
+trading-web/node_modules/bootstrap
+trading-web/node_modules/bootstrap-icons
+trading-web/node_modules/chart.js
