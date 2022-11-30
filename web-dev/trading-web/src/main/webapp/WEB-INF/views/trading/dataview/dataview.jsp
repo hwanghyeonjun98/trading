@@ -7,12 +7,23 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>트레이딩 | 데이터 조회</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/common.css">
+	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
 </head>
 <body>
-
+	<div class="background-wrap">
+		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
+		<main class="p-3">
+			<section>
+				<article>
+					<h2 class="h4">내용 들어 갈 자리</h2>
+					<div id="chart-area">
+					</div>
+				</article>
+			</section>
+		</main>
+		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/common.js"></script>
 </body>
 </html>

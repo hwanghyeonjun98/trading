@@ -27,7 +27,7 @@ public class TradingController {
 	}
 
 	@GetMapping("/dataview/dataview")
-	public String dataView(Model model) {
+	public String dataView (){
 		return "/dataview/dataview";
 	}
 }
