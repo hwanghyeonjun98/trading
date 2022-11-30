@@ -16,8 +16,6 @@
 			<section>
 				<article>
 					<h2 class="h4">내용 들어 갈 자리</h2>
-					<div id="chart-area">
-					</div>
 				</article>
 			</section>
 		</main>
