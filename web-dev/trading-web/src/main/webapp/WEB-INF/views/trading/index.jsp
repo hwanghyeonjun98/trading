@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+	<title>트레이딩</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="/css/reset.css">
@@ -44,7 +44,7 @@
 				<p class="">책임 없음</p>
 			</div>
 			<div class="copyright">
-				<p>빅데데이터 15기 주가예측팀</p>
+				<p>빅데이터 15기 주가예측팀</p>
 				<p>권준섭, 김민건, 김성진, 김영운, 윤성한, 황현준</p>
 			</div>
 		</footer>

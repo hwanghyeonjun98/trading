@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+body {
+	font-family: sans-serif;
+}
+
+.error_wrap {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+}
+
+.error_info {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-flow: column;
+	width: 60%;
+	height: 70vh;
+	padding: 3rem;
+	border: 1px solid #cccc;
+	box-shadow: 2px 2px 100px rgba(0, 0, 0, .2);
+	text-align: center;
+}
+
+.browser_list {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 3rem;
+	padding: 0;
+}
+
+.browser_list li a img {
+	width: 180px;
+	margin-bottom: 2rem;
+}
+
+.error_code {
+	font-size: 8rem;
+}
