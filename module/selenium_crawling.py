@@ -77,6 +77,7 @@ def now_date() -> str:
 
 	return days
 
+
 # 현재 날짜 - 일수
 def day_calc(num: int) -> str:
 	day = datetime.now() - timedelta(days=num)
@@ -141,7 +142,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 	suffix_ = suffix
 
 	# 셀리움 실행 코드
-	for name in names:
+	for idx, name in enumerate(names):
 		name_ = name.lower()
 		try:
 			url = f'https://kr.investing.com/{middel_url}/{name_}{suffix_}-historical-data'
@@ -152,9 +153,9 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			urlopen(req)
 			time.sleep(5)
 
-			allow_modal = driver.find_element(By.CSS_SELECTOR, modal)
-			if allow_modal.is_displayed():
-				driver.find_element(By.XPATH, modal_close).click()
+			# allow_modal = driver.find_element(By.CSS_SELECTOR, modal)
+			# if allow_modal and allow_modal.is_displayed():
+			# 	driver.find_element(By.XPATH, modal_close).click()
 
 			driver.find_element(By.CSS_SELECTOR, calender_new_btn).click()
 			driver.find_element(By.CSS_SELECTOR, start_year_new_input).clear()
@@ -256,6 +257,23 @@ def world_rate_bonds_list(rate_bonds_id: list) -> list:
 		href = each['href']
 		rate_bond = href.split('/')[-1]
 
-		rate_bonds.append(rate_bond)
+		if rate_bond == 'russia-overnight-rate':
+			pass
+		elif rate_bond == 'russia-1-week-bond-yield':
+			pass
+		elif rate_bond == 'russia-2-week-bond-yield':
+			pass
+		elif rate_bond == 'russia-1-month-bond-yield':
+			pass
+		elif rate_bond == 'russia-2-month-bond-yield':
+			pass
+		elif rate_bond == 'russia-3-month-bond-yield':
+			pass
+		elif rate_bond == 'russia-6-month-bond-yield':
+			pass
+		elif rate_bond == 'turkey-1-year-bond-yield':
+			pass
+		else:
+			rate_bonds.append(rate_bond)
 
 	return rate_bonds

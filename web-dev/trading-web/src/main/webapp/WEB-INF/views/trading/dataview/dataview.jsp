@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>트레이딩</title>
+	<title>트레이딩 | 데이터 조회</title>
 	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
 </head>
 <body>
@@ -16,8 +16,6 @@
 			<section>
 				<article>
 					<h2 class="h4">내용 들어 갈 자리</h2>
-					<div id="chart-area">
-					</div>
 				</article>
 			</section>
 		</main>
