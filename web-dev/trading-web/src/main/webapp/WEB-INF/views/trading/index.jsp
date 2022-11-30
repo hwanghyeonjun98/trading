@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -10,8 +11,6 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="/css/reset.css">
 	<link rel="stylesheet" href="/css/common.css">
-	<script src="/js/browserCheck.js"></script>
-	<script src="https://kit.fontawesome.com/5787bde1c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="background-wrap">
@@ -25,7 +24,7 @@
 				</div>
 				<ul class="header-menu-list">
 					<li><a href="#">홈</a></li>
-					<li><a href="#">데이터 보기</a></li>
+					<li><a href="/dataview/dataview.jsp">데이터 보기</a></li>
 					<li><a href="#">연락처</a></li>
 				</ul>
 			</nav>
