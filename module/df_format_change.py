@@ -146,3 +146,22 @@ def data_format_change(file_list: list, file_names: list) -> list:
 			pass
 
 	return df_list
+
+
+# 날짜 형식 숫자로만 바꾸기
+# 데이터 형식 출력용으로 바꾸기
+# file_list : 파일 리스트
+# file_name : 파일 이름 리스트
+# 데이터프레임 리스트 반환
+def api_data_format_change(df_list: list) -> list:
+	api_df_list = []
+	eng_name = ['date', 'close', 'open', 'high', 'low', 'volume', 'change']
+
+	for df in df_list:
+		col_name = df.columns
+		for idx, col in enumerate(col_name):
+			df.rename(columns={col: eng_name[idx]}, inplace=True)
+
+		api_df_list.append(df)
+
+	return api_df_list
