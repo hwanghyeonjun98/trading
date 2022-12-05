@@ -1,6 +1,8 @@
 # df_format_change.py
 import time
 
+from tqdm import tqdm
+
 # 데이터프레임 관련
 import numpy as np
 import pandas as pd
@@ -20,19 +22,24 @@ from unicodedata import normalize
 # file_list, file_names list, tuple로 반환
 def file_name_list(path: str, file_extension: str) -> tuple:
 	file_names = []
+	org_file_names = []
 
 	file_list = glob.glob(path + '/*.' + file_extension)
 
 	for file in file_list:
 		try:
 			file_name = file.split('/')[-1].split('.')[0]
-			name = file_name.replace(' ', '').replace('_', '')
+			name = file_name.replace(' ', '').replace('_', '').replace('&', '')
 			normalize_name = normalize('NFC', name)
 			file_names.append(normalize_name)
+
+			org_name = file.split('/')[-1].split('.')[0].replace(' 내역', '').replace('_', ' ')
+			org_normalize_name = normalize('NFC', org_name)
+			org_file_names.append(org_normalize_name)
 		except:
 			pass
 
-	return file_list, file_names
+	return file_list, org_file_names, file_names
 
 
 # 데이터 프레임 합치기
@@ -78,7 +85,7 @@ def df_save(df_list: list, df_names: list, save_path: str, file_extension='csv')
 # 데이터프레임 리스트 반환
 def data_format_change(file_list: list, file_names: list) -> list:
 	df_list = []
-	for idx, file in enumerate(file_list):
+	for idx, file in enumerate(tqdm(file_list)):
 		try:
 			date_regx = '\D?\s?'
 			persent_regx = '\d+[%]$'
@@ -150,18 +157,16 @@ def data_format_change(file_list: list, file_names: list) -> list:
 
 # 날짜 형식 숫자로만 바꾸기
 # 데이터 형식 출력용으로 바꾸기
-# file_list : 파일 리스트
-# file_name : 파일 이름 리스트
 # 데이터프레임 리스트 반환
-def api_data_format_change(df_list: list) -> list:
-	api_df_list = []
-	eng_name = ['date', 'close', 'open', 'high', 'low', 'volume', 'change']
+def column_name_change(df_list: list) -> list:
+	column_name_change_list = []
+	eng_name = ['dates', 'closes', 'opens', 'highs', 'lows', 'volumes', 'changes']
 
 	for df in df_list:
 		col_name = df.columns
 		for idx, col in enumerate(col_name):
 			df.rename(columns={col: eng_name[idx]}, inplace=True)
 
-		api_df_list.append(df)
+		column_name_change_list.append(df)
 
-	return api_df_list
+	return column_name_change_list
