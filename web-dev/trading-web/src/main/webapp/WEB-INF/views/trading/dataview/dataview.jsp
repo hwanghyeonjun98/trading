@@ -88,11 +88,11 @@
 					<div id="chart-area"></div>
 					<%-- 차트 영역 --%>
 					<div class="date-search-form">
-						<form name="dateSearchFrm"method="post">
+						<form name="dateSearchFrm" id="dateSearchFrm" method="post">
 							<label for="startDate">시작 날짜</label>
 							<input type="date" name="startDate" id="startDate" min="2020-01-01" max="">
-							<label for="startDate">끝 날짜</label>
-							<input type="date" name="endDate" id="endDate" max="2020-01-01">
+							<label for="endDate">끝 날짜</label>
+							<input type="date" name="endDate" id="endDate" max="" value="">
 							<button type="submit"><i class="bi bi-search"></i></button>
 						</form>
 					</div>

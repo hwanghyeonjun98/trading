@@ -1,14 +1,20 @@
 $(document).on("click", ".sort-btn", function () {
-	const tableName = $(this).parents("#data-table").data("table");
+	const tableName = $("#data-table").data("table");
 	const base = $(this).parent().attr("class");
+
+	let startDate = $("#startDate").val();
+	let endDate = $("#endDate").val();
+	startDate = startDate.replaceAll("-", "");
+	endDate = endDate.replaceAll("-", "");
+
 	let sortUrl;
 	if (!$(this).hasClass("sorted")) {
 		$(".sort-btn").removeClass("sorted");
 		$(this).addClass("sorted");
-		sortUrl= "/api/data/" + tableName + "내역/" + base + "/asc";
+		sortUrl = "/api/data/sorts/" + tableName + "내역/" + base + "/asc/" + startDate + "/" + endDate;
 	} else {
 		$(this).removeClass("sorted");
-		sortUrl= "/api/data/" + tableName + "내역/" + base + "/desc";
+		sortUrl = "/api/data/sorts/" + tableName + "내역/" + base + "/desc/" + startDate + "/" + endDate;
 	}
 	$.ajax({
 		type    : "POST",
@@ -35,7 +41,6 @@ $(document).on("click", ".sort-btn", function () {
 				      "</td></tr>";
 				$("#data-table tbody").append(str);
 			});
-			$("#data-table").attr("data-table", tableName);
 		},
 		error   : function () {
 			console.log("실패");

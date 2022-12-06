@@ -4,12 +4,6 @@
 	border-bottom: 4px solid var(--color-block);
 }
 
-table > thead {
-	position: sticky;
-	top: 74px;
-	left: 0;
-}
-
 .data-menu .menu-area {
 	margin-bottom: .8rem;
 }
@@ -55,13 +49,28 @@ table > thead {
 }
 
 .data-menu .menu-content ul li button:hover,
-.data-menu .menu-content ul li button:focus,a
+.data-menu .menu-content ul li button:focus, a
 .data-menu .menu-content ul li button:active,
 .data-menu .menu-content ul li button.active {
 	color: var(--color-block);
 	background-color: var(--color-purple);
 	border: 1px solid var(--color-purple);
 }
+
+table > thead {
+	position: sticky;
+	top: 74px;
+	left: 0;
+}
+
+table#data-table > tbody > tr > td:first-child {
+	text-align: center;
+}
+
+table#data-table > tbody > tr > td:not(:first-child) {
+	text-align: right;
+}
+
 
 @media screen and (min-width: 1024px) {
 	.sub-page {

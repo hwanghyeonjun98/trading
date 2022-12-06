@@ -39,7 +39,7 @@ def file_name_list(path: str, file_extension: str) -> tuple:
 		except:
 			pass
 
-	return file_list, org_file_names, file_names
+	return file_list, file_names
 
 
 # 데이터 프레임 합치기

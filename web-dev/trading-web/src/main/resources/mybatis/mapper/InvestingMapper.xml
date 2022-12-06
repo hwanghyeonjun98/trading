@@ -4,23 +4,27 @@
 	<select id="investingList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes, opens, highs, lows, volumes, changes
 		FROM ${names}
+		WHERE dates between #{startDate} AND #{endDate}
 		ORDER BY dates desc
 	</select>
-	<select id="investingSortList" resultType="com.big15.tradingweb.dto.InvestingDto">
-		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, opens, highs, lows, closes
+
+	<select id="investingDateSearchList" resultType="com.big15.tradingweb.dto.InvestingDto">
+		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes, opens, highs, lows, volumes, changes
 		FROM ${names}
-		ORDER BY ${base} ${sorts}
+		WHERE dates between #{startDate} AND #{endDate}
+		ORDER BY dates desc
 	</select>
+
 	<select id="chartList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, opens, highs, lows, closes
 		FROM ${names}
 		ORDER BY dates asc
 	</select>
+
 	<select id="dataList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes, opens, highs, lows, volumes, changes
 		FROM aedkrw내역
+		WHERE dates between '20221106' AND '20221206'
 		ORDER BY dates desc
 	</select>
-
-
 </mapper>
