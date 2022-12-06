@@ -21,5 +21,10 @@ public class TradingRestController {
 		return mapper.investingList(names);
 	}
 
+	@RequestMapping("/api/data/chart/{names}")
+	public List<InvestingDto> chartList(@PathVariable("names") String names) {
+		return mapper.investingList(names);
+	}
+
 
 }

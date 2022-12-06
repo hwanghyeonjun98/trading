@@ -1,7 +1,66 @@
 @charset "utf-8";
 
+.data-title {
+	border-bottom: 4px solid #333333;
+}
+
 table > thead {
 	position: sticky;
-	top: 0;
+	top: 74px;
 	left: 0;
 }
+
+.data-menu .menu-area {
+	margin-bottom: .8rem;
+}
+
+.data-menu .menu-title {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	padding: .6rem .6rem 0rem .6rem;
+	border-bottom: 1px solid #B2B2B2;
+	cursor: pointer;
+}
+
+.data-menu .menu-title .icon-span i {
+	font-size: 1.5rem;
+}
+
+.data-menu .menu-title + .menu-content {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height .4s ease-in-out;
+}
+
+.data-menu .menu-title.active + .menu-content {
+	max-height: 100px;
+}
+
+.data-menu .menu-content ul {
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	gap: .8rem;
+	padding: 0;
+	margin-top: .6rem;
+}
+
+.data-menu .menu-content ul li button {
+	padding: .4rem;
+	color: #BEAEE2;
+	border: 1px solid #BEAEE2;
+	border-radius: 5px;
+}
+
+.data-menu .menu-content ul li button:hover,
+.data-menu .menu-content ul li button:focus,a
+.data-menu .menu-content ul li button:active,
+.data-menu .menu-content ul li button.active {
+	color: #333;
+	background-color: #BEAEE2;
+	border: 1px solid #BEAEE2;
+}
+
+
