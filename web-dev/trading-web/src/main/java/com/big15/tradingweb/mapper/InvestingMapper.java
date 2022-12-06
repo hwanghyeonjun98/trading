@@ -12,6 +12,6 @@ public interface InvestingMapper {
     @Select("SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes, opens, highs, lows, volumes, changes FROM ${names} ORDER BY dates desc ")
     List<InvestingDto> investingList(@Param("names") String names);
 
-    @Select("SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes, opens, highs, lows, volumes, changes FROM ${names} ORDER BY ${base} ${sorts}")
-    List<InvestingDto> sortList(@Param("names") String names, @Param("base") String base, @Param("sorts") String sorts);
+    @Select("SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, opens, highs, lows, closes  FROM ${names} ORDER BY ${base} ${sorts}")
+    List<InvestingDto> chartList(@Param("names") String names);
 }

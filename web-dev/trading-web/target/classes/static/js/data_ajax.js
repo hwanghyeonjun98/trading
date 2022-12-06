@@ -1,27 +1,29 @@
 $(document).on("click", ".data-view-btn", function () {
-	const tableName = $(this).text();
-	const ajaxUrl = "/api/data/" + tableName;
+	const tableName = $(this).data("table");
+	const ajaxUrl = "/api/data/" + tableName + "내역";
+	const chartUrl = "/api/data/chart/" + tableName + "내역";
 	$.ajax({
 		type    : "POST",
 		url     : ajaxUrl,
 		dataset : "json",
-		success : function (data) {
+		success : function (reponse) {
 			console.log("통신 성공");
-			$.each(data, function (i) {
+			$("#data-table tbody tr").remove();
+			$.each(reponse, function (i) {
 				str = "<tr><td>" +
-				      data[i].dates +
+				      reponse[i].dates +
 				      "</td><td>" +
-				      data[i].closes +
+				      reponse[i].closes +
 				      "</td><td>" +
-				      data[i].opens +
+				      reponse[i].opens +
 				      "</td><td>" +
-				      data[i].highs +
+				      reponse[i].highs +
 				      "</td><td>" +
-				      data[i].lows +
+				      reponse[i].lows +
 				      "</td><td>" +
-				      data[i].volumes +
+				      reponse[i].volumes +
 				      "</td><td>" +
-				      data[i].changes +
+				      reponse[i].changes +
 				      "</td></tr>";
 				$("#data-table tbody").append(str);
 			});
@@ -31,5 +33,18 @@ $(document).on("click", ".data-view-btn", function () {
 			console.log("실패");
 		}
 	});
-});
 
+	$.getJSON(chartUrl, function (response) {
+		let dataList = [];
+
+		response.forEach((item) => {
+			dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
+		});
+
+		chart.updateSeries([{
+			name : "table",
+			data : dataList
+		}]);
+	});
+
+});
