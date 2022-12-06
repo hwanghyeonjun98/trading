@@ -16,7 +16,7 @@
 		<%-- haeder include--%>
 		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
 		<%-- haeder include--%>
-		<main class="p-3 w-75 m-auto">
+		<main class="p-3 sub-page">
 			<section>
 				<article>
 					<%-- 메뉴 영역 --%>
@@ -83,27 +83,65 @@
 						</div>
 					</nav>
 					<%-- 메뉴 영역 --%>
-					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">a</span> 내역</h4>
+					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">AED/KRW</span> 내역</h4>
 					<%-- 차트 영역 --%>
 					<div id="chart-area"></div>
 					<%-- 차트 영역 --%>
+					<div class="date-search-form">
+						<form name="dateSearchFrm"method="post">
+							<label for="startDate">시작 날짜</label>
+							<input type="date" name="startDate" id="startDate" min="2020-01-01" max="">
+							<label for="startDate">끝 날짜</label>
+							<input type="date" name="endDate" id="endDate" max="2020-01-01">
+							<button type="submit"><i class="bi bi-search"></i></button>
+						</form>
+					</div>
 					<%-- 데이터 영역 --%>
-					<table id="data-table" class="table table-hover table-striped position-relative">
+					<table id="data-table" class="table table-hover table-striped position-relative" data-table="aedkrw">
 						<thead class="table-secondary">
 							<tr>
 								<th class="dates">
 									날짜
+									<button type="button" class="sort-btn sorted"><i class="bi bi-arrow-down-up"></i></button>
+								</th>
+								<th class="closes">
+									종가
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="closes">종가</th>
-								<th class="opens">오픈</th>
-								<th class="highs">고가</th>
-								<th class="lows">저가</th>
-								<th class="volumes">거래량</th>
-								<th class="changes">변동</th>
+								<th class="opens">
+									오픈
+									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+								</th>
+								<th class="highs">
+									고가
+									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+								</th>
+								<th class="lows">
+									저가
+									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+								</th>
+								<th class="volumes">
+									거래량
+									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+								</th>
+								<th class="changes">
+									변동
+									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach items="${defaultData}" var="defaultData">
+								<tr>
+									<td>${defaultData.dates}</td>
+									<td>${defaultData.closes}</td>
+									<td>${defaultData.opens}</td>
+									<td>${defaultData.highs}</td>
+									<td>${defaultData.lows}</td>
+									<td>${defaultData.volumes}</td>
+									<td>${defaultData.changes}</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<%-- 데이터 영역 --%>

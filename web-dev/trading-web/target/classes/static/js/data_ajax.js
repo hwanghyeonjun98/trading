@@ -1,7 +1,10 @@
+// 데이터 AJAX로 불러오기 JQUERY 문법 이용
+
+// 버튼 동적 바인딩
 $(document).on("click", ".data-view-btn", function () {
 	const tableName = $(this).data("table");
 	const ajaxUrl = "/api/data/" + tableName + "내역";
-	const chartUrl = "/api/data/chart/" + tableName + "내역";
+	let chartUrl = "/api/data/chart/" + tableName + "내역";
 	$.ajax({
 		type    : "POST",
 		url     : ajaxUrl,
@@ -34,6 +37,7 @@ $(document).on("click", ".data-view-btn", function () {
 		}
 	});
 
+	// 차트 AJAX
 	$.getJSON(chartUrl, function (response) {
 		let dataList = [];
 

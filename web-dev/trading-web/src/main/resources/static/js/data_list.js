@@ -54,7 +54,11 @@ function menuList(list, listName) {
 
 		tempBtn.classList.add("data-view-btn");
 		tempBtn.setAttribute("type", "button");
-		tempBtn.dataset.table = btnText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
+		if (btnText === "독일 3개월 채권 수익율") {
+			tempBtn.dataset.table = "germany3month채권수익율";
+		} else {
+			tempBtn.dataset.table = btnText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
+		}
 		tempBtn.innerText = btnText;
 		tempLi.append(tempBtn);
 
