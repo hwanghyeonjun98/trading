@@ -38,7 +38,3 @@ module/__pycache__/
 
 # 스프링 help.md 무시
 web-dev/trading-web/HELP.md
-
-web-dev/trading-web/node_modules/bootstrap
-web-dev/trading-web/node_modules/bootstrap-icons
-web-dev/trading-web/node_modules/chart.js
