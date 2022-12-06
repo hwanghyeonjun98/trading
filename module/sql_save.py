@@ -3,6 +3,8 @@
 import numpy as np
 import pandas as pd
 
+from tqdm import tqdm
+
 # sql 관련
 import pymysql
 from sqlalchemy import create_engine
@@ -28,8 +30,8 @@ def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list
 		, encoding='utf8'
 	)
 
-	for idx, df in enumerate(df_list):
-		df.to_sql(name=file_names[idx], con=engine, if_exists=if_exists, index=False, method='multi')
+	for idx, df in enumerate(tqdm(df_list)):
+		df.to_sql(name=file_names[idx].lower(), con=engine, if_exists=if_exists, index=False, method='multi')
 
 
 # 최신 데이터 SQL 저장

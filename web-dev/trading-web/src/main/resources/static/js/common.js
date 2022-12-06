@@ -1,7 +1,9 @@
-const headerMenuBtn = document.querySelector('.header-menu-btn');
+const headerMenuBtn = document.querySelector(".header-menu-btn");
 const headerMenuList = document.querySelector(".header-menu-list");
 const headerMenuListEl = document.querySelectorAll(".header-menu-list li a");
 const notLink = document.querySelectorAll("a[href='#']");
+
+const upSort = document.querySelector(".sort-btn");
 
 
 // 가상 링크 이벤트 최기화
@@ -19,7 +21,7 @@ function menuDelayReset() {
 // 테블릿, 모바일, 메뉴 버튼 클릭 시 애니메이션
 function mobileMenuClick() {
 	if (window.outerWidth < `1024`) {
-		headerMenuList.classList.toggle('active');
+		headerMenuList.classList.toggle("active");
 		delay = .25;
 		for (i = 0; i < headerMenuListEl.length; i++) {
 			delay += .25;
@@ -34,7 +36,7 @@ function mobileMenuClick() {
 function otherSpaceClick(event) {
 	target = event.target;
 	if (!headerMenuBtn.contains(target)) {
-		headerMenuList.classList.remove('active');
+		headerMenuList.classList.remove("active");
 	}
 }
 
@@ -46,5 +48,4 @@ notLink.forEach((a) => {
 // 메뉴 관련 이벤트 리스너
 headerMenuBtn.addEventListener("click", mobileMenuClick);
 document.addEventListener("click", otherSpaceClick);
-
 
