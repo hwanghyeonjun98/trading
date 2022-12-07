@@ -146,7 +146,7 @@
 									<td>${defaultData.highs}</td>
 									<td>${defaultData.lows}</td>
 									<td>${defaultData.volumes}</td>
-									<td>${defaultData.changes}</td>
+									<td>${defaultData.changes}%</td>
 								</tr>
 							</c:forEach>
 						</tbody>

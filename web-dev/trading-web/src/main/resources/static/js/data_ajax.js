@@ -34,7 +34,7 @@ $(document).on("click", ".data-view-btn", function () {
 				      reponse[i].volumes +
 				      "</td><td>" +
 				      reponse[i].changes +
-				      "</td></tr>";
+				      "%</td></tr>";
 				$("#data-table tbody").append(str);
 			});
 			$("#data-table").attr("data-table", tableName);
@@ -96,7 +96,7 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) {
 				      reponse[i].volumes +
 				      "</td><td>" +
 				      reponse[i].changes +
-				      "</td></tr>";
+				      "%</td></tr>";
 				$("#data-table tbody").append(str);
 			});
 			$("#data-table").attr("data-table", tableName);
