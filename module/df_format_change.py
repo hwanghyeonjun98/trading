@@ -118,7 +118,7 @@ def data_format_change(file_list: list, file_names: list) -> list:
 
 					if str(volume) == 'nan':
 						n = str(volume).replace('nan', '0')
-						volumes.append(n)
+						volumes.append(float(n))
 					elif cash_unit == 'K':
 						k = volume.replace(cash_unit, '')
 						k_result = round(float(k) * 1000)
@@ -134,7 +134,7 @@ def data_format_change(file_list: list, file_names: list) -> list:
 
 				df['거래량'] = volumes
 			else:
-				df.insert(5, '거래량', '0', allow_duplicates=False)
+				df.insert(5, '거래량', 0, allow_duplicates=False)
 
 			df['변동'] = df['변동'].apply(lambda x: x.replace(',', ''))
 

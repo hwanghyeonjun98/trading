@@ -121,7 +121,7 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
-			time.sleep(3)
+			time.sleep(8)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -163,7 +163,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
-			time.sleep(3)
+			time.sleep(8)
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -197,7 +197,7 @@ def investing_coins(coins: list, start_date: str, driver: webdriver) -> None:
 			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
-			time.sleep(3)
+			time.sleep(8)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
