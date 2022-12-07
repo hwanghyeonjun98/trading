@@ -1,49 +1,48 @@
-$(document).on("click", ".sort-btn", function () {
-	const tableName = $("#data-table").data("table");
-	const base = $(this).parent().attr("class");
+const sortBtn = document.querySelectorAll(".sort-btn");
 
-	let startDate = $("#startDate").val();
-	let endDate = $("#endDate").val();
-	startDate = startDate.replaceAll("-", "");
-	endDate = endDate.replaceAll("-", "");
+sortBtn.forEach((btn, idx) => {
+	btn.addEventListener("click", function tableSort() {
+		let rows;
+		let x;
+		let y;
+		let switchCnt = 0;
+		let switching = true;
+		let shouldSwitch;
+		let dir = "asc";
+		let table = document.getElementById("data-table");
+		while (switching) {
+			switching = false;
+			rows = table.rows;
+			console.log(rows);
+			for (let i = 1; i < (rows.length - 1); i++) {
+				shouldSwitch = false;
+				x = rows[i].getElementsByTagName("td")[idx];
+				y = rows[i + 1].getElementsByTagName("td")[idx];
+				console.log(x);
+				console.log(y);
+				if (dir === "asc") {
+					if (Number(x.innerText) > Number(y.innerText)) {
+						shouldSwitch = true;
+						break;
+					}
+				} else if (dir === "desc") {
+					if (Number(x.innerText) < Number(y.innerText)) {
+						shouldSwitch = true;
+						break;
+					}
+				}
+				if (shouldSwitch) {
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
 
-	let sortUrl;
-	if (!$(this).hasClass("sorted")) {
-		$(".sort-btn").removeClass("sorted");
-		$(this).addClass("sorted");
-		sortUrl = "/api/data/sorts/" + tableName + "내역/" + base + "/asc/" + startDate + "/" + endDate;
-	} else {
-		$(this).removeClass("sorted");
-		sortUrl = "/api/data/sorts/" + tableName + "내역/" + base + "/desc/" + startDate + "/" + endDate;
-	}
-	$.ajax({
-		type    : "POST",
-		url     : sortUrl,
-		dataset : "json",
-		success : function (reponse) {
-			console.log("통신 성공");
-			$("#data-table tbody tr").remove();
-			$.each(reponse, function (i) {
-				str = "<tr><td>" +
-				      reponse[i].dates +
-				      "</td><td>" +
-				      reponse[i].closes +
-				      "</td><td>" +
-				      reponse[i].opens +
-				      "</td><td>" +
-				      reponse[i].highs +
-				      "</td><td>" +
-				      reponse[i].lows +
-				      "</td><td>" +
-				      reponse[i].volumes +
-				      "</td><td>" +
-				      reponse[i].changes +
-				      "</td></tr>";
-				$("#data-table tbody").append(str);
-			});
-		},
-		error   : function () {
-			console.log("실패");
+					switchCnt++;
+				} else {
+					if (switchCnt === 0 && dir === "asc") {
+						dir = "desc";
+						switching = true;
+					}
+				}
+			}
 		}
 	});
 });
