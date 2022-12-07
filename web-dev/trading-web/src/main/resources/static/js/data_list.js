@@ -1,3 +1,4 @@
+// 메뉴 이름 리스트
 const indices = ["캐나다 S&P TSX", "나스닥종합지수", "네덜란드 AEX", "닛케이", "다우존스", "대만 가권", "러셀 2000 지수", "러시아 MOEX Russia",
                  "벨기에 BEL", "브라질 보베스파", "사우디아라비아 Tadawul", "상하이종합", "스웨덴 OMXS", "스위스 SMI", "스페인 IBEX", "영국 FTSE",
                  "유로 스톡스 50", "이탈리아 FTSE MIB", "인도네시아 IDX", "코스닥", "코스피 50", "코스피지수", "터키 BIST", "폴란드 WIG 20",
@@ -40,12 +41,14 @@ const currencies = ["AED/KRW", "AUD/KRW", "CAD/KRW", "CHF/KRW", "CNY/KRW", "DKK/
                     "IDR/KRW", "INR/KRW", "JPY/KRW", "MXN/KRW", "MYR/KRW", "NOK/KRW", "NZD/KRW", "PKR/KRW",
                     "SAR/KRW", "SEK/KRW", "SGD/KRW", "THB/KRW", "USD/KRW"];
 
+// 메뉴 대분류
 const currenciesListEl = document.querySelector(".currencies");
 const indicesListEl = document.querySelector(".indices");
 const commoditiesListEl = document.querySelector(".commodities");
 const ratesBondsListEl = document.querySelector(".rates_bonds");
 const coninsListEl = document.querySelector(".conins");
 
+// 메뉴 동적으로 생성
 function menuList(list, listName) {
 	for (i = 0; i < list.length; i++) {
 		let tempLi = document.createElement("li");
@@ -54,7 +57,11 @@ function menuList(list, listName) {
 
 		tempBtn.classList.add("data-view-btn");
 		tempBtn.setAttribute("type", "button");
-		tempBtn.dataset.table = btnText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
+		if (btnText === "독일 3개월 채권 수익율") {
+			tempBtn.dataset.table = "germany3month채권수익율";
+		} else {
+			tempBtn.dataset.table = btnText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
+		}
 		tempBtn.innerText = btnText;
 		tempLi.append(tempBtn);
 
@@ -68,6 +75,7 @@ menuList(commodities, commoditiesListEl);
 menuList(ratesBonds, ratesBondsListEl);
 menuList(conins, coninsListEl);
 
+// 대분류 클릭 시 하위 메뉴 토글슬라이드
 const menuTitle = document.querySelectorAll(".menu-title");
 const menuIcon = document.querySelectorAll(".icon-span i");
 
@@ -83,6 +91,7 @@ menuTitle.forEach((el, idx) => {
 	});
 });
 
+// 메뉴 클릭 시 강조
 const menuBtn = document.querySelectorAll(".data-view-btn");
 const dataTitle = document.querySelector(".data-name");
 
@@ -96,3 +105,18 @@ menuBtn.forEach((btn) => {
 		dataTitle.innerText = btn.textContent;
 	});
 });
+
+// 날짜 관련
+const startDateInput = document.querySelector("#startDate");
+const endDateInput = document.querySelector("#endDate");
+let date = new Date();
+const TIME_ZONE = 3240 * 10000;
+const nowDate = new Date(+date + TIME_ZONE).toISOString().split("T")[0];
+
+date.setMonth(date.getMonth() - 1);
+const dateCalc = date.toISOString().split("T")[0];
+
+startDateInput.value = dateCalc;
+
+endDateInput.value = nowDate;
+endDateInput.setAttribute("max", nowDate);

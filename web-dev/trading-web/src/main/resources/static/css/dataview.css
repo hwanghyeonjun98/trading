@@ -1,13 +1,7 @@
 @charset "utf-8";
 
 .data-title {
-	border-bottom: 4px solid #333333;
-}
-
-table > thead {
-	position: sticky;
-	top: 74px;
-	left: 0;
+	border-bottom: 4px solid var(--color-block);
 }
 
 .data-menu .menu-area {
@@ -19,7 +13,7 @@ table > thead {
 	justify-content: space-between;
 	align-content: center;
 	padding: .6rem .6rem 0rem .6rem;
-	border-bottom: 1px solid #B2B2B2;
+	border-bottom: 1px solid var(--color-dark);
 	cursor: pointer;
 }
 
@@ -49,18 +43,38 @@ table > thead {
 
 .data-menu .menu-content ul li button {
 	padding: .4rem;
-	color: #BEAEE2;
-	border: 1px solid #BEAEE2;
+	color: var(--color-purple);
+	border: 1px solid var(--color-purple);
 	border-radius: 5px;
 }
 
 .data-menu .menu-content ul li button:hover,
-.data-menu .menu-content ul li button:focus,a
+.data-menu .menu-content ul li button:focus, a
 .data-menu .menu-content ul li button:active,
 .data-menu .menu-content ul li button.active {
-	color: #333;
-	background-color: #BEAEE2;
-	border: 1px solid #BEAEE2;
+	color: var(--color-block);
+	background-color: var(--color-purple);
+	border: 1px solid var(--color-purple);
+}
+
+table > thead {
+	position: sticky;
+	top: 74px;
+	left: 0;
+}
+
+table#data-table > tbody > tr > td:first-child {
+	text-align: center;
+}
+
+table#data-table > tbody > tr > td:not(:first-child) {
+	text-align: right;
 }
 
 
+@media screen and (min-width: 1024px) {
+	.sub-page {
+		width: 75%;
+		margin: 0 auto;
+	}
+}

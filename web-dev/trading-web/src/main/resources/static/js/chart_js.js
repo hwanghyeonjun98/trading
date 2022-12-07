@@ -1,11 +1,5 @@
 const options = {
-	series         : [{
-		name : "table",
-		data : [
-			["2022-01-01", 6593.34, 6600, 6582.63, 6600],
-			["2022-01-02", 6595.16, 6604.76, 6590.73, 6593.86]
-		]
-	}],
+	series         : [],
 	chart          : {
 		type : "candlestick", height : 350
 	}, title       : {
@@ -19,8 +13,8 @@ const options = {
 	}, plotOptions : {
 		candlestick : {
 			colors : {
-				upward: "#FF6B6B",
-				downward: "#4D96FF"
+				upward   : "#FF6B6B",
+				downward : "#4D96FF"
 			}
 		}
 	}
@@ -28,3 +22,18 @@ const options = {
 
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
 chart.render();
+
+// 기본 호출
+const defaulturl = "/api/data/chart/aedkrw내역";
+$.getJSON(defaulturl, function (response) {
+	let dataList = [];
+
+	response.forEach((item) => {
+		dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
+	});
+
+	chart.updateSeries([{
+		name : "table",
+		data : dataList
+	}]);
+});
