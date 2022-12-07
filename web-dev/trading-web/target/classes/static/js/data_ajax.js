@@ -1,12 +1,12 @@
 // 데이터 AJAX로 불러오기 JQUERY 문법 이용
 
-
 // 버튼 동적 바인딩
 $(document).on("click", ".data-view-btn", function () {
-	let startDate = $("#startDate").val();
-	let endDate = $("#endDate").val();
-	startDate = startDate.replaceAll("-", "");
-	endDate = endDate.replaceAll("-", "");
+	$("#startDate").val(dateCalc);
+	$("#endDate").val(nowDate);
+
+	const startDate = dateCalc.replaceAll("-", "");
+	const endDate = nowDate.replaceAll("-", "");
 
 	const tableName = $(this).data("table");
 	const ajaxUrl = "/api/data/" + tableName + "내역/" + startDate + "/" + endDate;

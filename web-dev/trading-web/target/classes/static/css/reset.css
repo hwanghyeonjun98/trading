@@ -3,12 +3,14 @@
 :root {
 	--color-block: #333;
 	--color-dark: #B2B2B2;
+	--color-gray: #EDEDED;
 	--color-purple: #BEAEE2;
 	--color-pink: #F7DBF0;
 	--color-blue: #4D96FF;
 	--color-red: #FF6B6Bl;
 	--color-yellow: #FFD93D;
 	--color-green: #6BCB77;
+	--color-dark-green: #519959;
 	--color-white: #F9F9F9;
 }
 

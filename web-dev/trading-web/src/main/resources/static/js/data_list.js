@@ -101,6 +101,7 @@ date.setMonth(date.getMonth() - 1);
 const dateCalc = date.toISOString().split("T")[0];
 
 startDateInput.value = dateCalc;
+console.log(dateCalc);
 
 endDateInput.value = nowDate;
 endDateInput.setAttribute("max", nowDate);

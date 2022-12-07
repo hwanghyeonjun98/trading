@@ -3,7 +3,6 @@ package com.big15.tradingweb.mapper;
 import com.big15.tradingweb.dto.InvestingDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 

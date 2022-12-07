@@ -1,14 +1,48 @@
 const options = {
 	series         : [],
 	chart          : {
-		type : "candlestick", height : 350
-	}, title       : {
-		text : "내역", align : "left"
+		type          : "candlestick",
+		height        : 350,
+		locales       : [{
+			"name"    : "ko",
+			"options" : {
+				"months"      : ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				"shortMonths" : ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				"days"        : ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+				"shortDays"   : ["일", "월", "화", "수", "목", "금", "토"],
+				"toolbar"     : {
+					"menu"          : "메뉴",
+					"selection"     : "영역선택",
+					"selectionZoom" : "선택 후 확제",
+					"zoomIn"        : "확대",
+					"zoomOut"       : "축소",
+					"pan"           : "이동",
+					"reset"         : "초기화"
+				}
+			}
+		}],
+		defaultLocale : "ko",
+		tools         : {
+			download : false,
+		}
+	}, tooltip     : {
+		enabled : true,
+		x       : {
+			show      : true,
+			format    : "MM월 dd일",
+		}
 	}, xaxis       : {
-		type : "datetime"
+		type   : "datetime",
+		labels : {
+			datetimeFormatter : {
+				year  : "yyyy년",
+				month : "MM월 dd일",
+				day   : "MM월 dd일"
+			}
+		}
 	}, yaxis       : {
 		tooltip : {
-			enabled : true
+			enabled : true,
 		}
 	}, plotOptions : {
 		candlestick : {
@@ -16,6 +50,13 @@ const options = {
 				upward   : "#FF6B6B",
 				downward : "#4D96FF"
 			}
+		}
+	}, noData      : {
+		text          : "데이터가 없습니다.",
+		align         : "center",
+		verticalAlign : "middle",
+		style         : {
+			fontSize : "2.4rem"
 		}
 	}
 };
@@ -37,3 +78,6 @@ $.getJSON(defaulturl, function (response) {
 		data : dataList
 	}]);
 });
+
+
+

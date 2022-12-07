@@ -87,44 +87,51 @@
 					<%-- 차트 영역 --%>
 					<div id="chart-area"></div>
 					<%-- 차트 영역 --%>
-					<div class="date-search-form">
+					<div class="date-search-form w-100 my-3">
 						<form name="dateSearchFrm" id="dateSearchFrm" method="post">
-							<label for="startDate">시작 날짜</label>
-							<input type="date" name="startDate" id="startDate" min="2020-01-01" max="">
-							<label for="endDate">끝 날짜</label>
-							<input type="date" name="endDate" id="endDate" max="" value="">
-							<button type="submit"><i class="bi bi-search"></i></button>
+							<div>
+								날짜 검섹 :
+							</div>
+							<div class="col-sm-2">
+								<label for="startDate" class="visually-hidden">시작 날짜</label>
+								<input type="date" name="startDate" id="startDate" class="form-control" min="2020-01-01">
+							</div>
+							<div class="col-sm-2">
+								<label for="endDate" class="visually-hidden">끝 날짜</label>
+								<input type="date" name="endDate" id="endDate" class="form-control" max="" value="">
+							</div>
+							<button type="submit" class="btn btn-outline-success btn-sm"><i class="bi bi-search"></i></button>
 						</form>
 					</div>
 					<%-- 데이터 영역 --%>
-					<table id="data-table" class="table table-hover table-striped position-relative" data-table="aedkrw">
+					<table id="data-table" class="table table-hover table-striped position-relative table-sort" data-table="aedkrw">
 						<thead class="table-secondary">
 							<tr>
-								<th class="dates">
+								<th id="dates" class="order-by-desc">
 									날짜
 									<button type="button" class="sort-btn sorted"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="closes">
+								<th id="closes" class="order-by-desc">
 									종가
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="opens">
+								<th id="opens" class="order-by-desc">
 									오픈
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="highs">
+								<th id="highs" class="order-by-desc">
 									고가
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="lows">
+								<th id="lows" class="order-by-desc">
 									저가
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="volumes">
+								<th id="volumes" class="order-by-desc">
 									거래량
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
-								<th class="changes">
+								<th id="changes" class="order-by-desc">
 									변동
 									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
 								</th>
@@ -145,9 +152,11 @@
 						</tbody>
 					</table>
 					<%-- 데이터 영역 --%>
-					<small>
-						데이터 출처 : investing
-					</small>
+					<p class="text-end">
+						<small>
+							데이터 출처 : investing
+						</small>
+					</p>
 				</article>
 			</section>
 		</main>
@@ -162,6 +171,6 @@
 	<script src="/js/data_list.js"></script>
 	<script src="/js/chart_js.js"></script>
 	<script src="/js/data_ajax.js"></script>
-	<script src="/js/data_sort.js"></script>
+	<script src="/js/table-sort.js"></script>
 </body>
 </html>
