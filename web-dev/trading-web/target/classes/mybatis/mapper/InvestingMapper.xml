@@ -8,13 +8,6 @@
 		ORDER BY dates desc
 	</select>
 
-	<select id="investingSortList" resultType="com.big15.tradingweb.dto.InvestingDto">
-		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates,closes, opens, highs, lows, volumes, changes
-		FROM ${names}
-		WHERE dates between #{startDate} AND #{endDate}
-		ORDER BY ${base} ${sorts}
-	</select>
-
 	<select id="investingDateSearchList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes, opens, highs, lows, volumes, changes
 		FROM ${names}
