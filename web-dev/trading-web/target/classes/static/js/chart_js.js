@@ -29,7 +29,7 @@ const options = {
 		enabled : true,
 		x       : {
 			show      : true,
-			format    : "MM월 dd일",
+			format    : "MM/dd",
 		}
 	}, xaxis       : {
 		type   : "datetime",
