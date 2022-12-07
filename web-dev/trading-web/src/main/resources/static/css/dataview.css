@@ -1,7 +1,91 @@
 @charset "utf-8";
 
+.data-title {
+	border-bottom: 4px solid var(--color-block);
+}
+
+.data-menu .menu-area {
+	margin-bottom: .8rem;
+}
+
+.data-menu .menu-title {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	padding: .6rem .6rem 0rem .6rem;
+	border-bottom: 1px solid var(--color-dark);
+	cursor: pointer;
+}
+
+.data-menu .menu-title:hover {
+	background-color: var(--color-gray);
+}
+
+.data-menu .menu-title .icon-span i {
+	font-size: 1.5rem;
+}
+
+.data-menu .menu-title + .menu-content {
+	max-height: 0;
+	overflow: scroll;
+	transition: max-height .4s ease-in-out;
+}
+
+.data-menu .menu-title.active + .menu-content {
+	max-height: 100px;
+}
+
+.data-menu .menu-content ul {
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	gap: .8rem;
+	padding: 0;
+	margin-top: .6rem;
+}
+
+.data-menu .menu-content ul li button {
+	padding: .4rem;
+	color: var(--color-purple);
+	border: 1px solid var(--color-purple);
+	border-radius: 5px;
+}
+
+.data-menu .menu-content ul li button:hover,
+.data-menu .menu-content ul li button:focus, a
+.data-menu .menu-content ul li button:active,
+.data-menu .menu-content ul li button.active {
+	color: var(--color-block);
+	background-color: var(--color-purple);
+	border: 1px solid var(--color-purple);
+}
+
+#dateSearchFrm {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: .8rem;
+}
+
 table > thead {
 	position: sticky;
-	top: 0;
+	top: 74px;
 	left: 0;
+}
+
+table#data-table > tbody > tr > td:first-child {
+	text-align: center;
+}
+
+table#data-table > tbody > tr > td:not(:first-child) {
+	text-align: right;
+}
+
+
+@media screen and (min-width: 1024px) {
+	.sub-page {
+		width: 75%;
+		margin: 0 auto;
+	}
 }

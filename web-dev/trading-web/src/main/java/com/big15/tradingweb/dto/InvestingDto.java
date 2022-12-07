@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class InvestingDto {
     private String dates;
-    private double closes;
-    private double opens;
-    private double highs;
-    private double lows;
-    private double volumes;
+    private String closes;
+    private String opens;
+    private String highs;
+    private String lows;
+    private String volumes;
     private double changes;
 }
 
