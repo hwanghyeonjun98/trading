@@ -1,0 +1,89 @@
+@charset "utf-8";
+
+.search-bar-content{
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 6px 0;
+}
+.search-bar-content textarea {
+	font-size: 18px;
+	width: 100%;
+	border-radius: 8px;
+	min-height: 52px;
+	color: #575c66;
+	background: #fff;
+	border: 1px solid #188bff;
+	outline-width: 0;
+	height: 52px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 10px 56px;
+	resize: none;
+}
+.keyword.item {
+	background: #f0f3fa;
+	border-radius: 4px;
+	padding: 8px 16px;
+	margin-bottom: 40px;
+	margin-right: 30px;
+}
+.icon-search{
+	margin-right: 10px;
+}
+.titlecu{
+	margin-bottom: 30px;
+	margin-top: 20px;
+}
+.main_title{
+	margin: 10px;
+	border: 1px solid #e9edf5;
+	padding: 20px;	
+	background-color: palevioletred;
+}
+.economic-indicator {
+	margin: 35px;
+	border: 1px solid #e9edf5;
+	padding: 35px;
+	float: left;	
+}
+.main-value{
+	font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.indicator-name{
+	font-size: 25px;
+    line-height: 24px;
+    font-weight: 400;
+    padding: 10px 0;
+    margin-bottom: 8px;
+}
+.change-rate_neg{
+
+    margin-bottom: 8px;
+	color: #188bff;
+}
+.change-rate_pos{
+
+    margin-bottom: 8px;
+	color: red;
+}
+.chartFrame{
+	float: right;
+	margin: 15px;
+	padding: 20px;
+	border: 1px solid #6aaa35b7;
+}
+.aside_area_aside_popular{
+	float: right;
+}
+.banner{
+	text-align: center;
+}
+.h_popular{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
