@@ -1,6 +1,7 @@
 # selenium_crawling.py
 
 import time
+from tqdm import tqdm
 from datetime import datetime
 from datetime import timedelta
 
@@ -103,7 +104,7 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 	suffix_ = suffix
 
 	# 셀리움 실행 코드
-	for name in names:
+	for name in tqdm(names):
 		name_ = name.lower()
 		try:
 			url = f'https://kr.investing.com/{middel_url}/{name_}{suffix_}-historical-data'
@@ -121,7 +122,7 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
-			time.sleep(8)
+			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -142,7 +143,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 	suffix_ = suffix
 
 	# 셀리움 실행 코드
-	for idx, name in enumerate(names):
+	for idx, name in enumerate(tqdm(names)):
 		name_ = name.lower()
 		try:
 			url = f'https://kr.investing.com/{middel_url}/{name_}{suffix_}-historical-data'
@@ -153,9 +154,12 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			urlopen(req)
 			time.sleep(5)
 
-			# allow_modal = driver.find_element(By.CSS_SELECTOR, modal)
-			# if allow_modal and allow_modal.is_displayed():
-			# 	driver.find_element(By.XPATH, modal_close).click()
+			try:
+				allow_modal = driver.find_element(By.CSS_SELECTOR, modal)
+				if allow_modal.is_displayed():
+					driver.find_element(By.XPATH, modal_close).click()
+			except:
+				pass
 
 			driver.find_element(By.CSS_SELECTOR, calender_new_btn).click()
 			driver.find_element(By.CSS_SELECTOR, start_year_new_input).clear()
@@ -163,7 +167,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
-			time.sleep(8)
+			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -197,7 +201,7 @@ def investing_coins(coins: list, start_date: str, driver: webdriver) -> None:
 			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CLASS_NAME, apply_btn).click()
-			time.sleep(8)
+			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
