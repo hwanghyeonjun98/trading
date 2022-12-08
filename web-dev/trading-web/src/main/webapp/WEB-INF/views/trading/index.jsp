@@ -26,8 +26,6 @@
 						</div>
 						<textarea autocomplete="off" id="search-input" placeholder="환율이 궁금한 국가를 검색하세요!" class="" spellcheck="false" style="height: 50px;"></textarea>
 						<div class="clear-wrapper">
-						<textarea autocomplete="off" id="search-input" placeholder="검색어를 입력해 주세요." class="" spellcheck="false" style="height: 50px;"></textarea>
-						<div class="clear-wrapper">
 						</div>
 					</div>
 					<div class="recommendation-keywords-container">
