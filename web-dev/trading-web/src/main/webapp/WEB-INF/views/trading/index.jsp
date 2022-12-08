@@ -2,110 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="ko">
-
-<<<<<<< HEAD
-<link rel="stylesheet" href="/css/index.css">
-=======
-<style>
-	.search-bar-content {
-		position: relative;
-		display: flex;
-		align-items: center;
-		padding: 6px 0;
-	}
-
-	.search-bar-content textarea {
-		font-size: 18px;
-		width: 100%;
-		border-radius: 8px;
-		min-height: 52px;
-		color: #575c66;
-		background: #fff;
-		border: 1px solid #188bff;
-		outline-width: 0;
-		height: 52px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding: 10px 56px;
-		resize: none;
-	}
-
-	.keyword.item {
-		background: #f0f3fa;
-		border-radius: 4px;
-		padding: 8px 16px;
-		margin-bottom: 18px;
-	}
-
-	.titlecu {
-		margin-bottom: 18px;
-	}
-
-	.main_title {
-		margin: 10px;
-		border: 1px solid #e9edf5;
-		padding: 20px;
-		background-color: palevioletred;
-	}
-
-	.economic-indicator {
-		margin: 35px;
-		border: 1px solid #e9edf5;
-		padding: 35px;
-		float: left;
-	}
-
-	.main-value {
-		font-size: 20px;
-		line-height: 30px;
-		font-weight: 700;
-		margin-bottom: 8px;
-	}
-
-	.indicator-name {
-		font-size: 25px;
-		line-height: 24px;
-		font-weight: 400;
-		padding: 10px 0;
-		margin-bottom: 8px;
-	}
-
-	.change-rate_neg {
-
-		margin-bottom: 8px;
-		color: #188bff;
-	}
-
-	.change-rate_pos {
-
-		margin-bottom: 8px;
-		color: red;
-	}
-
-	.chartFrame {
-		float: right;
-		margin: 5px;
-		padding: 5px;
-		border: 1px solid #6aaa35b7;
-	}
-
-	.aside_area_aside_popular {
-		float: right;
-	}
-
-	.banner {
-		text-align: center;
-	}
-
-
-</style>
->>>>>>> 62023e74e692170a3ac253004d9e354d6eca86f2
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>트레이딩</title>
 	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
+	<link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 	<div class="background-wrap">
@@ -121,13 +24,10 @@
 								</svg>
 							</div>
 						</div>
-<<<<<<< HEAD
 						<textarea autocomplete="off" id="search-input" placeholder="환율이 궁금한 국가를 검색하세요!" class="" spellcheck="false" style="height: 50px;"></textarea>
-						<div class="clear-wrapper">	
-=======
+						<div class="clear-wrapper">
 						<textarea autocomplete="off" id="search-input" placeholder="검색어를 입력해 주세요." class="" spellcheck="false" style="height: 50px;"></textarea>
 						<div class="clear-wrapper">
->>>>>>> 62023e74e692170a3ac253004d9e354d6eca86f2
 						</div>
 					</div>
 					<div class="recommendation-keywords-container">
@@ -252,7 +152,6 @@
 										<path fill="none" d="M 1 40.5 L 298 40.5" stroke="#ececec" stroke-width="1" zIndex="1" opacity="1"></path>
 										<path fill="none" d="M 1 3.5 L 298 3.5" stroke="#ececec" stroke-width="1" zIndex="1" opacity="1"></path>
 										<path fill="none" d="M 1 77.5 L 298 77.5" stroke="#ececec" stroke-width="1" zIndex="1" opacity="1"></path>
-<<<<<<< HEAD
 										<path fill="none" d="M 1 150.5 L 298 150.5" stroke="#ececec" stroke-width="1" zIndex="1" opacity="1"></path></g><g class="highcharts-axis" zIndex="2"></g>
 										<path fill="none" d="M 267.5 0 L 267.5 150" stroke="#C0C0C0" stroke-width="1" zIndex="2" visibility="hidden"></path>
 										<path fill="none" d="M 1 37.5 L 298 37.5" stroke="#C0C0C0" stroke-width="1" zIndex="2" visibility="hidden"></path>
@@ -288,8 +187,6 @@
 														 </tbody> 
 														</table>  
 													   </div>
-													
-=======
 										<path fill="none" d="M 1 150.5 L 298 150.5" stroke="#ececec" stroke-width="1" zIndex="1" opacity="1"></path>
 									</g>
 									<g class="highcharts-axis" zIndex="2"></g>
@@ -354,9 +251,6 @@
 							</div>
 						</div>
 						<div id="quotesBoxChartLoading" class="loading-responsive medium-circle" style="display: none;"></div>
-
-
->>>>>>> 62023e74e692170a3ac253004d9e354d6eca86f2
 					</div>
 
 					<div id="chart-area">
