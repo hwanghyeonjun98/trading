@@ -179,7 +179,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
 			driver.implicitly_wait(5)
 			driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
-			time.sleep(6)
+			time.sleep(10)
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
