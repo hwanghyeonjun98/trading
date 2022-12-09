@@ -12,9 +12,9 @@
 	width: 100%;
 	border-radius: 8px;
 	min-height: 52px;
-	color: #575c66;
-	background: #fff;
-	border: 1px solid #188bff;
+	color: var(--color-block);
+	background: var(--color-gray);
+	border: 1px solid var(--color-blue);
 	outline-width: 0;
 	height: 52px;
 	overflow: hidden;
@@ -24,7 +24,7 @@
 }
 
 .keyword.item {
-	background: #f0f3fa;
+	background: var(--color-gray);
 	border-radius: 4px;
 	padding: 8px 16px;
 	margin-bottom: 40px;
@@ -42,14 +42,14 @@
 
 .main_title {
 	margin: 10px;
-	border: 1px solid #e9edf5;
+	border: 1px solid var(--color-gray);
 	padding: 20px;
-	background-color: palevioletred;
+	background-color: var(--color-pink);
 }
 
 .economic-indicator {
 	margin: 35px;
-	border: 1px solid #e9edf5;
+	border: 1px solid var(--color-gray);;
 	padding: 35px;
 	float: left;
 }
@@ -72,20 +72,20 @@
 .change-rate_neg {
 
 	margin-bottom: 8px;
-	color: #188bff;
+	color: var(--color-blue);
 }
 
 .change-rate_pos {
 
 	margin-bottom: 8px;
-	color: red;
+	color: var(--color-red);
 }
 
 .chartFrame {
 	float: right;
 	margin: 15px;
-	padding: 20px;
-	border: 1px solid #6aaa35b7;
+	padding: 15px;
+	border: 1px solid var(--color-dark-green);
 }
 
 .aside_area_aside_popular {
