@@ -1,5 +1,4 @@
 # df_format_change.py
-import time
 
 from tqdm import tqdm
 
@@ -22,7 +21,6 @@ from unicodedata import normalize
 # file_list, file_names list, tuple로 반환
 def file_name_list(path: str, file_extension: str) -> tuple:
 	file_names = []
-	org_file_names = []
 
 	file_list = glob.glob(path + '/*.' + file_extension)
 
@@ -32,10 +30,6 @@ def file_name_list(path: str, file_extension: str) -> tuple:
 			name = file_name.replace(' ', '').replace('_', '').replace('&', '')
 			normalize_name = normalize('NFC', name)
 			file_names.append(normalize_name)
-
-			org_name = file.split('/')[-1].split('.')[0].replace(' 내역', '').replace('_', ' ')
-			org_normalize_name = normalize('NFC', org_name)
-			org_file_names.append(org_normalize_name)
 		except:
 			pass
 
