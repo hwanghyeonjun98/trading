@@ -2,7 +2,6 @@ package com.big15.tradingweb.controller;
 
 import com.big15.tradingweb.dto.InvestingDto;
 import com.big15.tradingweb.mapper.InvestingMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +35,11 @@ public class TradingController {
 		return "index";
 	}
 
-	@GetMapping("/dataview/dataview")
+	@GetMapping("/dataview/data")
 	public String dataView(Model model) {
 		List<InvestingDto> defaultData = mapper.dataList();
 		model.addAttribute("defaultData", defaultData);
-		return "/dataview/dataview";
+		return "data";
 	}
 
 }

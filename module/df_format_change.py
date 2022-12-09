@@ -1,5 +1,4 @@
 # df_format_change.py
-import time
 
 from tqdm import tqdm
 

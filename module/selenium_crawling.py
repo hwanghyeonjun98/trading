@@ -34,9 +34,9 @@ def selenium_driver_load(driver_path: str, url: str, file_save_path: str) -> web
 	)
 
 	# 크롬창 안열고 크롤링 설정
-	options.add_argument('headless')
-	options.add_argument('window-size=1920x1080')
-	options.add_argument("disable-gpu")
+	# options.add_argument('headless')
+	# options.add_argument('window-size=1920x1080')
+	# options.add_argument("disable-gpu")
 
 	# user agent 설정
 	user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
@@ -100,7 +100,7 @@ def day_calc(num: int) -> str:
 # names : 세부 URL
 # start_date : 시작 날짜
 # driver : selenium_driver_load 반환값
-def investing_crawling(middel_url: str, names: list, start_date: str, driver: webdriver, new_data: str, suffix='') -> None:
+def investing_crawling(middel_url: str, names: list, start_date: str, driver: webdriver, suffix='', new_data='') -> None:
 	print(middel_url + '크롤링 시작')
 	start_date = start_date
 	calender_btn = '.DatePickerWrapper_icon-wrap__cwTu_'
@@ -130,17 +130,18 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 				driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 				driver.implicitly_wait(5)
 				driver.find_element(By.CLASS_NAME, apply_btn).click()
-				time.sleep(6)
 			else:
 				pass
+			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
+			driver.save_screenshot('./image.png')
 			pass
 
 
 # 인베스팅 새 버전 페이지 크롤링
-def investing_crawling_new(middel_url: str, names: list, start_date: str, driver: webdriver, new_data: str,suffix='') -> None:
+def investing_crawling_new(middel_url: str, names: list, start_date: str, driver: webdriver, new_data='', suffix='') -> None:
 	print(middel_url + '크롤링 시작')
 	start_date = start_date
 	calender_new_btn = '#flatDatePickerCanvasHol #datePickerIconWrap'
@@ -180,12 +181,13 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 				driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
 				driver.implicitly_wait(5)
 				driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
-				time.sleep(10)
 			else:
 				pass
+			time.sleep(10)
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
+			driver.save_screenshot('./image.png')
 			pass
 
 
@@ -194,7 +196,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 # coins : 2차원 배열
 # start_date : 시작 날짜
 # driver : selenium_driver_load 반환값
-def investing_coins(coins: list, start_date: str, driver: webdriver, new_data: str) -> None:
+def investing_coins(coins: list, start_date: str, driver: webdriver, new_data='') -> None:
 	print(str(coins) + '크롤링 시작')
 	start_date = start_date
 	calender_btn = '.DatePickerWrapper_icon-wrap__cwTu_'
@@ -218,12 +220,13 @@ def investing_coins(coins: list, start_date: str, driver: webdriver, new_data: s
 				driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 				driver.implicitly_wait(5)
 				driver.find_element(By.CLASS_NAME, apply_btn).click()
-				time.sleep(6)
 			else:
 				pass
+			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
+			driver.save_screenshot('./image.png')
 			pass
 
 
