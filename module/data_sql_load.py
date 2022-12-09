@@ -1,7 +1,4 @@
-# sql_save.py
-
-import numpy as np
-import pandas as pd
+# data_sql_load.py
 
 from tqdm import tqdm
 
@@ -35,18 +32,46 @@ def df_sql_save(user: str, password: str, host: str, port: str, db: str, df_list
 
 
 # 최신 데이터 SQL 저장
-# if_exists='append' 기존 테이블에 마지막 행에 추가 됨
-def new_data_sql_save(user: str, password: str, host: str, port: str, db: str, df_list: list, file_names: list, if_exists='append') -> None:
-	engine = create_engine(
-		"mysql+pymysql://{user}:{password}@{host}:{port}/{db}?charset=utf8".format(
-			user=user, password=password, host=host, port=port, db=db
-		)
-		, encoding='utf8'
+# 기본 데이터가 없으면 insert, 있으면 update
+def sql_update(user: str, password: str, host: str, db: str, df_list: list, file_names: list) -> None:
+	pymysql.install_as_MySQLdb()
+	conn = pymysql.connect(
+		host=host
+		, user=user
+		, password=password
+		, db=db
+		, charset='utf8'
 	)
 
-	for idx, df in enumerate(df_list):
-		try:
-			last_df = df.iloc[-1:, :]
-			last_df.to_sql(name=file_names[idx], con=engine, if_exists=if_exists, index=False)
-		except:
-			pass
+	cursor = conn.cursor()
+	print('=' * 100)
+	for idx, df in enumerate(tqdm(df_list)):
+		table_name = file_names[idx]
+		args = df.values.tolist()
+
+		col1 = df.columns[0]
+		col2 = df.columns[1]
+		col3 = df.columns[2]
+		col4 = df.columns[3]
+		col5 = df.columns[4]
+		col6 = df.columns[5]
+		col7 = df.columns[6]
+
+		sql_update = f"""
+		INSERT INTO {table_name}
+		VALUES (%s,%s,%s,%s,%s,%s,%s)
+		ON DUPLICATE KEY UPDATE
+			`{col1}` = VALUES(`{col1}`)
+			,`{col2}` = VALUES(`{col2}`)
+			,`{col3}` = VALUES(`{col3}`)
+			,`{col4}` = VALUES(`{col4}`)
+			,`{col5}` = VALUES(`{col5}`)
+			,`{col6}` = VALUES(`{col6}`)
+			,`{col7}` = VALUES(`{col7}`)
+		"""
+		print(table_name)
+		print(str(df.columns.tolist()), '\n', "=" * 100)
+		cursor.executemany(sql_update, args)
+
+	conn.commit()
+	conn.close()

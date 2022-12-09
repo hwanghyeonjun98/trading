@@ -8,9 +8,6 @@ from datetime import timedelta
 # 셀리움 import
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 # bs4 / 404 해결
 import urllib.request
@@ -103,7 +100,7 @@ def day_calc(num: int) -> str:
 # names : 세부 URL
 # start_date : 시작 날짜
 # driver : selenium_driver_load 반환값
-def investing_crawling(middel_url: str, names: list, start_date: str, driver: webdriver, suffix='') -> None:
+def investing_crawling(middel_url: str, names: list, start_date: str, driver: webdriver, new_data: str, suffix='') -> None:
 	print(middel_url + '크롤링 시작')
 	start_date = start_date
 	calender_btn = '.DatePickerWrapper_icon-wrap__cwTu_'
@@ -126,13 +123,16 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			time.sleep(5)
 
 			driver.execute_script('window.scrollTo(0, 320)')
-			driver.find_element(By.CSS_SELECTOR, calender_btn).click()
-			driver.implicitly_wait(5)
-			driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
-			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
-			driver.implicitly_wait(5)
-			driver.find_element(By.CLASS_NAME, apply_btn).click()
-			time.sleep(6)
+			if new_data:
+				driver.find_element(By.CSS_SELECTOR, calender_btn).click()
+				driver.implicitly_wait(5)
+				driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
+				driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
+				driver.implicitly_wait(5)
+				driver.find_element(By.CLASS_NAME, apply_btn).click()
+				time.sleep(6)
+			else:
+				pass
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -140,7 +140,7 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 
 
 # 인베스팅 새 버전 페이지 크롤링
-def investing_crawling_new(middel_url: str, names: list, start_date: str, driver: webdriver, suffix='') -> None:
+def investing_crawling_new(middel_url: str, names: list, start_date: str, driver: webdriver, new_data: str,suffix='') -> None:
 	print(middel_url + '크롤링 시작')
 	start_date = start_date
 	calender_new_btn = '#flatDatePickerCanvasHol #datePickerIconWrap'
@@ -173,13 +173,16 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 				pass
 
 			driver.execute_script('window.scrollTo(0, 320)')
-			driver.find_element(By.CSS_SELECTOR, calender_new_btn).click()
-			driver.find_element(By.CSS_SELECTOR, start_year_new_input).clear()
-			driver.implicitly_wait(1)
-			driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
-			driver.implicitly_wait(5)
-			driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
-			time.sleep(10)
+			if new_data:
+				driver.find_element(By.CSS_SELECTOR, calender_new_btn).click()
+				driver.find_element(By.CSS_SELECTOR, start_year_new_input).clear()
+				driver.implicitly_wait(1)
+				driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
+				driver.implicitly_wait(5)
+				driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
+				time.sleep(10)
+			else:
+				pass
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -191,7 +194,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 # coins : 2차원 배열
 # start_date : 시작 날짜
 # driver : selenium_driver_load 반환값
-def investing_coins(coins: list, start_date: str, driver: webdriver) -> None:
+def investing_coins(coins: list, start_date: str, driver: webdriver, new_data: str) -> None:
 	print(str(coins) + '크롤링 시작')
 	start_date = start_date
 	calender_btn = '.DatePickerWrapper_icon-wrap__cwTu_'
@@ -208,13 +211,16 @@ def investing_coins(coins: list, start_date: str, driver: webdriver) -> None:
 			req = urllib.request.Request(url, headers=headers)
 			urlopen(req)
 			time.sleep(5)
-			driver.find_element(By.CSS_SELECTOR, calender_btn).click()
-			driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
-			driver.implicitly_wait(1)
-			driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
-			driver.implicitly_wait(5)
-			driver.find_element(By.CLASS_NAME, apply_btn).click()
-			time.sleep(6)
+			if new_data:
+				driver.find_element(By.CSS_SELECTOR, calender_btn).click()
+				driver.find_element(By.CSS_SELECTOR, start_year_input).clear()
+				driver.implicitly_wait(1)
+				driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
+				driver.implicitly_wait(5)
+				driver.find_element(By.CLASS_NAME, apply_btn).click()
+				time.sleep(6)
+			else:
+				pass
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:

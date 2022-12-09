@@ -32,7 +32,7 @@
 }
 
 .data-menu .menu-title.active + .menu-content {
-	max-height: 100px;
+	max-height: 120px;
 }
 
 .data-menu .menu-content ul {
