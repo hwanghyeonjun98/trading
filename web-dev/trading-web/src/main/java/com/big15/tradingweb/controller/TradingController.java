@@ -39,7 +39,7 @@ public class TradingController {
 	public String dataView(Model model) {
 		List<InvestingDto> defaultData = mapper.dataList();
 		model.addAttribute("defaultData", defaultData);
-		return "data";
+		return "/dataview/data";
 	}
 
 }

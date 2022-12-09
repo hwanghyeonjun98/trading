@@ -44,7 +44,6 @@ def sql_update(user: str, password: str, host: str, db: str, df_list: list, file
 	)
 
 	cursor = conn.cursor()
-	print('=' * 100)
 	for idx, df in enumerate(tqdm(df_list)):
 		table_name = file_names[idx]
 		args = df.values.tolist()
@@ -69,8 +68,6 @@ def sql_update(user: str, password: str, host: str, db: str, df_list: list, file
 			,`{col6}` = VALUES(`{col6}`)
 			,`{col7}` = VALUES(`{col7}`)
 		"""
-		print(table_name)
-		print(str(df.columns.tolist()), '\n', "=" * 100)
 		cursor.executemany(sql_update, args)
 
 	conn.commit()
