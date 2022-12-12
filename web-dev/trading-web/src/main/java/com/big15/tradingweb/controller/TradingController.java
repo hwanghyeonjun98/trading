@@ -39,6 +39,11 @@ public class TradingController {
 		return "index";
 	}
 
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+
 	@GetMapping("/dataview/data")
 	public String dataDefultList(Model model) {
 		List<InvestingDto> defaultData = mapper.dataDefultList();
