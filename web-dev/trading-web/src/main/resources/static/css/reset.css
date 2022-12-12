@@ -19,6 +19,7 @@ ul, ol {
 }
 
 button {
+	color: var(--color-block);
 	background: transparent;
 	border: 0;
 }

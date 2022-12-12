@@ -104,53 +104,56 @@
 						</form>
 					</div>
 					<%-- 데이터 영역 --%>
-					<table id="data-table" class="table table-hover table-striped position-relative table-sort" data-table="aedkrw">
-						<thead class="table-secondary">
-							<tr>
-								<th id="dates" class="order-by-desc">
-									날짜
-									<button type="button" class="sort-btn sorted"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-								<th id="closes" class="order-by-desc">
-									종가
-									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-								<th id="opens" class="order-by-desc">
-									오픈
-									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-								<th id="highs" class="order-by-desc">
-									고가
-									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-								<th id="lows" class="order-by-desc">
-									저가
-									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-								<th id="volumes" class="order-by-desc">
-									거래량
-									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-								<th id="changes" class="order-by-desc">
-									변동
-									<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${dataList}" var="dataList">
+					<p class="text-end mobile-show"><b><i class="bi bi-arrow-left-right"></i> 옆으로 스크롤</b></p>
+					<div class="table-wrap">
+						<table id="data-table" class="table table-hover table-striped table-sort" data-table="aedkrw">
+							<thead class="table-secondary">
 								<tr>
-									<td>${dataList.dates}</td>
-									<td>${dataList.closes}</td>
-									<td>${dataList.opens}</td>
-									<td>${dataList.highs}</td>
-									<td>${dataList.lows}</td>
-									<td>${dataList.volumes}</td>
-									<td>${dataList.changes}%</td>
+									<th id="dates" class="order-by-desc">
+										날짜
+										<button type="button" class="sort-btn sorted"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
+									<th id="closes" class="order-by-desc">
+										종가
+										<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
+									<th id="opens" class="order-by-desc">
+										오픈
+										<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
+									<th id="highs" class="order-by-desc">
+										고가
+										<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
+									<th id="lows" class="order-by-desc">
+										저가
+										<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
+									<th id="volumes" class="order-by-desc">
+										거래량
+										<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
+									<th id="changes" class="order-by-desc">
+										변동
+										<button type="button" class="sort-btn"><i class="bi bi-arrow-down-up"></i></button>
+									</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach items="${dataList}" var="dataList">
+									<tr>
+										<td>${dataList.dates}</td>
+										<td>${dataList.closes}</td>
+										<td>${dataList.opens}</td>
+										<td>${dataList.highs}</td>
+										<td>${dataList.lows}</td>
+										<td>${dataList.volumes}</td>
+										<td>${dataList.changes}%</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 					<%-- 데이터 영역 --%>
 					<p class="text-end">
 						<small>

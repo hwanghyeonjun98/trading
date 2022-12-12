@@ -22,14 +22,17 @@ const options = {
 			}
 		}],
 		defaultLocale : "ko",
-		tools         : {
-			download : false,
+		toolbar       : {
+			tools : {
+				download : false,
+				reset: '<i class="bi bi-arrow-counterclockwise" style="font-size:20px;"></i>'
+			}
 		}
 	}, tooltip     : {
 		enabled : true,
 		x       : {
-			show      : true,
-			format    : "MM/dd",
+			show   : true,
+			format : "MM/dd",
 		}
 	}, xaxis       : {
 		type   : "datetime",
