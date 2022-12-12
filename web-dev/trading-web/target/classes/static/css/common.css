@@ -101,6 +101,7 @@ table thead tr th {
 	}
 
 	nav .header-menu-btn {
+		width: 40px;
 		font-size: 1.6rem;
 	}
 

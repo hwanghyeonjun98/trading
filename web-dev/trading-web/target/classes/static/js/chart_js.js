@@ -25,7 +25,7 @@ const options = {
 		toolbar       : {
 			tools : {
 				download : false,
-				reset: '<i class="bi bi-arrow-counterclockwise" style="font-size:20px;"></i>'
+				reset    : "<i class=\"bi bi-arrow-counterclockwise\" style=\"font-size:20px;\"></i>"
 			}
 		}
 	}, tooltip     : {
@@ -35,8 +35,9 @@ const options = {
 			format : "MM/dd",
 		}
 	}, xaxis       : {
-		type   : "datetime",
-		labels : {
+		type          : "datetime",
+		tickPlacement : "on",
+		labels        : {
 			datetimeFormatter : {
 				year  : "yyyy년",
 				month : "MM월 dd일",

@@ -41,15 +41,20 @@
 	align-items: flex-start;
 	flex-wrap: wrap;
 	gap: .8rem;
-	padding: 0;
+	padding: 0 .8rem;
 	margin-top: .6rem;
+}
+.data-menu .menu-content ul li {
+	min-width: calc(100% / 12);
 }
 
 .data-menu .menu-content ul li .data-view-btn {
+	width: 100%;
 	padding: .4rem;
 	color: var(--color-purple);
 	border: 1px solid var(--color-purple);
 	border-radius: 5px;
+	text-align: center;
 }
 
 .data-menu .menu-content ul li .data-view-btn:hover,
