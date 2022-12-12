@@ -15,5 +15,9 @@ public interface InvestingMapper {
 
 	List<InvestingDto> investingDateSearchList(@Param("names") String names, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
-	List<InvestingDto> dataList();
+	List<InvestingDto> dataDefultList();
+
+	List<InvestingDto> dataList(@Param("names") String names);
+
+	List<InvestingDto> kospiChartList();
 }

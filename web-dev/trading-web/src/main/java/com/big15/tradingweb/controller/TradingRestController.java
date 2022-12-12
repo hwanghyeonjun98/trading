@@ -31,5 +31,9 @@ public class TradingRestController {
 		return mapper.chartList(names);
 	}
 
+	@RequestMapping("/api/data/chart/kospi")
+	public List<InvestingDto> kospiChartList() {
+		return mapper.kospiChartList();
+	}
 
 }
