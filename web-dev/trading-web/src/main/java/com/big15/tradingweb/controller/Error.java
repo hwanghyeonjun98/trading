@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-
 // 에러 처리 컨트롤러
 @Controller
 public class Error implements ErrorController {

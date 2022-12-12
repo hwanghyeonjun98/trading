@@ -34,4 +34,10 @@
 		WHERE dates between DATE_FORMAT(CURRENT_DATE() - interval 1 month, '%Y%m%d') AND DATE_FORMAT(CURDATE(), '%Y%m%d')
 		ORDER BY dates desc
 	</select>
+
+	<select id="kospiChartList" resultType="com.big15.tradingweb.dto.InvestingDto">
+		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes
+		FROM 코스피지수내역
+		ORDER BY dates asc
+	</select>
 </mapper>
