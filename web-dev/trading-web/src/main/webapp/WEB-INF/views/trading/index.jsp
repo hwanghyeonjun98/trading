@@ -21,85 +21,82 @@
 						</div>
 					</div>
 					<div class="recommendation-keywords-container">
-						<div class="titlecu">환율 검색 추천</div>
+						<div class="titlecu"><h2>환율 검색 추천</h2></div>
 						<div class="keywords-container-wrapper">
 							<div class="keywords-contents">
+								<a href="/dataview/data/caddkrw">
+									<div class="keyword item">CAD/KRW</div>
+								</a>
+								<a href="/dataview/data/chfkrw">
+									<div class="keyword item">CHF/KRW</div>
+								</a>
+								<a href="/dataview/data/cnykrw">
+									<div class="keyword item">CNY/KRW</div>
+								</a>
+								<a href="/dataview/data/dkkkrw">
+									<div class="keyword item">DKK/KRW</div>
+								</a>
+								<a href="/dataview/data/eurkrw">
+									<div class="keyword item">EUR/KRW</div>
+								</a>
+								<a href="/dataview/data/gbpkrw">
+									<div class="keyword item">GBP/KRWS</div>
+								</a>
+								<a href="/dataview/data/hkdkrw">
+									<div class="keyword item">HKD/KRW</div>
+								</a>
+								<a href="/dataview/data/idrkrw">
+									<div class="keyword item">IDR/KRW</div>
+								</a>
+								<a href="/dataview/data/jpykrw">
+									<div class="keyword item">JPY/KRW</div>
+								</a>
+								<a href="/dataview/data/sgdkrw">
+									<div class="keyword item">SGD/KRW</div>
+								</a>
+								<a href="/dataview/data/thbkrw">
+									<div class="keyword item">THB/KRW</div>
+								</a>
 								<a href="/dataview/data/usdkrw">
-									<div class="keyword item">미국 USD</div>
-								</a>
-								<a href="/analytics/compute?input=%EA%B3%A0%EB%B0%B0%EB%8B%B9%20%EA%B4%80%EB%A0%A8%20%EA%B8%B0%EC%97%85%20and%20(%EC%83%81%EC%9E%A5%20%EA%B8%B0%EC%97%85)&amp;avds=false">
-									<div class="keyword item">유럽연합 EUR</div>
-								</a>
-								<a href="/analytics/compute?input=%22*K641*%22%20%EC%82%B0%EC%97%85%20%EA%B8%B0%EC%97%85%20and%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%3E%2010000000000&amp;avds=false">
-									<div class="keyword item">일본 JPY (100엔)</div>
-								</a>
-								<a href="/analytics/compute?input=%EB%82%98%EC%9D%B4%EC%8A%A4%ED%8F%89%EA%B0%80%EC%A0%95%EB%B3%B4%20%EC%BD%94%EB%A6%AC%EC%95%84%ED%81%AC%EB%A0%88%EB%94%A7%EB%B7%B0%EB%A1%9C%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">중국 CNY</div>
-								</a>
-								<a href="/analytics/compute?input=SPC%EC%82%BC%EB%A6%BD%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">대만 TWD</div>
-								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22news%22%2C%22economy%22%2C%22title%3A((%EB%A0%88%EA%B3%A0%EB%9E%9C%EB%93%9C))%22%2Ccount%3D100)&amp;avds=false">
-									<div class="keyword item">영국 GBP</div>
-								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22news%22%2C%22economy%22%2C%22title%3A((SK%20C%26C))%22%2Ccount%3D100)&amp;avds=false">
-									<div class="keyword item">캐나다 CAD</div>
-								</a>
-								<a href="/analytics/compute?input=%EC%A0%95%EC%9C%A1%EA%B0%81%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">홍콩 HKD</div>
-								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22research%22%2CNone%2C%22securities.name%3A%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%8E%98%EC%9D%B4%22)&amp;avds=false">
-									<div class="keyword item">덴마크 DKK</div>
-								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22research%22%2CNone%2C%22securities.name%3A%ED%95%9C%EA%B5%AD%EC%A0%84%EB%A0%A5%22)&amp;avds=false">
-									<div class="keyword item">튀르키예 TRY</div>
-								</a>
-								<a href="/analytics/compute?input=%EC%97%90%EC%8A%A4%EC%97%90%EC%9D%B4%EC%97%A0%EC%A7%80%EC%97%94%ED%84%B0%ED%85%8C%EC%9D%B8%EB%A8%BC%ED%8A%B8%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">태국 THB</div>
-								</a>
-								<a href="/analytics/compute?input=%EC%98%B5%ED%8B%B0%EC%BD%94%EC%96%B4%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">필리핀 PHP</div>
+									<div class="keyword item">USD/KRW</div>
 								</a>
 							</div>
 						</div>
-						<div class="titlecu">환율 검색 추천</div>
+						<div class="titlecu"><h2>세계지수 검색 추천</h2></div>
 						<div class="keywords-container-wrapper">
 							<div class="keywords-contents">
-								<a href="/analytics/compute?input=%EA%B2%BD%EA%B8%B0%EB%B0%A9%EC%96%B4%20%EA%B4%80%EB%A0%A8%20%EA%B8%B0%EC%97%85&amp;avds=false">
-									<div class="keyword item">미국 USD</div>
+								<a href="/dataview/data/캐나다sptsx">
+									<div class="keyword item">캐나다 S&P TSX</div>
 								</a>
-								<a href="/analytics/compute?input=%EA%B3%A0%EB%B0%B0%EB%8B%B9%20%EA%B4%80%EB%A0%A8%20%EA%B8%B0%EC%97%85%20and%20(%EC%83%81%EC%9E%A5%20%EA%B8%B0%EC%97%85)&amp;avds=false">
-									<div class="keyword item">유럽연합 EUR</div>
+								<a href="/dataview/data/나스닥종합지수">
+									<div class="keyword item">나스닥종합지수</div>
 								</a>
-								<a href="/analytics/compute?input=%22*K641*%22%20%EC%82%B0%EC%97%85%20%EA%B8%B0%EC%97%85%20and%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%3E%2010000000000&amp;avds=false">
-									<div class="keyword item">일본 JPY (100엔)</div>
+								<a href="/dataview/data/네덜란드aex">
+									<div class="keyword item">네덜란드 AEX</div>
 								</a>
-								<a href="/analytics/compute?input=%EB%82%98%EC%9D%B4%EC%8A%A4%ED%8F%89%EA%B0%80%EC%A0%95%EB%B3%B4%20%EC%BD%94%EB%A6%AC%EC%95%84%ED%81%AC%EB%A0%88%EB%94%A7%EB%B7%B0%EB%A1%9C%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">중국 CNY</div>
+								<a href="/dataview/data/닛케이">
+									<div class="keyword item">닛케이</div>
 								</a>
-								<a href="/analytics/compute?input=SPC%EC%82%BC%EB%A6%BD%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">대만 TWD</div>
+								<a href="/dataview/data/다우존스">
+									<div class="keyword item">다우존스</div>
 								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22news%22%2C%22economy%22%2C%22title%3A((%EB%A0%88%EA%B3%A0%EB%9E%9C%EB%93%9C))%22%2Ccount%3D100)&amp;avds=false">
-									<div class="keyword item">영국 GBP</div>
+								<a href="/dataview/data/대만가권">
+									<div class="keyword item">대만 가권</div>
 								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22news%22%2C%22economy%22%2C%22title%3A((SK%20C%26C))%22%2Ccount%3D100)&amp;avds=false">
-									<div class="keyword item">캐나다 CAD</div>
+								<a href="/dataview/data/러셀2000지수">
+									<div class="keyword item">러셀 2000 지수</div>
 								</a>
-								<a href="/analytics/compute?input=%EC%A0%95%EC%9C%A1%EA%B0%81%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">홍콩 HKD</div>
+								<a href="/dataview/data/러시아moexrussia">
+									<div class="keyword item">러시아 MOEX Russia</div>
 								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22research%22%2CNone%2C%22securities.name%3A%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%8E%98%EC%9D%B4%22)&amp;avds=false">
-									<div class="keyword item">덴마크 DKK</div>
+								<a href="/dataview/data/벨기에bel">
+									<div class="keyword item">벨기에 BEL</div>
 								</a>
-								<a href="/analytics/compute?input=DocumentSearch(%22research%22%2CNone%2C%22securities.name%3A%ED%95%9C%EA%B5%AD%EC%A0%84%EB%A0%A5%22)&amp;avds=false">
-									<div class="keyword item">튀르키예 TRY</div>
+								<a href="/dataview/data/브라질보베스파">
+									<div class="keyword item">브라질 보베스파</div>
 								</a>
-								<a href="/analytics/compute?input=%EC%97%90%EC%8A%A4%EC%97%90%EC%9D%B4%EC%97%A0%EC%A7%80%EC%97%94%ED%84%B0%ED%85%8C%EC%9D%B8%EB%A8%BC%ED%8A%B8%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">태국 THB</div>
-								</a>
-								<a href="/analytics/compute?input=%EC%98%B5%ED%8B%B0%EC%BD%94%EC%96%B4%20%EB%A7%A4%EC%B6%9C%20%EC%98%81%EC%97%85%EC%9D%B4%EC%9D%B5%20%EB%8B%B9%EA%B8%B0%EC%88%9C%EC%9D%B4%EC%9D%B5%202018-2021&amp;avds=false">
-									<div class="keyword item">필리핀 PHP</div>
+								<a href="/dataview/data/사우디아라비아tadawul">
+									<div class="keyword item">사우디아라비아 Tadawul</div>
 								</a>
 							</div>
 						</div>
@@ -109,7 +106,7 @@
 					</a>
 
 					<h2 class="main_title">국내 금융시장 주요 지표</h2>
-					<div class="main_gr">
+					<div class="groups">
 						<div class="economic-indicator">
 							<div class="indicator-name">
 								<a href="/analytics/economic-indicator/BOK%3A802Y001.0001000">코스피</a>
@@ -163,6 +160,7 @@
 					</div>
 
 					<div class="chartFrame">
+						
 						<div id="quotesBoxChartTimeFrames" class="timePeriods">
 							<span data-time-frame="1day" class="selected">1일 코스피 현재 지수</span>
 							<a href="/indices/kospi-chart" class="js-chart-link quotesboxLinkIcon"></a></div>
@@ -221,7 +219,7 @@
 										
 
 					<div id="chart-area">
-
+						
 					</div>
 				</article>
 			</section>
@@ -233,5 +231,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/js/common.js"></script>
+	<script src="/js/chart_js.js"></script>
+	<script src="/js/index_chart.js"></script>
 </body>
 </html>
