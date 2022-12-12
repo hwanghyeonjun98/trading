@@ -12,7 +12,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: .6rem .6rem 0rem .6rem;
+	padding: .3rem .6rem;
 	border-bottom: 1px solid var(--color-dark);
 	cursor: pointer;
 }
@@ -85,12 +85,6 @@ table#data-table > tbody > tr > td:first-child {
 
 table#data-table > tbody > tr > td:not(:first-child) {
 	text-align: right;
-}
-
-#chart-area .apexcharts-reset-icon:hover {
-	transform: rotateZ(-45deg) scale(.85);
-	transition: all .5s ease-in-out;
-	transform-origin: center;
 }
 
 @media screen and (max-width: 680px) {

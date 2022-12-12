@@ -15,7 +15,7 @@ public class Error implements ErrorController {
 	private String ERROR_TEMPLATES_PATH = "/errors/";
 
 	@RequestMapping(value = "/error")
-	public String handleError(HttpServletRequest request, Model model) {
+	public String handleError(HttpServletRequest request) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		if (status != null) {
 			int statusCode = Integer.valueOf(status.toString());
