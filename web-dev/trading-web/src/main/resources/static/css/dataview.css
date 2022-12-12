@@ -81,11 +81,3 @@ table#data-table > tbody > tr > td:first-child {
 table#data-table > tbody > tr > td:not(:first-child) {
 	text-align: right;
 }
-
-
-@media screen and (min-width: 1024px) {
-	.sub-page {
-		width: 75%;
-		margin: 0 auto;
-	}
-}

@@ -18,4 +18,6 @@ public interface InvestingMapper {
 	List<InvestingDto> dataDefultList();
 
 	List<InvestingDto> dataList(@Param("names") String names);
+
+	List<InvestingDto> kospiChartList();
 }
