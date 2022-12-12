@@ -83,7 +83,7 @@
 						</div>
 					</nav>
 					<%-- 메뉴 영역 --%>
-					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">AED/KRW</span> 내역</h4>
+					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">AED/KRW</span>내역</h4>
 					<%-- 차트 영역 --%>
 					<div id="chart-area"></div>
 					<%-- 차트 영역 --%>
@@ -138,15 +138,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${defaultData}" var="defaultData">
+							<c:forEach items="${dataList}" var="dataList">
 								<tr>
-									<td>${defaultData.dates}</td>
-									<td>${defaultData.closes}</td>
-									<td>${defaultData.opens}</td>
-									<td>${defaultData.highs}</td>
-									<td>${defaultData.lows}</td>
-									<td>${defaultData.volumes}</td>
-									<td>${defaultData.changes}%</td>
+									<td>${dataList.dates}</td>
+									<td>${dataList.closes}</td>
+									<td>${dataList.opens}</td>
+									<td>${dataList.highs}</td>
+									<td>${dataList.lows}</td>
+									<td>${dataList.volumes}</td>
+									<td>${dataList.changes}%</td>
 								</tr>
 							</c:forEach>
 						</tbody>

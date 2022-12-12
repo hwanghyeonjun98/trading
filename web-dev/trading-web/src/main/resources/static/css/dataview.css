@@ -27,7 +27,7 @@
 
 .data-menu .menu-title + .menu-content {
 	max-height: 0;
-	overflow: scroll;
+	overflow-Y: scroll;
 	transition: max-height .4s ease-in-out;
 }
 
@@ -45,17 +45,17 @@
 	margin-top: .6rem;
 }
 
-.data-menu .menu-content ul li button {
+.data-menu .menu-content ul li .data-view-btn {
 	padding: .4rem;
 	color: var(--color-purple);
 	border: 1px solid var(--color-purple);
 	border-radius: 5px;
 }
 
-.data-menu .menu-content ul li button:hover,
-.data-menu .menu-content ul li button:focus, a
-.data-menu .menu-content ul li button:active,
-.data-menu .menu-content ul li button.active {
+.data-menu .menu-content ul li .data-view-btn:hover,
+.data-menu .menu-content ul li .data-view-btn:focus,
+.data-menu .menu-content ul li .data-view-btn:active,
+.data-menu .menu-content ul li .data-view-btn.active {
 	color: var(--color-block);
 	background-color: var(--color-purple);
 	border: 1px solid var(--color-purple);
