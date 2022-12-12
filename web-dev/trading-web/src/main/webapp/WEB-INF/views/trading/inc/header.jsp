@@ -8,9 +8,9 @@
 			</button>
 		</div>
 		<ul class="header-menu-list">
-			<li><a href="/">홈</a></li>
-			<li><a href="/dataview/data">데이터 보기</a></li>
-			<li><a href="#">연락처</a></li>
+			<li><a href="/">HOME</a></li>
+			<li><a href="/dataview/data">DATA</a></li>
+			<li><a href="#">CONTACT</a></li>
 		</ul>
 	</nav>
 </header>
