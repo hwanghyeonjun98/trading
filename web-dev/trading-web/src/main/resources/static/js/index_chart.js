@@ -22,17 +22,14 @@ const options = {
 			}
 		}],
 		defaultLocale : "ko",
-		toolbar       : {
-			tools : {
-				download : false,
-				reset: '<i class="bi bi-arrow-counterclockwise" style="font-size:20px;"></i>'
-			}
+		tools         : {
+			download : false,
 		}
 	}, tooltip     : {
 		enabled : true,
 		x       : {
-			show   : true,
-			format : "MM/dd",
+			show      : true,
+			format    : "MM/dd",
 		}
 	}, xaxis       : {
 		type   : "datetime",
@@ -67,20 +64,17 @@ const options = {
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
 chart.render();
 
-// 기본 호출
-const defaulturl = "/api/data/chart/aedkrw내역";
-$.getJSON(defaulturl, function (response) {
-	let dataList = [];
+let chartUrl = "/api/data/chart/코스피지수내역";
 
-	response.forEach((item) => {
-		dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
+  $.getJSON(chartUrl, function (response) {
+		let dataList = [];
+
+		response.forEach((item) => {
+			dataList.push([item.dates, item.opens,item.closes]);
+		});
+
+		chart.updateSeries([{
+			name : "table",
+			data : dataList
+		}]);
 	});
-
-	chart.updateSeries([{
-		name : "table",
-		data : dataList
-	}]);
-});
-
-
-

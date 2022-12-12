@@ -36,18 +36,22 @@ const coninsListEl = document.querySelector(".conins");
 function menuList(list, listName) {
 	for (i = 0; i < list.length; i++) {
 		let tempLi = document.createElement("li");
-		let tempBtn = document.createElement("button");
-		let btnText = list[i];
+		let tempA = document.createElement("a");
+		let aText = list[i];
 
-		tempBtn.classList.add("data-view-btn");
-		tempBtn.setAttribute("type", "button");
-		if (btnText === "독일 3개월 채권 수익율") {
-			tempBtn.dataset.table = "germany3month채권수익율";
+		tempA.classList.add("data-view-btn");
+		tempA.setAttribute("type", "button");
+		if (aText === "독일 3개월 채권 수익율") {
+			// tempA.h.table = "germany3month채권수익율";
+			tempA.setAttribute("href", "/dataview/data/germany3month채권수익율");
+			tempA.dataset.table = "germany3month채권수익율";
 		} else {
-			tempBtn.dataset.table = btnText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
+			// tempA.dataset.table = aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
+			tempA.setAttribute("href", `/dataview/data/${aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase()}`);
+			tempA.dataset.table = aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
 		}
-		tempBtn.innerText = btnText;
-		tempLi.append(tempBtn);
+		tempA.innerText = aText;
+		tempLi.append(tempA);
 
 		listName.append(tempLi);
 	}
@@ -58,6 +62,30 @@ menuList(indices, indicesListEl);
 menuList(commodities, commoditiesListEl);
 menuList(ratesBonds, ratesBondsListEl);
 menuList(conins, coninsListEl);
+
+// 브라우저 로드 시 버튼 활성화, 제목 변경
+window.addEventListener("load", () => {
+		// 현재 브라우저 URL 불러와 맨뒤 내역 이름 가져오기
+		const nowUrl = decodeURI(window.location.href);
+		let name = nowUrl.split("/");
+		name = name[name.length - 1];
+
+		// 가져온 이름과 dataset 이름으로) 비교하여
+		// 버튼 활성화하고 데이터 제목 업데이트
+		const btnAll = document.querySelectorAll(".data-view-btn");
+		const dataTitle = document.querySelector(".data-title .data-name");
+		btnAll.forEach((el) => {
+			const dataName = el.dataset.table;
+			const menuContent = el.closest(".menu-content");
+			const scroll = el.offsetTop;
+
+			if (dataName === name) {
+				el.classList.add("active");
+				dataTitle.innerText = el.textContent;
+			}
+		});
+	}
+);
 
 // 대분류 클릭 시 하위 메뉴 토글슬라이드
 const menuTitle = document.querySelectorAll(".menu-title");
