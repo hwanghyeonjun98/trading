@@ -16,7 +16,7 @@
 	<div class="error_wrap">
 		<div class="error_info">
 			<h1 class="error_code opacity-50">500</h1>
-			<h2 class="error_text"><i class="bi bi-info-circle"></i> 잘못된 접근입니다.</h2>
+			<h2 class="error_text mb-4"><i class="bi bi-info-circle"></i> 잘못된 접근입니다.</h2>
 			<ul class="error_btn">
 				<li>
 					<a href="#" class="page-back btn btn-outline-secondary btn-lg">이전으로 돌아가기

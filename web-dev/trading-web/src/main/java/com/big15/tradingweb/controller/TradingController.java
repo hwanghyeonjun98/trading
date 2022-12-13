@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
-@Slf4j
 public class TradingController {
 
 	private InvestingMapper mapper;
