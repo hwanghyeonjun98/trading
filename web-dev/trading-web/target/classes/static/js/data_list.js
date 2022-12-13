@@ -59,11 +59,9 @@ function menuList(list, listName) {
 		tempA.classList.add("data-view-btn");
 		tempA.setAttribute("type", "button");
 		if (aText === "독일 3개월 채권 수익율") {
-			// tempA.h.table = "germany3month채권수익율";
 			tempA.setAttribute("href", "/dataview/data/germany3month채권수익율");
 			tempA.dataset.table = "germany3month채권수익율";
 		} else {
-			// tempA.dataset.table = aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
 			tempA.setAttribute(
 				"href", `/dataview/data/${aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase()}`);
 			tempA.dataset.table = aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
@@ -88,7 +86,7 @@ window.addEventListener("load", () => {
 		let name = nowUrl.split("/");
 		name = name[name.length - 1];
 
-		// 가져온 이름과 dataset 이름으로) 비교하여
+		// 가져온 이름과 dataset 이름으로 비교하여
 		// 버튼 활성화하고 데이터 제목 업데이트
 		const btnAll = document.querySelectorAll(".data-view-btn");
 		const dataTitle = document.querySelector(".data-title .data-name");
@@ -106,7 +104,7 @@ window.addEventListener("load", () => {
 	}
 );
 
-// 대분류 클릭 시 하위 메뉴 토글슬라이드
+// 대분류 클릭 시 하위 메뉴 토글 슬라이드
 const menuTitle = document.querySelectorAll(".menu-title");
 const menuIcon = document.querySelectorAll(".icon-span i");
 
@@ -140,15 +138,18 @@ menuBtn.forEach((btn) => {
 // 날짜 관련
 const startDateInput = document.querySelector("#startDate");
 const endDateInput = document.querySelector("#endDate");
-let date = new Date();
-const TIME_ZONE = 3240 * 10000;
-const nowDate = new Date(+date + TIME_ZONE).toISOString().split("T")[0];
+let date = new Date(); // 날짜 object 생성
+const TIME_ZONE = 3240 * 10000; // 한국 시간대로 타임존 setting
+const nowDate = new Date(+date + TIME_ZONE).toISOString().split("T")[0]; // 한국 시간으로 불러와 T를 기준으로 split
 
+// 한달전 날짜
 date.setMonth(date.getMonth() - 1);
 const dateCalc = date.toISOString().split("T")[0];
 
 startDateInput.value = dateCalc;
 console.log(dateCalc);
 
+// 현재 날짜
 endDateInput.value = nowDate;
+// 검색 최대 날짜 정해기
 endDateInput.setAttribute("max", nowDate);
