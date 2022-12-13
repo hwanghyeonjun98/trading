@@ -2,15 +2,18 @@ package com.big15.tradingweb.controller;
 
 import com.big15.tradingweb.dto.InvestingDto;
 import com.big15.tradingweb.mapper.InvestingMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
 public class TradingController {
@@ -36,9 +39,17 @@ public class TradingController {
 	}
 
 	@GetMapping("/dataview/data")
-	public String dataView(Model model) {
-		List<InvestingDto> defaultData = mapper.dataList();
-		model.addAttribute("defaultData", defaultData);
+	public String dataDefultList(Model model) {
+		List<InvestingDto> defaultData = mapper.dataDefultList();
+		model.addAttribute("dataList", defaultData);
+		return "/dataview/data";
+	}
+
+	@RequestMapping("/dataview/data/{names}")
+	public String dataView(@PathVariable String names, Model model) {
+		List<InvestingDto> list_ = mapper.dataList(names);
+		model.addAttribute("dataList", list_);
+		model.addAttribute("dataName", names);
 		return "/dataview/data";
 	}
 

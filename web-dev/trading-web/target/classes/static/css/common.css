@@ -66,6 +66,11 @@ table thead tr th {
 	nav .header-menu-list li:hover a {
 		background-color: var(--color-pink);
 	}
+
+	main.sub-page {
+		width: 1200px;
+		margin: 0 auto;
+	}
 }
 
 @media screen and (min-width: 681px) {
@@ -96,6 +101,7 @@ table thead tr th {
 	}
 
 	nav .header-menu-btn {
+		width: 40px;
 		font-size: 1.6rem;
 	}
 

@@ -8,12 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface InvestingMapper {
-
-	List<InvestingDto> investingList(@Param("names") String names, @Param("startDate") String startDate, @Param("endDate") String endDate);
-
 	List<InvestingDto> chartList(@Param("names") String names);
 
 	List<InvestingDto> investingDateSearchList(@Param("names") String names, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
-	List<InvestingDto> dataList();
+	List<InvestingDto> dataDefultList();
+
+	List<InvestingDto> dataList(@Param("names") String names);
+
+	List<InvestingDto> kospiChartList();
 }

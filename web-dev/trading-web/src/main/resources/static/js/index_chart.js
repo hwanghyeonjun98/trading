@@ -1,15 +1,3 @@
-/**
- * 차트리트스 옵션
- * [자세한 설정은 https://apexcharts.com/docs/installation/ 참고]
- * series : X, Y축 값 설정
- * chart : 차트 종류, 기본값 설정
- * tooltip : 마우스 올렸을 때 상세 내용 설정
- * xaxis : X축 설정
- * yaxis : Y축 설정
- * plotOptions : 축 색깔 설정
- * noData : 데이터가 없을 때 설정(데이터 없음 문구 같은거)
- */
-
 const options = {
 	series         : [],
 	chart          : {
@@ -34,22 +22,18 @@ const options = {
 			}
 		}],
 		defaultLocale : "ko",
-		toolbar       : {
-			tools : {
-				download : false,
-				reset    : "<i class=\"bi bi-arrow-counterclockwise\" style=\"font-size:20px;\"></i>"
-			}
+		tools         : {
+			download : false,
 		}
 	}, tooltip     : {
 		enabled : true,
 		x       : {
-			show   : true,
-			format : "MM/dd",
+			show      : true,
+			format    : "MM/dd",
 		}
 	}, xaxis       : {
-		type          : "datetime",
-		tickPlacement : "on",
-		labels        : {
+		type   : "datetime",
+		labels : {
 			datetimeFormatter : {
 				year  : "yyyy년",
 				month : "MM월 dd일",
@@ -77,26 +61,20 @@ const options = {
 	}
 };
 
-
-// 차트 object 생성
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
-// 차트 랜더딩
 chart.render();
 
-// 기본 차트 리스트 호출
-const defaulturl = "/api/data/chart/aedkrw내역";
-$.getJSON(defaulturl, function (response) {
-	let dataList = [];
+let chartUrl = "/api/data/chart/코스피지수내역";
 
-	response.forEach((item) => {
-		dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
+  $.getJSON(chartUrl, function (response) {
+		let dataList = [];
+
+		response.forEach((item) => {
+			dataList.push([item.dates, item.opens,item.closes]);
+		});
+
+		chart.updateSeries([{
+			name : "table",
+			data : dataList
+		}]);
 	});
-
-	chart.updateSeries([{
-		name : "table",
-		data : dataList
-	}]);
-});
-
-
-

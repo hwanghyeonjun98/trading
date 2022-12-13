@@ -16,11 +16,6 @@ public class TradingRestController {
 		this.mapper = mapper;
 	}
 
-	@RequestMapping("/api/data/{names}/{startDate}/{endDate}")
-	public List<InvestingDto> investingList(@PathVariable("names") String names, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
-		return mapper.investingList(names, startDate, endDate);
-	}
-
 	@RequestMapping("/api/data/dateSearch/{names}/{startDate}/{endDate}")
 	public List<InvestingDto> investingDateSearchList(@PathVariable("names") String names, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
 		return mapper.investingDateSearchList(names, startDate, endDate);
@@ -31,5 +26,9 @@ public class TradingRestController {
 		return mapper.chartList(names);
 	}
 
+	@RequestMapping("/api/data/chart/kospi")
+	public List<InvestingDto> kospiChartList() {
+		return mapper.kospiChartList();
+	}
 
 }
