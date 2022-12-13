@@ -7,7 +7,6 @@ $(window).on("load", function () {
 	name = name[name.length - 1];
 
 	let chartUrl = "/api/data/chart/" + name + "내역";
-	console.log(chartUrl);
 
 	// 차트 AJAX
 	$.getJSON(chartUrl, function (response) {
@@ -39,7 +38,6 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) {
 	// 예외 처리
 	const nothing = "<tr><td colspan='7' class='text-center'>데이터가 없습니다.</td></tr>";
 	const searchError = "<tr><td colspan='7' class='text-center'>날짜를 확인 해주세요.</td></tr>";
-	console.log(searchUrl);
 	$.ajax({
 		type    : "POST",
 		url     : searchUrl,
