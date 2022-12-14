@@ -86,21 +86,27 @@ window.addEventListener("load", () => {
 		let name = nowUrl.split("/");
 		name = name[name.length - 1];
 
+		const defaultName = "aedkrw";
+
 		// 가져온 이름과 dataset 이름으로 비교하여
 		// 버튼 활성화하고 데이터 제목 업데이트
 		const btnAll = document.querySelectorAll(".data-view-btn");
 		const dataTitle = document.querySelector(".data-title .data-name");
 		const dataTable = document.querySelector("#data-table");
-		btnAll.forEach((el) => {
-			const dataName = el.dataset.table;
+		if (name !== defaultName) {
+			btnAll.forEach((el) => {
+				const dataName = el.dataset.table;
 
-			if (dataName === name) {
-				el.classList.add("active");
-				dataTitle.innerText = el.textContent;
-			}
+				if (dataName === name) {
+					el.classList.add("active");
+					dataTitle.innerText = el.textContent;
+				}
 
-		});
-		dataTable.dataset.table = name;
+			});
+			dataTable.dataset.table = name;
+		} else {
+			dataTable.dataset.table = defaultName;
+		}
 	}
 );
 

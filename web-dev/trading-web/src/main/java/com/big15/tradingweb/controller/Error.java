@@ -19,8 +19,8 @@ public class Error implements ErrorController {
 	@RequestMapping(value = "/*")
 	public String handleError(HttpServletRequest request) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-		log.error("error code : " + status.toString());
 		if (status != null) {
+			log.error("error code : " + status.toString());
 			int statusCode = Integer.valueOf(status.toString());
 			if (statusCode == HttpStatus.NOT_FOUND.value()) {
 				return ERROR_TEMPLATES_PATH + "404";
@@ -34,6 +34,6 @@ public class Error implements ErrorController {
 				return ERROR_TEMPLATES_PATH + "500";
 			}
 		}
-		return "error";
+		return "redirect:/index";
 	}
 }
