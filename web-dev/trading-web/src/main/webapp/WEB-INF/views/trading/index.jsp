@@ -16,7 +16,7 @@
 	<div class="background-wrap">
 		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
 			<main class="p-3">
-			<p>TIME : <span id="current" class="display"></span></p>
+			<div class="snap">TIME : <span id="current" class="display"></span></div>
 			<script>
 				setInterval(displayNow, 1000); // 1초마다 시간 갱신
 				function displayNow() {
@@ -115,7 +115,7 @@
 					<a href="https://deepsearch-jira.atlassian.net/servicedesk/customer/kb/view/636583937" class="banner" target="_blank" rel="noopener noreferrer">
 						<img src="https://deepsearchimages.wpcomstaging.com/wp-content/uploads/cards/2022/11/banner_20221124-20221124-053132.png" alt="[DAP] 경제 지표 개선 공지">
 					</a>
-					<h2 class="main_title">이 시각 주요 뉴스</h2>
+					<h2 class="main_title">주요 경제</h2>
 					<div class="groups">
 						<div class="economic-indicator">
 							<div class="jot"></div>

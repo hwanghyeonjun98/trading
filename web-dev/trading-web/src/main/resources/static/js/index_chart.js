@@ -74,7 +74,7 @@ let chartUrl = "/api/data/chart/코스피지수내역";
 		});
 
 		chart.updateSeries([{
-			name : "table",
+			name : "KOSPI",
 			data : dataList
 		}]);
 	});
