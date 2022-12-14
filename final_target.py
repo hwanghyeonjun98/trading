@@ -49,11 +49,10 @@ def get_krx_target(path):
 
     target = "./download/target/target*.csv"
     csv_list = glob.glob(target)
-    print(csv_list)
 
     if len(csv_list) >= 1: # 파일이 있는 경우
         
-        csv_date = csv_list[0].split('.')[0][-8:] # 날짜 확인
+        csv_date = csv_list[0].split('.')[1][-8:] # 날짜 확인
         
         if csv_date != today: # 날짜가 다른 경우
             os.remove(csv_list[0])

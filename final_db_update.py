@@ -37,7 +37,7 @@ def get_krx_stock_list(path):
 
     if len(csv_list) >= 1:
         
-        csv_date = csv_list[0].split('.')[0][-8:]
+        csv_date = csv_list[0].split('.')[1][-8:]
         
         if csv_date != today:
 
