@@ -1,12 +1,6 @@
-from module.setting import instCpStockCode, instCpCodeMgr, instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033
-from module import connection, get, save, search, update
-from sqlalchemy import create_engine
-from datetime import timedelta, date
-from datetime import datetime
+from module.setting import instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033
+from datetime import date, datetime
 import pandas as pd
-import pymysql
-import pandas as pd
-import os
 import time
 
 from final_dbconnect import *
@@ -15,37 +9,6 @@ from final_db_update import *
 # 날짜 지정 필수
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
-
-def get_pymysql_db_list(conn, db_name):
-
-    # 현재 DB 내 존재하는 테이블(종목) 추출
-    sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{0}'".format(db_name)
-
-    result = conn.execute(sql)
-    db_list = [item[0] for item in result.fetchall()]
-
-    return db_list
-
-
-def get_investing_data(conn, investing_data_list):
-
-    investing_df = pd.DataFrame()
-
-    # 현재 DB 내 존재하는 테이블(종목) 추출
-    for table in investing_data_list:
-        conn = sqlalchemy_connect_ip('192.168.50.123', 'investing_data')
-        sql = "SELECT * FROM investing_data.`{0}` ORDER BY 날짜 DESC LIMIT 1 ".format(table)
-
-        result = conn.execute(sql)
-
-        temp_df = pd.DataFrame(result.fetchall())
-        investing_df = pd.concat([investing_df, temp_df], axis=1)
-    
-    investing_df.drop(columns='날짜', axis=1, inplace=True) # 어제 날짜
-    investing_df.rename(index={0:today}, inplace=True) # 오늘 날짜로 reindex
-    
-    return investing_df
-
 
 def get_pymysql_day_stock(conn, code, yesterday, investing_df):
 
