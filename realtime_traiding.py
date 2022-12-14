@@ -404,6 +404,7 @@ def real_trading(stock_list):
 
 while True:
     stock_trading_db(stock_list, investing_df)
+    
     real_trading(stock_list)
     
 
