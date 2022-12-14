@@ -8,36 +8,20 @@ import numpy as np
 import pandas as pd
 
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from sqlalchemy import create_engine
 from datetime import datetime
 from datetime import timedelta, date
+from pandas.tseries.offsets import BDay
 from tqdm import tqdm
 from random import uniform
 from final_dbconnect import DBConnection
 from module.setting import instCpCodeMgr, instStockChart, instCpCybos
 
+from final_dbconnect import DBConnection
+from module.selenium_crawling import *
+
 today = str(date.today()).replace('-','')
 
-
-# mysql connect하기 위한 아이디 비밀번호 포트 데이터베이스 등록 및 conn 리턴
-def sqlalchemy_connect_ip(ip_address, db_name):
-    engine = create_engine("mysql+pymysql://admin:"
-                +"big15" # user password
-                +"@{0}:3306/{1}?charset=utf8".format(ip_address, db_name)
-                , encoding='utf8')
-    
-    return engine.connect()
-
-
-def get_pymysql_connection(ip_address, db_name):
-
-    conn = pymysql.connect(host=ip_address, user='admin', password='big15'
-                        , db=db_name, charset='utf8')
-
-    return conn
     
 def get_pymysql_stock_list(conn, db_name):
     # 현재 DB 내 존재하는 테이블(종목) 추출
@@ -51,7 +35,8 @@ def get_pymysql_stock_list(conn, db_name):
 
             return result
 
-def get_krx_stock_list(user):
+def get_krx_stock_list(path):
+    
 
     target = r"\\DESKTOP-H2H6JNB\data\kos*.csv"
     csv_list = glob.glob(target)
@@ -67,10 +52,11 @@ def get_krx_stock_list(user):
         else:
             return
         
-    driver = webdriver.Chrome("./chromedriver")
-
-    driver.get("http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020201")
-    driver.implicitly_wait(20)
+    driver = selenium_driver_load(
+        './driver/chromedriver'
+        , "http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020201"
+        , path
+    )
     time.sleep(4)
     driver.find_element(By.XPATH, '//*[@id="MDCSTAT019_FORM"]/div[1]/div/table/tbody/tr/td/label[2]').click()
     time.sleep(1.5)
@@ -91,8 +77,7 @@ def get_krx_stock_list(user):
     time.sleep(1.5)
     driver.close()
 
-    target = r"C:\Users\{0}\Downloads\data*.csv".format(user)
-
+    target = './download/krx/data*.csv'
     new_csv_list = glob.glob(target)
 
     file_size_1 = os.path.getsize(new_csv_list[0])
@@ -239,7 +224,7 @@ def update_pymysql_empty(code, type, conn, today):
 def save_samsung_template(conn):
     day_format = '%Y%m%d'
 
-    yesterday = datetime.strftime(datetime.strptime(today, day_format) - timedelta(days=1), day_format)
+    yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
     template = update_pymysql_exist('005930', 'm', conn)
     template = template.reset_index()
     template = template.set_index(['날짜', '시간'])
@@ -344,8 +329,10 @@ def sqlalchemy_update_insert(update_df, code, type, conn):
     count = update_df.to_sql(name='{0}'.format(code), con=conn, if_exists=type, index=False)
     
     
-    
-def db_list_update(computer_name):
+
+
+# 한번에 처리
+def db_list_update(krx):
 
     pct_error_list = []
     
@@ -353,8 +340,7 @@ def db_list_update(computer_name):
     sqlalchemy_conn = DBConnection().get_sqlalchemy_connect_ip()
 
     stock_list = get_pymysql_stock_list(pymysql_conn, 'stock_info')
-    print(stock_list)
-    get_krx_stock_list(user=computer_name)
+    get_krx_stock_list(path=krx)
     exist_list, empty_list = get_compare_list(stock_list)
     
     template = save_samsung_template(pymysql_conn)
