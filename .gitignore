@@ -40,3 +40,6 @@ __pycache__/
 
 # 스프링 help.md 무시
 web-dev/trading-web/HELP.md
+
+# 크롤링 테스트 이미지
+/Users/hwanghyeonjun/Documents/GitHub/trading/데이터 수집 노트북/image.png
