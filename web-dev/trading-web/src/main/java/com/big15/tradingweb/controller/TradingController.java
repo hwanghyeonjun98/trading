@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
-@Slf4j
 public class TradingController {
 
 	private InvestingMapper mapper;
@@ -27,7 +26,7 @@ public class TradingController {
 
 	// 브라우저 체크
 	// 브라우저가 인터넷 익스플로러면 다른 브라우저 접속, 다운로드 안내 페이지로 이동
-	@GetMapping("/*")
+	@GetMapping("/")
 	public String browserCheck(HttpServletRequest request, Locale locale, Model model) {
 		String userAgent = request.getHeader("User-Agent");
 
@@ -37,11 +36,6 @@ public class TradingController {
 		}
 
 		return "index";
-	}
-
-	@GetMapping("/test")
-	public String test() {
-		return "test";
 	}
 
 	@GetMapping("/dataview/data")

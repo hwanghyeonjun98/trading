@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="/css/reset.css">
 	<link rel="stylesheet" href="/css/common.css">
 	<link rel="stylesheet" href="/css/error_common.css">
-	<script src="https://kit.fontawesome.com/5787bde1c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="error_wrap">
