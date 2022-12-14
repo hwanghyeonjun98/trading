@@ -15,3 +15,4 @@ kospi_list, kosdaq_list, investing_df = get_target(path=r'D:\systrader-dev\tradi
 #     traiding_start()
 
 # realtime 추가
+
