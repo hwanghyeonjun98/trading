@@ -1,13 +1,14 @@
 # cr.py
 from module.selenium_crawling import *
 from module.df_format_change import *
+from module.data_sql_load import *
 from module.data_file_control import file_move
 
 if __name__ == '__main__':
 	driver = selenium_driver_load(
 		'./driver/chromedriver'
 		, 'https://kr.investing.com/?ref=www'
-		, './data'
+		, '/Users/hwanghyeonjun/Documents/GitHub/data/selenium'
 	)
 	start_date = '2020-01-01'
 	login('widrn1010@naver.com', 'Aa10101010!', driver)
@@ -33,8 +34,11 @@ if __name__ == '__main__':
 	investing_crawling_new('rates-bonds', rate_bonds, start_date, driver)
 	driver.close()
 	file_list, file_names = file_name_list(
-		'./data/'
+		'/Users/hwanghyeonjun/Documents/GitHub/data/selenium/'
 		, 'csv'
 	)
 	df_list = data_format_change(file_list, file_names)
-	file_move(file_list, '/home/hyeonjunhwang398/data-anal/python-dev/workspace/data/downloadData/', file_names)
+	sql_update('admin', 'big15', '192.168.50.123', 'investing_data', df_list, file_names)
+	web_data = column_name_change(df_list)
+	sql_update('admin', 'big15', '192.168.50.123', 'web_data', web_data, file_names)
+	file_move(file_list, '/Users/hwanghyeonjun/Documents/GitHub/data/selenium/temp/', file_names)
