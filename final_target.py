@@ -49,6 +49,7 @@ def get_krx_target(path):
 
     target = "./download/target/target*.csv"
     csv_list = glob.glob(target)
+    print(csv_list)
 
     if len(csv_list) >= 1: # 파일이 있는 경우
         
