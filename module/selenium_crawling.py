@@ -34,9 +34,9 @@ def selenium_driver_load(driver_path: str, url: str, file_save_path: str) -> web
 	)
 
 	# 크롬창 안열고 크롤링 설정
-	options.add_argument('headless')
-	options.add_argument('window-size=1920x1080')
-	options.add_argument("disable-gpu")
+	# options.add_argument('headless')
+	# options.add_argument('window-size=1920x1080')
+	# options.add_argument("disable-gpu")
 
 	# user agent 설정
 	user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
@@ -46,10 +46,7 @@ def selenium_driver_load(driver_path: str, url: str, file_save_path: str) -> web
 
 	driver.get(url)
 
-	login_modal = driver.find_element(By.XPATH, '//*[@id="PromoteSignUpPopUp"]')
-	driver.implicitly_wait(100)
-	if login_modal.is_displayed():
-		driver.find_element(By.CSS_SELECTOR, '#PromoteSignUpPopUp > div.right > i').click()
+
 
 	print("크롤링 실행")
 	return driver
@@ -61,7 +58,12 @@ def login(email: str, password: str, driver) -> None:
 	email_input = '//*[@id="loginFormUser_email"]'
 	pw_input = '//*[@id="loginForm_password"]'
 	login_btn = '//*[@id="signup"]/a'
-
+	
+	login_modal = driver.find_element(By.XPATH, '//*[@id="PromoteSignUpPopUp"]')
+	driver.implicitly_wait(100)
+	if login_modal.is_displayed():
+		driver.find_element(By.CSS_SELECTOR, '#PromoteSignUpPopUp > div.right > i').click()
+ 
 	driver.implicitly_wait(100)
 	driver.find_element(By.XPATH, header_login_btn).click()
 	time.sleep(1)
