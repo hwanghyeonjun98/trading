@@ -1,7 +1,7 @@
 from module.selenium_crawling import *
 from module.df_format_change import *
 from module.data_sql_load import *
-from module.data_file_control import file_remove, file_move
+from module.data_file_control import file_move
 
 
 def investing_update(path):
