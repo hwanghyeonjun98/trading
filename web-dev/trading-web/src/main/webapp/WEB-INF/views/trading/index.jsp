@@ -9,22 +9,33 @@
 	<title>트레이딩</title>
 	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
 	<link rel="stylesheet" href="/css/index.css">
+	
+	
 </head>
 <body>
 	<div class="background-wrap">
 		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
-		<main class="p-3">
+			<main class="p-3">
+			<p>TIME : <span id="current" class="display"></span></p>
+			<script>
+				setInterval(displayNow, 1000); // 1초마다 시간 갱신
+				function displayNow() {
+				let now = new Date();
+				let currentTime = now.toLocaleTimeString();//현재 거주 지역에 맞는 시간
+
+				document.querySelector("#current").innerHTML = currentTime
+				}
+
+			</script>
 			<section>
 				<article>
-					<div class="search-bar-content">
 						<div class="clear-wrapper">
 						</div>
-					</div>
 					<div class="recommendation-keywords-container">
 						<div class="titlecu"><h2>환율 검색 추천</h2></div>
 						<div class="keywords-container-wrapper">
 							<div class="keywords-contents">
-								<a href="/dataview/data/caddkrw">
+								<a href="/dataview/data/cadkrw">
 									<div class="keyword item">CAD/KRW</div>
 								</a>
 								<a href="/dataview/data/chfkrw">
@@ -104,10 +115,13 @@
 					<a href="https://deepsearch-jira.atlassian.net/servicedesk/customer/kb/view/636583937" class="banner" target="_blank" rel="noopener noreferrer">
 						<img src="https://deepsearchimages.wpcomstaging.com/wp-content/uploads/cards/2022/11/banner_20221124-20221124-053132.png" alt="[DAP] 경제 지표 개선 공지">
 					</a>
-
-					<h2 class="main_title">국내 금융시장 주요 지표</h2>
+					<h2 class="main_title">이 시각 주요 뉴스</h2>
 					<div class="groups">
 						<div class="economic-indicator">
+							<div class="jot"></div>
+							<div id="root">
+							</div>
+							<script src='app.js' type="module"></script>
 							<div class="indicator-name">
 								<a href="/analytics/economic-indicator/BOK%3A802Y001.0001000">코스피</a>
 							</div>
@@ -160,38 +174,27 @@
 					</div>
 
 					<div class="chartFrame">
-						
-						<div id="chart-area">
-						
-						</div>
-						
-				
-									
-													<div class="aside_area aside_popular"> 
-														<h3 class="h_popular"><span>인기 검색 종목</span></h3> 
-														<table class="tbl_home">
-														 <colgroup> 
-														  <col> 
-														  <col width="60"> 
-														  <col width="82"> 
-														 </colgroup> 
-														 <thead> 
-														  <tr> 
-														   <th scope="col">구분</th> 
-														   <th scope="col">현재가</th> 
-														   <th scope="col">전일대비</th> 
-														  </tr> 
-														 </thead> 
-														 <tbody> 
-														  <tr class="up"><th scope="row"><em>1.</em><a href="/item/main.naver?code=005930" onclick="clickcr(this, &quot;boa.list&quot;, &quot;005930&quot;, &quot;1&quot;, event);">삼성전자</a></th><td>59,000</td><td><em class="bu_p bu_pup"><span class="blind">상승</span></em><span class="tah p11 red02"> 100 </span></td></tr> 
-														  <tr class="down"><th scope="row"><em>2.</em><a href="/item/main.naver?code=112040" onclick="clickcr(this, &quot;boa.list&quot;, &quot;112040&quot;, &quot;2&quot;, event);">위메이드</a></th><td>29,900</td><td><em class="bu_p bu_pdn"><span class="blind">하락</span></em><span class="tah p11 nv01"> 7,800 </span></td></tr> 
-														  <tr class="down"><th scope="row"><em>3.</em><a href="/item/main.naver?code=035720" onclick="clickcr(this, &quot;boa.list&quot;, &quot;035720&quot;, &quot;3&quot;, event);">카카오</a></th><td>55,100</td><td><em class="bu_p bu_pdn"><span class="blind">하락</span></em><span class="tah p11 nv01"> 400 </span></td></tr> 
-														  <tr class="up"><th scope="row"><em>4.</em><a href="/item/main.naver?code=000660" onclick="clickcr(this, &quot;boa.list&quot;, &quot;000660&quot;, &quot;4&quot;, event);">SK하이닉스</a></th><td>79,300</td><td><em class="bu_p bu_pup"><span class="blind">상승</span></em><span class="tah p11 red02"> 400 </span></td></tr> 
-														  <tr class="down"><th scope="row"><em>5.</em><a href="/item/main.naver?code=051910" onclick="clickcr(this, &quot;boa.list&quot;, &quot;051910&quot;, &quot;5&quot;, event);">LG화학</a></th><td>672,000</td><td><em class="bu_p bu_pdn"><span class="blind">하락</span></em><span class="tah p11 nv01"> 7,000 </span></td></tr> 
-														 </tbody> 
-														</table>  
-													   </div>
-										
+						<h2>코스피 지수 현황</h2>
+									<div id="chart-area">
+									</div>			
+									<h2>시가 총액 상위</h2>
+										<hr />
+										   <div id="container">
+											<ul id="rolling">
+												<li>1.삼성전자</li>
+												<li>2.LG 에너지 솔루션</li>
+												<li>3.SK하이닉스</li>
+												<li>4.삼성바이오로직스</li>
+												<li>5.삼성SDI</li>
+												<li>6.LG화학</li>
+												<li>7.삼성전자우</li>
+												<li>8.현대차</li>
+												<li>9.NAVER</li>
+												<li>10.카카오</li>
+											</ul>
+											</div>
+													
+					</div>	
 
 					<div id="chart-area">
 						
@@ -208,5 +211,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="/js/common.js"></script>
 	<script src="/js/index_chart.js"></script>
+	<script src="/js/index_ajax.js"></script>
 </body>
 </html>

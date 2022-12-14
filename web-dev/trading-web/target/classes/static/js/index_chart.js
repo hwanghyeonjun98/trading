@@ -1,7 +1,7 @@
 const options = {
 	series         : [],
 	chart          : {
-		type          : "candlestick",
+		type          : "area",
 		height        : 350,
 		locales       : [{
 			"name"    : "ko",
@@ -22,9 +22,9 @@ const options = {
 			}
 		}],
 		defaultLocale : "ko",
-		tools         : {
-			download : false,
-		}
+		toolbar : {
+      show : false
+    }
 	}, tooltip     : {
 		enabled : true,
 		x       : {
