@@ -1,13 +1,8 @@
-from module.setting import instCpStockCode, instCpCodeMgr, instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033
-from module import connection, get, save, search, update
-from sqlalchemy import create_engine
-from datetime import timedelta, date
-from datetime import datetime
+from datetime import date
+from pandas.tseries.offsets import BDay
+from sklearn.preprocessing import MaxAbsScaler
 import pandas as pd
-import pymysql
-import pandas as pd
-import os
-import time
+
 
 from final_dbconnect import *
 
@@ -15,11 +10,11 @@ today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 
 ## predict 값 DB에 넣기
-def stock_tranding(stock_list, investing_df ,col_list ,mode):
+def stock_predict(stock_list,col_list ,model):
     sqlalchemy_conn = DBConnection_trading().get_sqlalchemy_connect_ip()
     sqlalchemy_conn_p = DBConnection_predict().get_sqlalchemy_connect_ip()
     p = pd.DataFrame()
-    while True:
+    for i in range(10):    # while True:
         for code in stock_list:
             
             sql = f"SELECT * FROM trading_data.{code}_{today} ORDER BY 시간 DESC LIMIT 1"
@@ -39,7 +34,6 @@ def stock_tranding(stock_list, investing_df ,col_list ,mode):
         
             p.append(predict_df)
             predict_df.to_sql(name='{0}_{1}'.format(code, today), con=sqlalchemy_conn_p, if_exists='replace', index=False)
-            
     p.to_csv('../data/')
             
                

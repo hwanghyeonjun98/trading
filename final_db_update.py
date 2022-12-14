@@ -1,23 +1,17 @@
 import os
-import csv
 import glob
 import time
 import shutil
-import pymysql
 import numpy as np
 import pandas as pd
 
 
-from sqlalchemy import create_engine
 from datetime import datetime
 from datetime import timedelta, date
 from pandas.tseries.offsets import BDay
-from tqdm import tqdm
 from random import uniform
-from final_dbconnect import DBConnection
-from module.setting import instCpCodeMgr, instStockChart, instCpCybos
-
-from final_dbconnect import DBConnection
+from module.setting import instStockChart, instCpCybos
+from final_dbconnect import DBConnection_stock
 from module.selenium_crawling import *
 
 today = str(date.today()).replace('-','')
@@ -38,7 +32,7 @@ def get_pymysql_stock_list(conn, db_name):
 def get_krx_stock_list(path):
     
 
-    target = r"\\DESKTOP-H2H6JNB\data\kos*.csv"
+    target = "./download/krx/kos*.csv"
     csv_list = glob.glob(target)
 
     if len(csv_list) >= 1:
@@ -84,17 +78,17 @@ def get_krx_stock_list(path):
     file_size_2 = os.path.getsize(new_csv_list[1])
 
     if file_size_1 < file_size_2:
-        shutil.move(new_csv_list[0], fr"\\DESKTOP-H2H6JNB\data\kospi_{today}.csv")
-        shutil.move(new_csv_list[1], fr"\\DESKTOP-H2H6JNB\data\kosdaq_{today}.csv")
+        shutil.move(new_csv_list[0], f'./download/krx/kospi_{today}.csv')
+        shutil.move(new_csv_list[1], f'./download/krx/kosdaq_{today}.csv')
     else:
-        shutil.move(new_csv_list[1], fr"\\DESKTOP-H2H6JNB\data\kospi_{today}.csv")
-        shutil.move(new_csv_list[0], fr"\\DESKTOP-H2H6JNB\data\kosdaq_{today}.csv")
+        shutil.move(new_csv_list[1], f'./download/krx/kospi_{today}.csv')
+        shutil.move(new_csv_list[0], f'/download/krx/kosdaq_{today}.csv')
 
 def get_compare_list(stock_list):
 # stock code가 테이블이 존재하는 비교
 
-    kospi = pd.read_csv(fr'\\DESKTOP-H2H6JNB\data\kospi_{today}.csv', encoding='euc-kr')
-    kosdaq = pd.read_csv(fr'\\DESKTOP-H2H6JNB\data\kosdaq_{today}.csv', encoding='euc-kr')
+    kospi = pd.read_csv(f'./download/krx/kospi_{today}.csv', encoding='euc-kr')
+    kosdaq = pd.read_csv(f'./download/krx/kosdaq_{today}.csv', encoding='euc-kr')
 
     kospi = kospi[kospi['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
     kosdaq = kosdaq[kosdaq['주식종류'] == '보통주'].iloc[:,[1,-3]].iloc[:,0]
@@ -119,14 +113,12 @@ def update_pymysql_exist(code, type, conn):
 # 존재할 경우, 대신증권에서 해당 종목 일봉 분봉 업데이트문
 
     sql = "SELECT MAX(날짜) FROM STOCK_INFO.{0} ".format(code)
-
     cur = conn.cursor()
     cur.execute(sql)
     max_day = cur.fetchone()[0] # 마지막 업데이트 날짜
 
     day_format = '%Y%m%d'
     start_day = datetime.strftime(datetime.strptime(str(max_day), day_format) + timedelta(days=1), day_format)
-
     # 최종 업데이트 날짜가 오늘 날짜와 같은 경우 배제
     if (str(max_day) != today):
         temp_df = pd.DataFrame()
@@ -222,7 +214,6 @@ def update_pymysql_empty(code, type, conn, today):
 # 삼성전자 종목 업데이트 우선 수행 후 template 생성
 
 def save_samsung_template(conn):
-    day_format = '%Y%m%d'
 
     yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
     template = update_pymysql_exist('005930', 'm', conn)
@@ -336,21 +327,18 @@ def db_list_update(krx):
 
     pct_error_list = []
     
-    pymysql_conn =DBConnection().get_pymysql_connection()
-    sqlalchemy_conn = DBConnection().get_sqlalchemy_connect_ip()
-
-    stock_list = get_pymysql_stock_list(pymysql_conn, 'stock_info')
+    stock_list = get_pymysql_stock_list(DBConnection_stock().get_pymysql_connection(), 'stock_info')
     get_krx_stock_list(path=krx)
     exist_list, empty_list = get_compare_list(stock_list)
     
-    template = save_samsung_template(pymysql_conn)
+    template = save_samsung_template(DBConnection_stock().get_pymysql_connection())
 
     for code in exist_list:
         
         print('현재 업데이트 중인 종목명 : ' + code)
-        min_df = update_pymysql_exist(code, 'm', pymysql_conn)
+        min_df = update_pymysql_exist(code, 'm', DBConnection_stock().get_pymysql_connection())
         if min_df.empty == False:
-            day_df = update_pymysql_exist(code, 'D', pymysql_conn)
+            day_df = update_pymysql_exist(code, 'D', DBConnection_stock().get_pymysql_connection())
             min_df = update_fillrow(min_df, template)
             concat_df = update_concat(min_df, day_df)
             update_df = update_label(concat_df)
@@ -358,7 +346,7 @@ def db_list_update(krx):
                 pct_error_list.append(code)
                 print('pct_label 에러 발생' + code)
 
-            sqlalchemy_update_insert(update_df, code, 'append', sqlalchemy_conn)
+            sqlalchemy_update_insert(update_df, code, 'append', DBConnection_stock().get_sqlalchemy_connect_ip())
     if len(pct_error_list) > 0:
         for stock in pct_error_list:
             print('에러 발생 종목 리스트 : ' + stock)
@@ -372,13 +360,13 @@ def db_list_update(krx):
         for code in empty_list:
             print('현재 업데이트 중인 종목명 : ' + code)
             try:
-                min_df = update_pymysql_empty(code, 'm', pymysql_conn, today)
-                day_df = update_pymysql_empty(code, 'D', pymysql_conn, today)
+                min_df = update_pymysql_empty(code, 'm', DBConnection_stock().get_pymysql_connection(), today)
+                day_df = update_pymysql_empty(code, 'D', DBConnection_stock().get_pymysql_connection(), today)
 
                 min_df = update_fillrow(min_df, template)
                 concat_df = update_concat(min_df, day_df)
                 update_df = update_label(concat_df)
-                sqlalchemy_update_insert(update_df, code, 'replace', sqlalchemy_conn)
+                sqlalchemy_update_insert(update_df, code, 'replace', DBConnection_stock().get_sqlalchemy_connect_ip())
             except:
                 print('에러 발생 종목 : ' + code)
                 error_list.append(code)
@@ -389,6 +377,6 @@ def db_list_update(krx):
         else:
             print('업데이트가 완료되었습니다.')
         
-    conn.close()
+    # conn.close()
     
     
