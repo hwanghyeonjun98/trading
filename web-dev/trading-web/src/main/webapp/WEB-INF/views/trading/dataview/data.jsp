@@ -90,7 +90,7 @@
 					<div class="date-search-form w-100 my-3">
 						<form name="dateSearchFrm" id="dateSearchFrm" method="post">
 							<div>
-								날짜 검섹 :
+								날짜 검색 :
 							</div>
 							<div class="col-sm-2">
 								<label for="startDate" class="visually-hidden">시작 날짜</label>
