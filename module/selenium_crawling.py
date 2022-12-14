@@ -46,8 +46,6 @@ def selenium_driver_load(driver_path: str, url: str, file_save_path: str) -> web
 
 	driver.get(url)
 
-
-
 	print("크롤링 실행")
 	return driver
 
@@ -132,9 +130,9 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 				driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 				driver.implicitly_wait(5)
 				driver.find_element(By.CLASS_NAME, apply_btn).click()
+				time.sleep(2)
 			else:
 				pass
-			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -183,9 +181,9 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 				driver.find_element(By.CSS_SELECTOR, start_year_new_input).send_keys(start_date)
 				driver.implicitly_wait(5)
 				driver.find_element(By.CSS_SELECTOR, apply_new_btn).click()
+				time.sleep(8)
 			else:
 				pass
-			time.sleep(10)
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
@@ -222,9 +220,9 @@ def investing_coins(coins: list, start_date: str, driver: webdriver, new_data=''
 				driver.find_element(By.CSS_SELECTOR, start_year_input).send_keys(start_date)
 				driver.implicitly_wait(5)
 				driver.find_element(By.CLASS_NAME, apply_btn).click()
+				time.sleep(6)
 			else:
 				pass
-			time.sleep(6)
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
