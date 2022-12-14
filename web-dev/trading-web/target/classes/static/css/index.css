@@ -94,20 +94,19 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
  
-	line-height: 2em;
+	line-height: 1.7em;
 	padding-left: 1em;
 	font-weight: bold;
 }
 
 
 
-p {
-	margin-top:20px;
+.snap {
 	font-size:1.2em;
 	text-align: right;
   }
   .display {
-	font-size:2em; 
+	font-size:1.2em; 
 	font-weight:bold;
-	color: var(--color-purple);      
+	color: var(--color-dark-purple);      
   }
