@@ -34,9 +34,9 @@ def selenium_driver_load(driver_path: str, url: str, file_save_path: str) -> web
 	)
 
 	# 크롬창 안열고 크롤링 설정
-	# options.add_argument('headless')
-	# options.add_argument('window-size=1920x1080')
-	# options.add_argument("disable-gpu")
+	options.add_argument('headless')
+	options.add_argument('window-size=1920x1080')
+	options.add_argument("disable-gpu")
 
 	# user agent 설정
 	user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
