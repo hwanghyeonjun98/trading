@@ -51,7 +51,7 @@ def get_krx_target(path):
     csv_list = glob.glob(target)
 
     if len(csv_list) >= 1: # 파일이 있는 경우
-        
+        print('KRX target 파일이 존재')
         csv_date = csv_list[0].split('.')[1][-8:] # 날짜 확인
         
         if csv_date != today: # 날짜가 다른 경우

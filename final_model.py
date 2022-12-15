@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import os
+import glob
 
 from tqdm import tqdm
 from datetime import date
@@ -139,9 +140,31 @@ class DataFrameCreate(DBNetwork):
         return complete_df
   
     def get_corr_list(self):
-        stock_df = self.complete_df
-        corr_matrix = stock_df.corr()
-        corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
+
+        # 대형주_20221215_6개월 기준
+        # 소형주_20221215_6개월 =>
+
+        target = "./pickle/pickle_corr_matrix/*.pkl"
+        pkl_list = glob.glob(target)
+
+        if len(pkl_list) >= 1: # 파일이 있는 경우
+    
+            for i in range(len(pkl_list)):
+
+                stock_type = pkl_list[i].split('\\')[-1].split('_')[0] # 소형주
+                stock_day = pkl_list[i].split('\\')[-1].split('_')[1] # 오늘
+                stock_period = pkl_list[i].split('\\')[-1].split('_')[2] # 6개월
+
+                # 파일은 있는데 날짜가 일치하지 않는 경우
+                if (stock_type == self.stock_type) & (stock_day != self.today) & (stock_period == self.period):
+                    stock_df = self.complete_df
+                    corr_matrix = stock_df.corr()
+                    corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
+
+        else: # 파일 없는 경우
+            stock_df = self.complete_df
+            corr_matrix = stock_df.corr()
+            corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
 
         drop_list = []
         for i, cor in tqdm(enumerate(corr_matrix.columns)):
@@ -172,7 +195,7 @@ class DataFrameCreate(DBNetwork):
         complete_corr.to_pickle(f'./pickle/pickle_corr_complete/{self.stock_type}_{self.today}_{self.period}_10개_{self.corr}.pkl')
         self.complete_corr = complete_corr
         return complete_corr
-    
+
     
 class LstmNetwork(DataFrameCreate):
     def __init__(self, *args, **kwargs):

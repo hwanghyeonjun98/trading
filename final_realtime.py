@@ -44,12 +44,12 @@ def get_realtime_stock_info(code, today):
         index_ = str(instStockChart.GetDataValue(0,i))
         index.append(index_)
 
-    stock_info = pd.DataFrame(columns=numcolumn[:], index=index)
+    stock_info = pd.DataFrame(columns=numcolumn, index=index)
 
     for num in range(numrow):
         for col in range(len(numcolumn)):
             # 1,2,3,4,5,6,7,8,9, 10
-            stock_info.iloc[num, col-1] = str(instStockChart.GetDataValue(col,num))
+            stock_info.iloc[num, col] = str(instStockChart.GetDataValue(col,num))
 
     if instCpCybos.GetLimitRemainCount(1) < 3:
         while True:
@@ -352,11 +352,10 @@ def real_trading(predict_df, code, account_value, each_target_df, now):
 
 def get_pymysql_db_table_check(table_schema, code, conn):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
-    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = {table_schema} AND table_name = '{code}_{today}'"
+    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = '{table_schema}' AND table_name = '{code}_{today}'"
 
     cur = conn.cursor()
-    cur.execute(sql)
-    count = cur.fetchone()[0]
+    count = cur.execute(sql)
 
     return count
 
