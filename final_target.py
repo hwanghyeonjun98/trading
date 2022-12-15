@@ -4,10 +4,10 @@ import os
 import time
 import glob
 import shutil
-
-from final_dbconnect import DBConnection
 from pandas.tseries.offsets import BDay
 from module.selenium_crawling import selenium_driver_load, By
+
+from final_dbconnect import DBConnection
 
 # 날짜 지정 필수
 today = str(date.today()).replace('-','')
@@ -103,7 +103,7 @@ def get_target_stock_list():
 
 
 
-
+#########################################################################################################################################
 
 def get_target(path):
     # 대상 종목 설정
@@ -116,3 +116,5 @@ def get_target(path):
     investing_df = get_investing_data(DBConnection().get_sqlalchemy_connect_ip(), investing_data_list)
 
     return kospi_list, kosdaq_list, investing_df
+
+#########################################################################################################################################

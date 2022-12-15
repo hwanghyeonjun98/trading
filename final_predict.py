@@ -17,7 +17,7 @@ def stock_predict(stock_list,col_list ,model):
     for i in range(10):    # while True:
         for code in stock_list:
             
-            sql = f"SELECT * FROM trading_data.{code}_{today} ORDER BY 시간 DESC LIMIT 1"
+            sql = f"SELECT * FROM predict_data.{code}_{today} ORDER BY 시간 DESC LIMIT 1"
             table_data = sqlalchemy_conn.execute(sql) 
             table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
             

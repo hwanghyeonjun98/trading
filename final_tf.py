@@ -3,7 +3,8 @@ from final_db_update import *
 from final_realtime import *
 from final_predict import *
 from final_target import *
-from investing_update import investing_update
+
+from keras.models import load_model
 import tensorflow as tf
 
 # tf gpu 메모리 관련 코드 
