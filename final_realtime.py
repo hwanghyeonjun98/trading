@@ -18,13 +18,13 @@ yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 def get_pymysql_day_stock(conn, code, yesterday, investing_df):
 
     code = code[-6:]
-    sql = f"SELECT 날짜, 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={yesterday} ORDER BY 시간 DESC LIMIT 1"
+    sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={yesterday} ORDER BY 시간 DESC LIMIT 1"
 
     result = conn.execute(sql)
 
     target_df = pd.DataFrame(result.fetchall())
-    target_df.set_index('날짜', inplace=True)
-    target_df.rename(index={int(yesterday):today}, inplace=True)
+    # target_df.set_index('날짜', inplace=True)
+    # target_df.rename(index={int(yesterday):today}, inplace=True)
     target_df = pd.concat([target_df, investing_df], axis=1)
 
     return target_df
@@ -58,7 +58,7 @@ def get_realtime_stock_info(code, today):
         index_ = str(instStockChart.GetDataValue(0,i))
         index.append(index_)
 
-    stock_info = pd.DataFrame(columns=numcolumn[1:], index=index)
+    stock_info = pd.DataFrame(columns=numcolumn[:], index=index)
 
     for num in range(numrow):
         for col in range(len(numcolumn)):
