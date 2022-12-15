@@ -377,7 +377,7 @@ def realtime_trading(stock_list, investing_df):
             for code in stock_list:
                 each_target_df = stock_trading_db(code, investing_df)
                 while True:
-                    count = get_pymysql_db_table_check('predict_data', code, DBConnection_trading().get_sqlalchemy_connect_ip())
+                    count = get_pymysql_db_table_check('predict_data', code, DBConnection_trading().get_pymysql_connection())
                     time.sleep(1)
                     if count == 1:
                         break
