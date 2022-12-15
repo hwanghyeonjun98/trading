@@ -330,9 +330,9 @@ def real_trading(predict_df, code, account_value, each_target_df, now):
             except:
                 print('현재 매수 매도를 할 수 없습니다.')
                 print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
+                
             print('------------------------------------------------------------------------')
-
-        
+            
         elif (predict_df.loc[0,0] > predict_df.loc[0,1]) & (amount > 0):
             print('------------------------------- 매도 위치 -------------------------------')
             print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
@@ -361,17 +361,17 @@ def real_trading(predict_df, code, account_value, each_target_df, now):
                 print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
             print('**********************************************************************')
             
-        else:
-            print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 보유 수량 : ' + str(amount))
+        # else:
+            # print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 보유 수량 : ' + str(amount))
                 
         print('종목 별 거래 후 잔고 : ' + str(cost))
         #  잔고가 얼마냐?
     except:
         print('현재 보유 중인 주식이 없습니다.')
 
-def get_pymysql_db_table_check(code, conn):
+def get_pymysql_db_table_check(table_schema, code, conn):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
-    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'predict_data' AND table_name = '{code}_{today}'"
+    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = {table_schema} AND table_name = '{code}_{today}'"
 
     cur = conn.cursor()
     cur.execute(sql)
@@ -396,7 +396,7 @@ def realtime_trading(stock_list, investing_df):
             for code in stock_list:
                 each_target_df = stock_trading_db(code, investing_df)
                 while True:
-                    count = get_pymysql_db_table_check(code, DBConnection_trading().get_sqlalchemy_connect_ip())
+                    count = get_pymysql_db_table_check('predict_data', code, DBConnection_trading().get_sqlalchemy_connect_ip())
                     time.sleep(1)
                     if count == 1:
                         break
