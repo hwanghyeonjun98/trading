@@ -40,8 +40,7 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼�
 	const searchUrl = "/api/data/dateSearch/" + tableName + "내역/" + startDate + "/" + endDate; // API URL
 
 	// 예외 처리
-	const nothing = "<tr><td colspan='7' class='text-center'>데이터가 없습니다.</td></tr>";
-	const searchError = "<tr><td colspan='7' class='text-center'>날짜를 확인 해주세요.</td></tr>";
+	const searchError = "<tr><td colspan='7' class='text-center'>데이터가 없습니다. 날짜를 확인 해주세요.</td></tr>";
 	$.ajax({
 		type    : "POST", // GET, POST, PUT, DELETE
 		url     : searchUrl,
@@ -67,10 +66,6 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼�
 				$("#data-table tbody").append(str);
 			});
 			$("#data-table").attr("data-table", tableName);
-
-			if ($("#data-table tbody tr").length === 0) {
-				$("#data-table tbody").append(nothing);
-			}
 		},
 		error   : function () { // 통신 실패시 진행하는 코드
 			console.log("실패");

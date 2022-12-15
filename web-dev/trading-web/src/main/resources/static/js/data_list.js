@@ -93,7 +93,10 @@ window.addEventListener("load", () => {
 		const btnAll = document.querySelectorAll(".data-view-btn");
 		const dataTitle = document.querySelector(".data-title .data-name");
 		const dataTable = document.querySelector("#data-table");
-		if (name !== defaultName) {
+
+		if (defaultName !== name) {
+			dataTable.dataset.table = defaultName;
+		} else {
 			btnAll.forEach((el) => {
 				const dataName = el.dataset.table;
 
@@ -104,8 +107,6 @@ window.addEventListener("load", () => {
 
 			});
 			dataTable.dataset.table = name;
-		} else {
-			dataTable.dataset.table = defaultName;
 		}
 	}
 );

@@ -4,10 +4,10 @@ import os
 import time
 import glob
 import shutil
-
-from final_dbconnect import DBConnection
 from pandas.tseries.offsets import BDay
 from module.selenium_crawling import selenium_driver_load, By
+
+from final_dbconnect import DBConnection
 
 # 날짜 지정 필수
 today = str(date.today()).replace('-','')
@@ -52,7 +52,7 @@ def get_krx_target(path):
 
     if len(csv_list) >= 1: # 파일이 있는 경우
         
-        csv_date = csv_list[0].split('.')[0][-8:] # 날짜 확인
+        csv_date = csv_list[0].split('.')[1][-8:] # 날짜 확인
         
         if csv_date != today: # 날짜가 다른 경우
             os.remove(csv_list[0])
@@ -103,7 +103,7 @@ def get_target_stock_list():
 
 
 
-
+#########################################################################################################################################
 
 def get_target(path):
     # 대상 종목 설정
@@ -116,3 +116,5 @@ def get_target(path):
     investing_df = get_investing_data(DBConnection().get_sqlalchemy_connect_ip(), investing_data_list)
 
     return kospi_list, kosdaq_list, investing_df
+
+#########################################################################################################################################

@@ -1,27 +1,22 @@
 import pickle
-import pymysql
 import numpy as np
 import pandas as pd
+import os
 
 from tqdm import tqdm
 from datetime import date
-from sqlalchemy import create_engine
 from pandas.tseries.offsets import BDay
 
-from keras.models import load_model
-from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 
 from tensorflow.keras import optimizers
 from tensorflow.keras.models import Model
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, LSTM
 
-from tensorflow.keras.activations import softmax
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import Dropout, PReLU, Input, BatchNormalization, Activation
+from tensorflow.keras.layers import Input, BatchNormalization, Activation
 
 from final_dbconnect import DBConnection
 
@@ -135,6 +130,9 @@ class DataFrameCreate(DBNetwork):
             complete_df[col] = complete_df[col].shift(381)
         complete_df.dropna(inplace=True)
         
+        if not os.path.isdir('../data/pickle_complete'):
+            os.makedirs('../data/pickle_complete')
+
         complete_df.to_pickle(f'../data/pickle_complete/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
         self.sq_con.close()
         self.complete_df = complete_df
