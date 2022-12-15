@@ -15,20 +15,6 @@ from final_dbconnect import *
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 
-def get_pymysql_day_stock(conn, code, yesterday, investing_df):
-
-    code = code[-6:]
-    sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={yesterday} ORDER BY 시간 DESC LIMIT 1"
-
-    result = conn.execute(sql)
-
-    target_df = pd.DataFrame(result.fetchall())
-    # target_df.set_index('날짜', inplace=True)
-    # target_df.rename(index={int(yesterday):today}, inplace=True)
-    target_df = pd.concat([target_df, investing_df], axis=1)
-
-    return target_df
-
 def get_realtime_stock_info(code, today):
     
     instStockChart.SetInputValue(0, 'A'+ code) # 종목명
@@ -258,13 +244,8 @@ def ds_account_db_update(conn):
 
 
 def stock_trading_db(code, investing_df):
-    
-    # 전날 일봉 데이터와 investing data
-    day_stock_investing_df = get_pymysql_day_stock(DBConnection_trading().get_sqlalchemy_connect_ip(), code, yesterday, investing_df) 
     # 업데이트 중이 분봉 데이터
     each_target_df = get_realtime_stock_info(code, today) 
-    #  (전날 일봉 데이터와 investing data) + 업데이트 데이터
-    each_target_df = pd.concat([each_target_df, day_stock_investing_df], axis=1)
     ## DB 저장
     sqlalchemy_trading_insert(each_target_df, code, 'replace', DBConnection_trading().get_sqlalchemy_connect_ip())
     
