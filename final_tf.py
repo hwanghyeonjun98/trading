@@ -21,7 +21,7 @@ kospi_list, kosdaq_list, investing_df = get_target(path=r'D:\systrader-dev\tradi
 # model_big_year = load_model(modelpath_big_year)
 
 # # 대형주 1년 트레이딩
-# stock_predict(kospi_list, investing_df,col_list_big_year, investing_df, model_big_year)
+# stock_predict(kospi_list, investing_df, col_list_big_year, model_big_year)
 
 
 
@@ -32,7 +32,7 @@ kospi_list, kosdaq_list, investing_df = get_target(path=r'D:\systrader-dev\tradi
 # model_big_six_month = load_model(modelpath_big_six_month)
 
 # # 대형주 6개월 트레이딩
-# stock_predict(kospi_list, investing_df,col_list_big_six_month, investing_df, model_big_six_month)
+# stock_predict(kospi_list, investing_df, col_list_big_six_month, model_big_six_month)
 
 
 
@@ -43,7 +43,7 @@ kospi_list, kosdaq_list, investing_df = get_target(path=r'D:\systrader-dev\tradi
 # model_small_year = load_model(modelpath_small_year)
 
 # # 소형주 1년 트레이딩
-# stock_predict(kosdaq_list, investing_df,col_list_small_year, investing_df, model_small_year)
+# stock_predict(kosdaq_list, investing_df, col_list_small_year, model_small_year)
 
 
 
@@ -54,7 +54,7 @@ modelpath_small_six_month = ls_small_six_month.LstmModel()
 model_small_six_month = load_model(modelpath_small_six_month)
 
 # 소형주 6개월 트레이딩
-stock_predict(kosdaq_list, investing_df,col_list_small_six_month, investing_df, model_small_six_month)
+stock_predict(kosdaq_list, investing_df, col_list_small_six_month, model_small_six_month)
 
 
 

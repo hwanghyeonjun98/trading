@@ -4,18 +4,26 @@ from sklearn.preprocessing import MaxAbsScaler
 import pandas as pd
 import time
 
-from final_realtime import get_pymysql_db_table_check
+# from final_realtime import get_pymysql_db_table_check
 from final_dbconnect import *
 
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 
+def get_pymysql_traidng_table_check(code, conn):
+    # 현재 DB 내 존재하는 테이블 존재 여부 확인
+    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'trading_data' AND table_name = '{code}_{today}'"
+
+    cur = conn.cursor()
+    count = cur.execute(sql)
+
+    return count
 
 def get_pymysql_day_stock(conn, code, yesterday, investing_df):
 
     code = code[-6:]
     sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={yesterday} ORDER BY 시간 DESC LIMIT 1"
-
+    
     result = conn.execute(sql)
 
     target_df = pd.DataFrame(result.fetchall())
@@ -26,7 +34,7 @@ def get_pymysql_day_stock(conn, code, yesterday, investing_df):
     return target_df
 
 ## predict 값 DB에 넣기
-def stock_predict(stock_list, col_list, investing_df, model):
+def stock_predict(stock_list, investing_df, col_list,  model):
 
     pred_df = pd.DataFrame()
     while True:
@@ -37,20 +45,27 @@ def stock_predict(stock_list, col_list, investing_df, model):
             time.sleep(1)
         else:          
             for code in stock_list:
+                cnt = 0
                 while True:
-                    count = get_pymysql_db_table_check('trading_data', code, DBConnection_trading().get_sqlalchemy_connect_ip())
+                    cnt += 1
+                    if cnt == 100:
+                        print('진행중~~~~~~~')
+                        cnt = 0
+                    count = get_pymysql_traidng_table_check(code, DBConnection_trading().get_pymysql_connection())
                     if count == 1:
                         break
                     time.sleep(1)
                 # 전날 일봉 데이터와 investing data
+                
                 day_stock_investing_df = get_pymysql_day_stock(DBConnection_trading().get_sqlalchemy_connect_ip(), code, yesterday, investing_df)
-                 
+                
+                # day_stock_investing_df.reset_index(drop=True, inplace=True)
                 sql = f"SELECT * FROM trading_data.{code}_{today} ORDER BY 시간 DESC LIMIT 1"
                 table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
                 
-                 #  (전날 일봉 데이터와 investing data) + 업데이트 데이터
-                table_df = pd.concat([table_df, day_stock_investing_df], axis=1)
+            
+                table_df = pd.concat([table_df, day_stock_investing_df], axis=1 )
                 
                 c_list = list(col_list.index)
                 table_df = table_df.set_index(['날짜'])
@@ -58,7 +73,7 @@ def stock_predict(stock_list, col_list, investing_df, model):
                 min_abs_scaler = MaxAbsScaler()
                 X_pred_sc = min_abs_scaler.fit_transform(each_target_df)
                 X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
-                
+            
                 predict = model.predict(X_pred )
                 
                 predict_df = pd.DataFrame(predict)

@@ -40,7 +40,7 @@ def get_investing_data(conn, investing_data_list):
         investing_df = pd.concat([investing_df, temp_df], axis=1)
     
     investing_df.drop(columns='날짜', axis=1, inplace=True) # 어제 날짜
-    investing_df.rename(index={0:today}, inplace=True) # 오늘 날짜로 reindex
+    # investing_df.rename(index={0:today}, inplace=True) # 오늘 날짜로 reindex
     
     return investing_df
 
