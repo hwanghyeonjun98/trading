@@ -33,4 +33,5 @@ public class TradingRestController {
 		return mapper.kospiChartList();
 	}
 
+
 }
