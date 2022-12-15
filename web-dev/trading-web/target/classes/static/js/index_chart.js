@@ -26,7 +26,7 @@ const options = {
 		}],
 		defaultLocale : "ko",
 		toolbar : {
-      show : false
+	show : false
     }
 	}, tooltip     : {
 		enabled : true,
@@ -64,7 +64,7 @@ chart.render();
 
 let chartUrl = "/api/data/chart/코스피지수내역";
 
-  $.getJSON(chartUrl, function (response) {
+$.getJSON(chartUrl, function (response) {
 		let dataList = [];
 
 		response.forEach((item) => {
@@ -76,3 +76,5 @@ let chartUrl = "/api/data/chart/코스피지수내역";
 			data : dataList
 		}]);
 	});
+
+

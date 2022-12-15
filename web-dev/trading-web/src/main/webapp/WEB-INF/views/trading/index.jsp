@@ -27,8 +27,11 @@
 				}
 
 			</script>
-			<section>
-				<article>
+			<section class="main-list">
+				<article class="w-75">
+					그래프들어갈 자리
+				</article>
+				<article class="recommend-list w-25">
 						<div class="clear-wrapper">
 						</div>
 					<div class="recommendation-keywords-container">
@@ -112,18 +115,25 @@
 							</div>
 						</div>
 					</div>
+				</article>
+			</section>
+					<article>
 					<a href="https://deepsearch-jira.atlassian.net/servicedesk/customer/kb/view/636583937" class="banner" target="_blank" rel="noopener noreferrer">
 						<img src="https://deepsearchimages.wpcomstaging.com/wp-content/uploads/cards/2022/11/banner_20221124-20221124-053132.png" alt="[DAP] 경제 지표 개선 공지">
 					</a>
+					</article>
+					<section class="main-list">
 					<h2 class="main_title">주요 경제</h2>
-					<div class="groups">
+					<div class="d-flex justify-content-start align-items-start w-100" >
+					<article class="w-75">
+					<div class="groups d-flex justify-content-start align-items-start">
 						<div class="economic-indicator">
 							<div class="jot"></div>
 							<div id="root">
 							</div>
 							<script src='app.js' type="module"></script>
 							<div class="indicator-name">
-								<a href="/analytics/economic-indicator/BOK%3A802Y001.0001000">코스피</a>
+								<a href="/dataview/data/코스피지수">코스피</a>
 							</div>
 							<div class="main-value"><span class="change-rate_neg">2,419.32</span>
 							</div>
@@ -136,7 +146,7 @@
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<a href="/analytics/economic-indicator/BOK%3A802Y001.0089000">코스닥</a>
+								<a href="/dataview/data/코스닥">코스닥</a>
 							</div>
 							<div class="main-value"><span class="change-rate_pos">733.32</span>
 							</div>
@@ -149,7 +159,7 @@
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<a href="/analytics/economic-indicator/BOK%3A731Y001.0000001">원달러환율</a>
+								<a href="/dataview/data/usdkrw">원달러환율</a>
 							</div>
 							<div class="main-value"><span class="change-rate_neg">1,293.2</span></div>
 							<div class="sub-value">전월대비<span class="change-rate_neg">-9.06%</span></div>
@@ -161,7 +171,7 @@
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<a href="/analytics/economic-indicator/BOK%3A817Y002.010101000">콜금리</a>
+								<a href="/dataview/data/btckrwbithumb">비트코인</a>
 							</div>
 							<div class="main-value"><span class="change-rate_pos">3.224</span></div>
 							<div class="sub-value">전월대비<span class="change-rate_pos">+7.75%</span></div>
@@ -172,14 +182,15 @@
 							</div>
 						</div>
 					</div>
-
+					</article>
+					<article class="w-25">
 					<div class="chartFrame">
 						<h2>코스피 지수 현황</h2>
 									<div id="chart-area">
 									</div>			
 									<h2>시가 총액 상위</h2>
 										<hr />
-										   <div id="container">
+										<div id="container">
 											<ul id="rolling">
 												<li>1.삼성전자</li>
 												<li>2.LG 에너지 솔루션</li>
@@ -192,15 +203,12 @@
 												<li>9.NAVER</li>
 												<li>10.카카오</li>
 											</ul>
-											</div>
+										</div>
 													
 					</div>	
-
-					<div id="chart-area">
-						
-					</div>
-				</article>
-			</section>
+					</article>
+				</div>
+				</section>
 
 		</main>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
