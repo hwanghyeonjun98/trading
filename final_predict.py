@@ -82,7 +82,7 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                 predict = model.predict(X_pred )
                 
                 predict_df = pd.DataFrame(predict)
-                predict_df['비교'] = (predict_df['0'] - predict_df['1'])
+                predict_df['비교'] = (predict_df[0] - predict_df[1])
                 
                 pred_df.append(predict_df)
                 
