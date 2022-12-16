@@ -13,9 +13,7 @@
 .main-list .w-{
 	flex: 1 1 20%;
 } */
-.recommend-list{
 
-}
 
 .recommendation-keywords-container{
 	border: 1px solid var(--color-dark-green);
@@ -47,9 +45,9 @@
 
 .economic-indicator {
 	margin: 10px;
-	border: 1px solid var(--color-gray);;
+	border: 2px solid var(--color-gray);;
 	padding: 35px;
-	width: 220px;
+	width: 320px;
 	
 }
 
@@ -98,14 +96,14 @@
 	margin: 10px ;
 	width: 100%;
 }
- 
+
 #rolling > li {
 	height: 2em;
- 
+
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
- 
+
 	line-height: 1.7em;
 	padding-left: 1em;
 	font-weight: bold;
@@ -116,9 +114,16 @@
 .snap {
 	font-size:1.2em;
 	text-align: right;
-  }
-  .display {
+}
+.display {
 	font-size:1.2em; 
 	font-weight:bold;
 	color: var(--color-dark-purple);      
-  }
+}
+
+.hr-solid {
+	border : 0px;
+	border-top: 5px solid var(--color-block);
+}
+
+
