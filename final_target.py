@@ -7,7 +7,7 @@ import shutil
 from pandas.tseries.offsets import BDay
 from module.selenium_crawling import selenium_driver_load, By
 
-from final_dbconnect import DBConnection
+from final_dbconnect import DBConnection, DBConnection_target
 
 # 날짜 지정 필수
 today = str(date.today()).replace('-','')
@@ -40,7 +40,7 @@ def get_investing_data(conn, investing_data_list):
         investing_df = pd.concat([investing_df, temp_df], axis=1)
     
     investing_df.drop(columns='날짜', axis=1, inplace=True) # 어제 날짜
-    investing_df.rename(index={0:today}, inplace=True) # 오늘 날짜로 reindex
+    # investing_df.rename(index={0:today}, inplace=True) # 오늘 날짜로 reindex
     
     return investing_df
 
@@ -51,7 +51,7 @@ def get_krx_target(path):
     csv_list = glob.glob(target)
 
     if len(csv_list) >= 1: # 파일이 있는 경우
-        
+        print('KRX target 파일이 존재')
         csv_date = csv_list[0].split('.')[1][-8:] # 날짜 확인
         
         if csv_date != today: # 날짜가 다른 경우
@@ -85,7 +85,7 @@ def get_krx_target(path):
 
     shutil.move(new_csv_list[0], f'./download/target/target_{today}.csv')
 
-def get_target_stock_list():
+def get_target_stock_list(conn, type):
 
     # 대상 종목 추출
     target_df = pd.read_csv(f'./download/target/target_{today}.csv', encoding='euc-kr')
@@ -99,22 +99,35 @@ def get_target_stock_list():
     kospi_list = kospi['종목코드'].to_list()
     kosdaq_list = kosdaq['종목코드'].to_list()
 
-    return kospi_list, kosdaq_list
+    target_data = {'대형주' : kospi_list, '소형주' : kosdaq_list}
 
-
+    target_df = pd.DataFrame(target_data)
+    target_df.to_sql(name='target_{0}'.format(today), con=conn, if_exists=type, index=False)
 
 #########################################################################################################################################
 
 def get_target(path):
     # 대상 종목 설정
     get_krx_target(path=path)
-    kospi_list, kosdaq_list = get_target_stock_list()
+    get_target_stock_list(DBConnection_target().get_sqlalchemy_connect_ip(), 'replace')
     
     # Investing Data 생성
     
     investing_data_list = get_pymysql_db_list(DBConnection().get_sqlalchemy_connect_ip(), 'investing_data')
     investing_df = get_investing_data(DBConnection().get_sqlalchemy_connect_ip(), investing_data_list)
 
-    return kospi_list, kosdaq_list, investing_df
+    return investing_df
 
 #########################################################################################################################################
+
+def get_target_list_db():
+    
+    sql = "SELECT * FROM target_data.target_{0}".format(yesterday)
+
+    target_data = DBConnection_target().get_sqlalchemy_connect_ip().execute(sql)
+    target_df = pd.DataFrame(target_data.fetchall())
+
+    kospi_list = target_df['대형주'].to_list()
+    kosdaq_list = target_df['소형주'].to_list()
+
+    return kospi_list, kosdaq_list
