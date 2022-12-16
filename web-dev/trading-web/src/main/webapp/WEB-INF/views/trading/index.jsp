@@ -18,6 +18,7 @@
 			<main class="p-3">
 			<div class="snap">TIME : <span id="current" class="display"></span></div>
 			<script>
+				
 				setInterval(displayNow, 1000); // 1초마다 시간 갱신
 				function displayNow() {
 				let now = new Date();
@@ -123,63 +124,62 @@
 					</a>
 					</article>
 					<section class="main-list">
-					<h2 class="main_title">주요 경제</h2>
+					<h2 class="main_title">주식 관련 기사 추천</h2>
 					<div class="d-flex justify-content-start align-items-start w-100" >
 					<article class="w-75">
-					<div class="groups d-flex justify-content-start align-items-start">
+					<div class="groups d-flex justify-content-start align-items-start flex-wrap">
 						<div class="economic-indicator">
 							<div class="jot"></div>
 							<div id="root">
 							</div>
 							<script src='app.js' type="module"></script>
 							<div class="indicator-name">
-								<a href="/dataview/data/코스피지수">코스피</a>
+								<img src="https://imgnews.pstatic.net/image/018/2022/12/16/0005388149_003_20221216095701914.jpg?type=w540" width="255" height="265">
+								<hr class='hr-solid'>
+								<span>국내 이슈</span>
 							</div>
-							<div class="main-value"><span class="change-rate_neg">2,419.32</span>
+							<div class="main-value">주제 :<span class="change-rate_pos">한국전력</span>
 							</div>
-							<div class="sub-value">3일 전 대비<span class="change-rate_neg">-0.62%</span></div>
-							<div class="sub-value">전년도 대비<span class="change-rate_neg">-18.5%</span></div>
+							<div class="sub-value">기사 제목  :<span class="change-rate_pos">9부능선 넘은 한전법 개정안…'디폴트 위기' 한전 한숨 돌렸다</span></div>
 							<div class="date-info">
-								<div class="cycle">주기: Daily</div>
-								<div class="date">2022. 12. 05</div>
+								<hr class='hr-solid'>
+								<button class="btn btn-success" onClick="location.href='https://finance.naver.com/item/news_read.naver?article_id=0005388149&office_id=018&code=015760&sm=title_entity_id.basic'">링크로 이동</button>
 							</div>
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<a href="/dataview/data/코스닥">코스닥</a>
+								<img src="https://imgnews.pstatic.net/image/008/2022/12/16/0004829736_001_20221216072901029.jpg?type=w540" width="255" height="265">
+								<hr class='hr-solid'>
+								<span>해외 이슈</span>
 							</div>
-							<div class="main-value"><span class="change-rate_pos">733.32</span>
-							</div>
-							<div class="sub-value">3일 전 대비<span class="change-rate_pos">+0.05%</span></div>
-							<div class="sub-value">전년도 대비<span class="change-rate_neg">-26.56%</span></div>
+							<div class="main-value">주제 :<span class="change-rate_neg">금리</span></div>
+							<div class="sub-value">기사 제목  :<span class="change-rate_neg">'고금리→침체' 우려에 증시급락..."소비 불안"[뉴욕마감]</span></div>
 							<div class="date-info">
-								<div class="cycle">주기: Daily</div>
-								<div class="date">2022. 12. 05</div>
+								<hr class='hr-solid'>
+								<button class="btn btn-success" onClick="location.href='https://finance.naver.com/news/news_read.naver?article_id=0004829736&office_id=008&mode=mainnews&type=&date=2022-12-16&page=1'">링크로 이동</button>
 							</div>
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<a href="/dataview/data/usdkrw">원달러환율</a>
+								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F001%2F2022%2F10%2F05%2FPYH2022100502140001300_P4_20221005092413890.jpg&type=l340_165" width="255" height="265">
+								<hr class='hr-solid'>
+								<span>환율 관련</span>
 							</div>
-							<div class="main-value"><span class="change-rate_neg">1,293.2</span></div>
-							<div class="sub-value">전월대비<span class="change-rate_neg">-9.06%</span></div>
-							<div class="sub-value">전년도 대비<span class="change-rate_pos">+9.72%</span></div>
-							<div class="date-info">
-								<div class="cycle">주기: Daily</div>
-								<div class="date">2022. 12. 06</div>
-							</div>
+							<div class="main-value">주제 :<span class="change-rate_neg">환율</span></div>
+							<div class="sub-value">기사 제목  :<span class="change-rate_neg">코스피 하락, 환율 상승 출발</span></div>
+							<hr class='hr-solid'>
+							<button class="btn btn-success" onClick="location.href='https://newsis.com/view/?id=NISI20221216_0019595479'">링크로 이동</button>
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<a href="/dataview/data/btckrwbithumb">비트코인</a>
+								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTJfMTAw%2FMDAxNjY4MjE4MzIxMTAw.uN064CZvfnaj08SWljDs-jm4--M_pjT_9Sk3lP25XpEg.rx2QFgxITz7Kj4joJg5LZkwNq6nH1vVcDvv-WZJ3aZwg.JPEG.p9573198%2F0006452791%25A3%25DF002%25A3%25DF20221112052801742.jpg&type=a340" width="255" height="265">
+								<hr class='hr-solid'>
+								<span>비트코인 관련</span>
 							</div>
-							<div class="main-value"><span class="change-rate_pos">3.224</span></div>
-							<div class="sub-value">전월대비<span class="change-rate_pos">+7.75%</span></div>
-							<div class="sub-value">전년도 대비<span class="change-rate_pos">+237.59%</span></div>
-							<div class="date-info">
-								<div class="cycle">주기: Daily</div>
-								<div class="date">2022. 12. 05</div>
-							</div>
+							<div class="main-value">주제 :<span class="change-rate_neg">FTX 사태</span></div>
+							<div class="sub-value">기사 제목  :<span class="change-rate_neg">뱅크런은 어떻게 시작됐나…FTX 사태 주요 일지</span></div>
+							<hr class='hr-solid'>
+							<button class="btn btn-success " onClick="location.href='http://www.coindeskkorea.com/news/articleView.html?idxno=82076'">링크로 이동</button>
 						</div>
 					</div>
 					</article>
@@ -209,6 +209,8 @@
 					</article>
 				</div>
 				</section>
+				
+				
 
 		</main>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
