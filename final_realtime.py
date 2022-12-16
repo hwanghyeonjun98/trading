@@ -363,14 +363,19 @@ def get_pymysql_predict_table_check(code, conn):
 ###########################################################################################################################################################################
 def realtime_trading(stock_list, investing_df):
     account_value = ds_account_value()  # 주문 가능 예수 금액
+    time_cnt = 0
     while True:
         now = datetime.now()
-        if (now.minute > 30) & (now.hour >= 15):
+        if (now.minute == 30) & (now.hour == 15):
             final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip(), today)
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
                   
             break
-        elif (now.hour < 9):
+        elif (now.hour < 9) | (now.hour > 16):
+            time_cnt += 1
+            if time_cnt == 100:
+                print('박대기중~~~~~~~')
+                time_cnt = 0
             time.sleep(1)
         else:
             for code in stock_list:

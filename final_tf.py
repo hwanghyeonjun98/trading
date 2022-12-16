@@ -1,6 +1,6 @@
 from final_model import *
-from final_db_update import *
-from final_realtime import *
+# from final_db_update import *
+# from final_realtime import *
 from final_predict import *
 from final_target import *
 
@@ -12,7 +12,8 @@ gpus = tf.config.list_physical_devices(device_type = 'GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-kospi_list, kosdaq_list, investing_df = get_target(path=r'D:\systrader-dev\trading\download\target')
+kospi_list, kosdaq_list = get_target_list_db()
+investing_df = get_target(path=r'D:\systrader-dev\trading\download\target')
 
 # # 대형주 1년 학습
 # ls_big_year = LstmNetwork('대형주', kospi_list, '1년', 280, 0.02)

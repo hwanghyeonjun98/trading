@@ -37,11 +37,16 @@ def get_pymysql_day_stock(conn, code, yesterday, investing_df):
 def stock_predict(stock_list, investing_df, col_list,  model):
 
     pred_df = pd.DataFrame()
+    time_cnt = 0
     while True:
         now = datetime.now()
         if (now.minute > 30) & (now.hour >= 15):
             break
-        elif (now.hour < 9):
+        elif (now.hour < 9) | (now.hour > 16):
+            time_cnt += 1
+            if time_cnt == 100:
+                print('박대기중~~~~~~~')
+                time_cnt = 0
             time.sleep(1)
         else:          
             for code in stock_list:
