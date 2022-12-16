@@ -41,10 +41,31 @@ const options = {
 			}
 		}
 	}, tooltip     : {
-		enabled : true,
-		x       : {
+		enabled   : true,
+		x         : {
 			show   : true,
 			format : "MM/dd",
+		}, custom : function ({seriesIndex, dataPointIndex, w}) {
+			const o = w.globals.seriesCandleO[seriesIndex][dataPointIndex];
+			const h = w.globals.seriesCandleH[seriesIndex][dataPointIndex];
+			const l = w.globals.seriesCandleL[seriesIndex][dataPointIndex];
+			const c = w.globals.seriesCandleC[seriesIndex][dataPointIndex];
+			return (
+				"<div class=\"apexcharts-tooltip-box apexcharts-tooltip-candlestick\">" +
+				"<div>시가: <span class=\"value\">" +
+				o +
+				"</span></div>" +
+				"<div>고가: <span class=\"value\">" +
+				h +
+				"</span></div>" +
+				"<div>저가: <span class=\"value\">" +
+				l +
+				"</span></div>" +
+				"<div>종가: <span class=\"value\">" +
+				c +
+				"</span></div>" +
+				"</div>"
+			);
 		}
 	}, xaxis       : {
 		type          : "datetime",
