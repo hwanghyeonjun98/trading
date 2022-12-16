@@ -383,7 +383,7 @@ def realtime_trading(stock_list, investing_df):
                         break
                 
                 # DB에 테이블이 존재하지 않으면 sleep
-                sql = f"SELECT * FROM predict_data.{code}_{today}"
+                sql = f"SELECT * FROM predict_data.{code}_{today} order by id desc limit 1"
                 pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
                 print(predict_df)

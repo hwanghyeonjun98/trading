@@ -38,6 +38,7 @@ def stock_predict(stock_list, investing_df, col_list,  model):
 
     pred_df = pd.DataFrame()
     time_cnt = 0
+    id = 0 
     while True:
         now = datetime.now()
         if (now.minute > 30) & (now.hour >= 15):
@@ -48,7 +49,8 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                 print('박대기중~~~~~~~')
                 time_cnt = 0
             time.sleep(1)
-        else:          
+        else:
+                   
             for code in stock_list:
                 cnt = 0
                 while True:
@@ -80,10 +82,10 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                 X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
             
                 predict = model.predict(X_pred )
-                
+                id += 1
                 predict_df = pd.DataFrame(predict)
                 predict_df['비교'] = (predict_df[0] - predict_df[1])
-                
+                predict_df['id'] = id
                 pred_df.append(predict_df)
                 
                 pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection())
