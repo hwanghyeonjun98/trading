@@ -13,9 +13,7 @@ from final_realtime import realtime_trading
 kospi_list, kosdaq_list = get_target_list_db()
 investing_df = get_target(path=r'D:\systrader-dev\trading\download\target')
 
-
-
-realtime_trading(kospi_list, investing_df)
+realtime_trading(kosdaq_list, investing_df)
 
 # if __name__ == "__main__":
 #     traiding_start()

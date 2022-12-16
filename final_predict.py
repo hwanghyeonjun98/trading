@@ -44,7 +44,7 @@ def stock_predict(stock_list, investing_df, col_list,  model):
             break
         elif (now.hour < 9) | (now.hour > 16):
             time_cnt += 1
-            if time_cnt == 100:
+            if time_cnt == 10:
                 print('박대기중~~~~~~~')
                 time_cnt = 0
             time.sleep(1)
@@ -53,7 +53,7 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                 cnt = 0
                 while True:
                     cnt += 1
-                    if cnt == 100:
+                    if cnt == 10:
                         print('진행중~~~~~~~')
                         cnt = 0
                     count = get_pymysql_traidng_table_check(code, DBConnection_trading().get_pymysql_connection())
