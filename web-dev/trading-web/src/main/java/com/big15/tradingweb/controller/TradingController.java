@@ -5,6 +5,7 @@ import com.big15.tradingweb.mapper.IndexdataMapper;
 import com.big15.tradingweb.mapper.InvestingMapper;
 import com.mysql.cj.xdevapi.CreateIndexParams.IndexField;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.catalina.mapper.Mapper;
@@ -23,11 +24,10 @@ import java.util.Locale;
 
 @Slf4j
 @Controller
-@RequestMapping("/")
+@AllArgsConstructor
+@RequestMapping(value = {"/", "/index"})
 public class TradingController {
-	@Autowired
-	private InvestingMapper mapper;
-	@Autowired
+
 	private IndexdataMapper indexdataMapper;
 
 	// 브라우저 체크
@@ -44,27 +44,6 @@ public class TradingController {
 		List<InvestingDto> kospi_ = indexdataMapper.kospidata();
 		model.addAttribute("kospidata",kospi_);
 
-		
-		return "index";
-	}
-
-	@GetMapping("/dataview/data")
-	public String dataDefultList(Model model) {
-		List<InvestingDto> defaultData = mapper.dataDefultList();
-		model.addAttribute("dataList", defaultData);
-		return "/dataview/data";
-	}
-
-	@RequestMapping("/dataview/data/{names}")
-	public String dataView(@PathVariable String names, Model model) {
-		List<InvestingDto> list_ = mapper.dataList(names);
-		model.addAttribute("dataList", list_);
-		model.addAttribute("dataName", names);
-		return "/dataview/data";
-	}
-
-
-	public String maindata(Model model){
 		
 		return "index";
 	}
