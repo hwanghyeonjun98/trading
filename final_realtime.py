@@ -304,7 +304,6 @@ def real_trading(predict_df,cost, code, each_target_df, now):
             print('------------------------------------------------------------------------')
             try:
                 ds_trade_stock('1', code, amount , end_cost)
-                sell = end_cost
             except:
                 print('현재 매수 매도를 할 수 없습니다.')
                 print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
