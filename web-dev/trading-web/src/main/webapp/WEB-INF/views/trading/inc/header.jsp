@@ -8,9 +8,9 @@
 			</button>
 		</div>
 		<ul class="header-menu-list">
-			<li><a href="/">HOME</a></li>
-			<li><a href="/dataview/data">DATA</a></li>
-			<li><a href="#">CONTACT</a></li>
+			<li><a href="/" class="text-uppercase">HOME</a></li>
+			<li><a href="/dataview/data" class="text-uppercase">DATA</a></li>
+			<li><a href="#" class="text-uppercase">developer</a></li>
 		</ul>
 	</nav>
 </header>
