@@ -18,6 +18,7 @@
 			<main class="p-3">
 			<div class="snap">TIME : <span id="current" class="display"></span></div>
 			<script>
+				
 				setInterval(displayNow, 1000); // 1초마다 시간 갱신
 				function displayNow() {
 				let now = new Date();
@@ -126,7 +127,7 @@
 					<h2 class="main_title">주식 관련 기사 추천</h2>
 					<div class="d-flex justify-content-start align-items-start w-100" >
 					<article class="w-75">
-					<div class="groups d-flex justify-content-start align-items-start">
+					<div class="groups d-flex justify-content-start align-items-start flex-wrap">
 						<div class="economic-indicator">
 							<div class="jot"></div>
 							<div id="root">

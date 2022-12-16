@@ -126,4 +126,8 @@
 	border-top: 5px solid var(--color-block);
 }
 
-
+.keywords-contents{
+gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
