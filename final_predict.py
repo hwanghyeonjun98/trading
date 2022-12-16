@@ -10,9 +10,9 @@ from final_dbconnect import *
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 
-def get_pymysql_traidng_table_check(code, conn):
+def get_pymysql_traidng_table_check(table_schema, code, conn):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
-    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'trading_data' AND table_name = '{code}_{today}'"
+    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = '{table_schema}' AND table_name = '{code}_{today}'"
 
     cur = conn.cursor()
     count = cur.execute(sql)
@@ -56,7 +56,7 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                     if cnt == 10:
                         print('진행중~~~~~~~')
                         cnt = 0
-                    count = get_pymysql_traidng_table_check(code, DBConnection_trading().get_pymysql_connection())
+                    count = get_pymysql_traidng_table_check('trading_data',code, DBConnection_trading().get_pymysql_connection())
                     if count == 1:
                         break
                     time.sleep(1)
@@ -82,10 +82,16 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                 predict = model.predict(X_pred )
                 
                 predict_df = pd.DataFrame(predict)
-            
+                predict_df['비교'] = (predict_df['0'] - predict_df['1'])
+                
                 pred_df.append(predict_df)
                 
-                predict_df.to_sql(name='{0}_{1}'.format(code, today), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
+                pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection())
+                
+                if pred_cnt == 0:
+                    predict_df.to_sql(name='{0}_{1}'.format(code, today), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
+                else:
+                    predict_df.to_sql(name='{0}_{1}'.format(code, today), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='append', index=False)
                 
     pred_df.to_csv(f'./download/predict_df/{code}_{today}', encoding='utf-8-sig')
             
