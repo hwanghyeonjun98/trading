@@ -76,6 +76,9 @@
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
 		<%-- footer include--%>
 	</div>
+	<button type="button" class="top-to-btn">
+		<i class="bi bi-arrow-up-circle-fill"></i>
+	</button>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/js/common.js"></script>
 </body>
