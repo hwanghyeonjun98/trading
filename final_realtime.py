@@ -111,6 +111,41 @@ def ds_trade_stock(buysell, code, quantity, price):
     if rqStatus != 0:
         print('Trade_Stock Dib 연결 실패 : ', rqStatus, errMsg)
 
+def ds_trade_end(buysell, code, quantity):
+
+    # 주문 초기화
+    initCheck = instCpTdUtil.TradeInit(0)
+    if (initCheck != 0):
+        print('주문 초기화 실패, 연결 상태 확인 필요')
+        return
+
+
+    # # 주식 매수 주문
+    acc = instCpTdUtil.AccountNumber[0] #계좌번호
+    accFlag = instCpTdUtil.GoodsList(acc, 1)  # 주식상품 구분
+
+    instCpTd0311.SetInputValue(0, buysell)   # 1: 매도, 2: 매수
+    instCpTd0311.SetInputValue(1, acc )   #  계좌번호
+    instCpTd0311.SetInputValue(2, accFlag[0])   # 상품구분
+    instCpTd0311.SetInputValue(3, 'A' + code)   # 종목코드
+    instCpTd0311.SetInputValue(4, quantity)   # 매도, 매수 수량
+    # instCpTd0311.SetInputValue(5, price)   # 주문단가
+    instCpTd0311.SetInputValue(7, '0')   # 주문 조건 구분 코드, 0: 기본 1: IOC 2:FOK
+    instCpTd0311.SetInputValue(8, '03')   # 주문호가 구분코드 - 01: 보통
+
+    # 매수 주문 요청
+    nRet = instCpTd0311.BlockRequest()
+    if (nRet != 0) :
+        print('주문요청 오류', nRet)    
+        # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 
+    else:
+        print('주문 정상 접수')
+
+    rqStatus = instCpTd0311.GetDibStatus() # Dib Server 상태 확인
+    errMsg = instCpTd0311.GetDibMsg1() # 확인 메시지 출력
+    if rqStatus != 0:
+        print('Trade_Stock Dib 연결 실패 : ', rqStatus, errMsg)
+
 
 
 # 잔고 조회
@@ -329,7 +364,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
             print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
             print('**********************************************************************')
             try:
-                ds_trade_stock('1', code, amount , end_cost)
+                ds_trade_end('1', code, amount)
                 end = 0
             except:
                 print('현재 매수 매도를 할 수 없습니다.')
@@ -361,7 +396,7 @@ def realtime_trading(stock_list, investing_df):
     while True:
         now = datetime.now()
         if (now.minute == 30) & (now.hour == 15):
-            final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip(), today)
+            final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
                   
             break
