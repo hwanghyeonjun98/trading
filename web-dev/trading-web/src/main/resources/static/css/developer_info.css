@@ -8,8 +8,25 @@ main * {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	gap: 8rem;
 }
 
-.skill-img {
-	width: 100px;
+.skill-list li {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.img-warp {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 120px;
+	height: 160px;
+	margin-bottom: 1rem;
+}
+
+.img-warp .skill-img {
+	width: 90%;
 }

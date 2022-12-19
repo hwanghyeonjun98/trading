@@ -30,24 +30,24 @@
 					<h3>사용 기술(언어)</h3>
 					<h4 class="h5">ML,DL,RL</h4>
 					<ul class="skill-list">
-						<li><img src="../img/skill_icon/python.svg" alt="Python" class="skill-img">Python</li>
-						<li><img src="../img/skill_icon/tensorflow.svg" alt="tensorflow" class="skill-img">tensorflow</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/python.svg" alt="Python" class="skill-img"></div>Python</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/tensorflow.svg" alt="tensorflow" class="skill-img"></div>tensorflow</li>
 					</ul>
 					<h4 class="h5">frontend</h4>
 					<ul class="skill-list">
-						<li><img src="../img/skill_icon/html.png" alt="HTML" class="skill-img">HTML</li>
-						<li><img src="../img/skill_icon/css.png" alt="CSS3"class="skill-img">CSS3</li>
-						<li><img src="../img/skill_icon/bs.png" alt="BOOTSTRAP" class="skill-img">BOOTSTRAP</li>
-						<li><img src="../img/skill_icon/js.png" alt="JAVASCRPIT" class="skill-img">JAVASCRPIT (ES6+)</li>
-						<li><img src="../img/skill_icon/jq.png" alt="JQUERY" class="skill-img">JQUERY (ajax 부분)</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/html.png" alt="HTML" class="skill-img"></div>HTML</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/css.png" alt="CSS3"class="skill-img"></div>CSS3</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/bs.png" alt="BOOTSTRAP" class="skill-img"></div>BOOTSTRAP</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/js.png" alt="JAVASCRPIT" class="skill-img"></div>JAVASCRPIT (ES6+)</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/jq.png" alt="JQUERY" class="skill-img"></div>JQUERY (ajax 부분)</li>
 					</ul>
 					<h4 class="h5">backend(server, database)</h4>
 					<ul class="skill-list">
-						<li><img src="../img/skill_icon/java.png" alt="JAVA" class="skill-img">JAVA</li>
-						<li><img src="../img/skill_icon/java.png" alt="jsp" class="skill-img">jsp</li>
-						<li><img src="../img/skill_icon/spring.svg" alt="spring" class="skill-img">spring boot</li>
-						<li><img src="../img/skill_icon/mysql.png" alt="MY SQL" class="skill-img">MY SQL</li>
-						<li><img src="../img/skill_icon/mybatis.svg" alt="mybatis" class="skill-img">mybatis</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/java.png" alt="JAVA" class="skill-img"></div>JAVA</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/java.png" alt="jsp" class="skill-img"></div>jsp</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/spring.svg" alt="spring" class="skill-img"></div>spring boot</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/mysql.png" alt="MY SQL" class="skill-img"></div>MY SQL</li>
+						<li><div class="img-warp"><img src="../img/skill_icon/mybatis.svg" alt="mybatis" class="skill-img"></div>mybatis</li>
 					</ul>
 				</article>
 				<article>
