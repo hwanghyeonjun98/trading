@@ -144,7 +144,7 @@ class DataFrameCreate(DBNetwork):
 
         # 대형주_20221215_6개월 기준
         # 소형주_20221215_6개월 =>
-
+        
         target = "./pickle/pickle_corr_matrix/*.pkl"
         pkl_list = glob.glob(target)
         check = False
@@ -167,11 +167,13 @@ class DataFrameCreate(DBNetwork):
                 stock_df = self.complete_df
                 corr_matrix = stock_df.corr()
                 corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
+                print('상관계수 저장 완료')
 
         else: # 파일 없는 경우
             stock_df = self.complete_df
             corr_matrix = stock_df.corr()
             corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
+            print('상관계수 저장 완료')
             
         drop_list = []
         for i, cor in tqdm(enumerate(corr_matrix.columns)):
