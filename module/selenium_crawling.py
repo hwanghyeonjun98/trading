@@ -137,7 +137,7 @@ def investing_crawling(middel_url: str, names: list, start_date: str, driver: we
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
-			driver.save_screenshot('./image.png')
+			driver.save_screenshot(f'./error/image_{name}.png')
 			pass
 
 
@@ -189,7 +189,7 @@ def investing_crawling_new(middel_url: str, names: list, start_date: str, driver
 			driver.find_element(By.CSS_SELECTOR, csv_download_new_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
-			driver.save_screenshot('./image.png')
+			driver.save_screenshot(f'./error/image_{name}.png')
 			pass
 
 
@@ -228,7 +228,7 @@ def investing_coins(coins: list, start_date: str, driver: webdriver, new_data=''
 			driver.find_element(By.CSS_SELECTOR, csv_download_btn).click()
 			driver.implicitly_wait(30)
 		except HTTPError as e:
-			driver.save_screenshot('./image.png')
+			driver.save_screenshot(f'./error/image{coin[0]}.png')
 			pass
 
 

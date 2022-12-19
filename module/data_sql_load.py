@@ -57,7 +57,7 @@ def sql_update(user: str, password: str, host: str, db: str, df_list: list, file
 		col7 = df.columns[6]
 
 		sql_update = f"""
-		INSERT INTO {table_name}
+		INSERT INTO `{table_name}`
 		VALUES (%s,%s,%s,%s,%s,%s,%s)
 		ON DUPLICATE KEY UPDATE
 			`{col1}` = VALUES(`{col1}`)

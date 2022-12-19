@@ -33,11 +33,11 @@ def investing_update(path):
     investing_crawling_new('rates-bonds', rate_bonds, start_date, driver)
     driver.close()
     file_list, file_names = file_name_list(
-        './download/'
+        './download/investing/'
         , 'csv'
     )
     df_list = data_format_change(file_list, file_names)
     sql_update('admin', 'big15', '192.168.50.123', 'investing_data', df_list, file_names)
     web_data = column_name_change(df_list)
     sql_update('admin', 'big15', '192.168.50.123', 'web_data', web_data, file_names)
-    file_move(file_list, fr'{path}\temp/', file_names)
+    file_move(file_list, f'./download/temp/', file_names)
