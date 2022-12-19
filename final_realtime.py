@@ -382,7 +382,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
 
 def get_pymysql_predict_table_check(code, conn):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
-    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'predict_data' AND table_name = '{code}_{today}'"
+    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'predict_data' AND table_name = '{today}_{code}'"
 
     cur = conn.cursor()
     count = cur.execute(sql)
@@ -419,7 +419,7 @@ def realtime_trading(stock_list, investing_df):
                         break
                 
                 # DB에 테이블이 존재하지 않으면 sleep
-                sql = f"SELECT * FROM predict_data.{code}_{today} order by id desc limit 1"
+                sql = f"SELECT * FROM predict_data.{today}_{code} order by id desc limit 1"
                 pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
                 print(predict_df)
