@@ -35,16 +35,16 @@ def get_krx_stock_list(path):
     target = "./download/krx/kos*.csv"
     csv_list = glob.glob(target)
 
-    if len(csv_list) >= 1:
+    # if len(csv_list) >= 1:
         
-        csv_date = csv_list[0].split('.')[1][-8:]
+    #     csv_date = csv_list[0].split('.')[1][-8:]
         
-        if csv_date != today:
+    #     if csv_date != today:
 
-            os.remove(csv_list[0])
-            os.remove(csv_list[1])
-        else:
-            return
+    #         os.remove(csv_list[0])
+    #         os.remove(csv_list[1])
+    #     else:
+    #         return
         
     driver = selenium_driver_load(
         './driver/chromedriver'
