@@ -93,8 +93,9 @@ window.addEventListener("load", () => {
 		const dataTable = document.querySelector("#data-table");
 
 		if (name === "data") {
-			return false;
+			dataTable.dataset.table = "aedkrw";
 		} else {
+			console.log('다름');
 			btnAll.forEach((el) => {
 				const dataName = el.dataset.table;
 
