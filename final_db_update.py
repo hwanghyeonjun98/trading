@@ -155,11 +155,11 @@ def update_pymysql_exist(code, type, conn):
     else:
         return pd.DataFrame()
 
-def update_pymysql_empty(code, type, conn, today):
+def update_pymysql_empty(code, type, today):
 # 존재할 경우, 대신증권에서 해당 종목 일봉 분봉 업데이트문
     
     day_format = '%Y%m%d'
-    minus_day = timedelta(days=1)
+
 
     temp_df = pd.DataFrame()
 
@@ -191,7 +191,6 @@ def update_pymysql_empty(code, type, conn, today):
         temp_df = pd.concat([stock_info, temp_df])
 
         today = datetime.strftime(datetime.strptime(today, day_format) - timedelta(days=1), day_format)
-        transfer_end_day = datetime.strftime(datetime.strptime(today, day_format), day_format)
         time.sleep(uniform(0.15, 0.3))
 
         if instCpCybos.GetLimitRemainCount(1) < 3:
@@ -349,8 +348,8 @@ def db_list_update(krx):
         for code in empty_list:
             print('현재 업데이트 중인 종목명 : ' + code)
             try:
-                min_df = update_pymysql_empty(code, 'm', DBConnection_stock().get_pymysql_connection(), today)
-                day_df = update_pymysql_empty(code, 'D', DBConnection_stock().get_pymysql_connection(), today)
+                min_df = update_pymysql_empty(code, 'm', today)
+                day_df = update_pymysql_empty(code, 'D', today)
 
                 min_df = update_fillrow(min_df, template)
                 concat_df = update_concat(min_df, day_df)

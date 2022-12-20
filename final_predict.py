@@ -1,18 +1,19 @@
-from datetime import date, datetime
-from pandas.tseries.offsets import BDay
+from final_dbconnect import DBConnection_trading, DBConnection_predict
+
 from sklearn.preprocessing import MaxAbsScaler
+from pandas.tseries.offsets import BDay
+from datetime import date, datetime
+
 import pandas as pd
 import time
 
-# from final_realtime import get_pymysql_db_table_check
-from final_dbconnect import *
 
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 
 def get_pymysql_traidng_table_check(table_schema, code, conn):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
-    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = '{table_schema}' AND table_name = '{code}_{today}'"
+    sql = f"SELECT count(*) FROM Information_schema.tables  WHERE table_schema = '{table_schema}' AND table_name = '{code}_{today}'"
 
     cur = conn.cursor()
     count = cur.execute(sql)
@@ -73,16 +74,16 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                     sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량, 년, 월, 일 FROM trading_data.{code}_{today} ORDER BY 시간 DESC LIMIT 1"
                     table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                     table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
-                
+
                     table_df = pd.concat([table_df, day_stock_investing_df], axis=1 )
-                    
+                    table_df = table_df.apply(pd.to_numeric)
+                    min_abs_scaler = MaxAbsScaler()
                     c_list = list(col_list.index)
                     each_target_df = table_df[c_list]
-                    min_abs_scaler = MaxAbsScaler()
                     X_pred_sc = min_abs_scaler.fit_transform(each_target_df)
                     X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
                 
-                    predict = model.predict(X_pred )
+                    predict = model.predict(X_pred)
                 
                     predict_df = pd.DataFrame(predict)
                     predict_df['비교'] = (predict_df[0] - predict_df[1])
