@@ -118,6 +118,18 @@ def get_target(path):
 
 def get_target_list_db():
     
+    sql = "SELECT * FROM target_data.target_{0}".format(today)
+
+    target_data = DBConnection_target().get_sqlalchemy_connect_ip().execute(sql)
+    target_df = pd.DataFrame(target_data.fetchall())
+
+    kospi_list = target_df['대형주'].to_list()
+    kosdaq_list = target_df['소형주'].to_list()
+
+    return kospi_list, kosdaq_list
+
+def get_target_list_db_rt():
+    
     sql = "SELECT * FROM target_data.target_{0}".format(yesterday)
 
     target_data = DBConnection_target().get_sqlalchemy_connect_ip().execute(sql)
