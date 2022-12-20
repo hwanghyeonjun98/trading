@@ -48,19 +48,6 @@ def get_investing_data(conn, investing_data_list):
 
 def get_krx_target(path):
 
-    target = "./download/target/target*.csv"
-    csv_list = glob.glob(target)
-
-    # if len(csv_list) >= 1: # 파일이 있는 경우
-    #     print('KRX target 파일이 존재')
-    #     csv_date = csv_list[0].split('.')[1][-8:] # 날짜 확인
-        
-    #     if csv_date != today: # 날짜가 다른 경우
-    #         os.remove(csv_list[0])
-
-    #     else:
-    #         return
-
     driver = selenium_driver_load(
         './driver/chromedriver'
         , "http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020201"

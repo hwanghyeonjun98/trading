@@ -7,7 +7,7 @@ app  =  Application(backend = "uia").start('C:\CREON\STARTER\coStarter.exe')
 # Notepad.exe 프로세스 내부의 창 설명 
 dlg_spec = app.CREONstarter
 # 창이 실제로 열릴 때까지 기다리십시오 
-time.sleep(60)
+time.sleep(3)
 pyautogui.moveTo(1025, 605)
 pyautogui.click()
 dlg_spec.wait('visible')
