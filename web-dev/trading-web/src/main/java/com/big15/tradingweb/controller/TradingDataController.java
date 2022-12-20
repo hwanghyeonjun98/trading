@@ -23,6 +23,7 @@ public class TradingDataController {
 	public String dataDefultList(Model model) {
 		List<InvestingDto> defaultData = mapper.dataDefultList();
 		model.addAttribute("dataList", defaultData);
+		model.addAttribute("defaultDataName", "aedkrw");
 		return "/dataview/data";
 	}
 
