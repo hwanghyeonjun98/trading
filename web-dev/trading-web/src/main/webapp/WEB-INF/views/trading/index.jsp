@@ -217,7 +217,7 @@
 					<c:forEach items="${nnews}" var="nnews">
 						<ul>
 							<li>
-								<a href="${nnews.newsLink}">
+								<a href="${nnews.newsLink}" class="news-link">
 									<h5 class="hove">${nnews.newsName}</h5>
 									<p class="llong">${nnews.news}</p>
 								</a>
