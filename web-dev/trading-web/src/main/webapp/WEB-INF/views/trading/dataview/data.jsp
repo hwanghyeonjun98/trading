@@ -110,7 +110,7 @@
 					<%-- 데이터 영역 --%>
 					<p class="text-end mobile-show"><b><i class="bi bi-arrow-left-right"></i> 옆으로 스크롤</b></p>
 					<div class="table-wrap">
-						<table id="data-table" class="table table-hover table-striped table-sort" data-table="aedkrw">
+						<table id="data-table" class="table table-hover table-striped table-sort" data-table="${defaultDataName}">
 							<thead class="table-secondary">
 								<tr>
 									<th id="dates" class="order-by-desc">

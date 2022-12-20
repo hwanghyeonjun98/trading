@@ -1,25 +1,28 @@
-import pickle
-import numpy as np
-import pandas as pd
-import os
-import glob
-
-from tqdm import tqdm
-from datetime import date
-from pandas.tseries.offsets import BDay
-
-from sklearn.preprocessing import MaxAbsScaler
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split
-
-from tensorflow.keras import optimizers
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, LSTM
-
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import Input, BatchNormalization, Activation
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.layers import Dense, LSTM
+from tensorflow.keras.models import Model
+from tensorflow.keras import optimizers
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import MaxAbsScaler
 
 from final_dbconnect import DBConnection
+
+from pandas.tseries.offsets import BDay
+from keras.models import load_model
+from datetime import date
+from tqdm import tqdm
+
+import pandas as pd
+import numpy as np
+import pickle
+import glob
+import os
+
+
+
 
 class DBNetwork(DBConnection):
     def __init__(self, stock_type, stock_table_list, period, day, corr
@@ -209,15 +212,34 @@ class DataFrameCreate(DBNetwork):
 class LstmNetwork(DataFrameCreate):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        super().get_sqlalchemy_stock_investing_merge_df()
-        super().get_corr_list()
         self.epochs = 30
         self.patience = 5
         self.batch_size = 64
         self.learning_rate = 0.001
         self.decay = 1e-7
+        self.col_list = None
+        self.model_weight = None
+        target = "./model/weight/*.hdf5"
+        model_list = glob.glob(target)
+        check = False
+        for md in model_list:
+            md = md.split('\\')[-1]
+            if md == f'{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5':
+                check = True
+        print(check)
+        if check == False:
+            self.lstm_model()
+        else:
+            with open(f'./pickle/pickle_corr_complete//{self.stock_type}_{self.today}_{self.period}_10개_{self.corr}.pkl', 'rb') as f:
+                col_list = pickle.load(f) # 상관 계수에 따른 컬럼 리스트
+            model_weight = load_model(f"./model/weight/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5")
+            self.col_list =col_list
+            self.model_weight = model_weight
+        
 
-    def LstmModel(self):
+    def lstm_model(self):
+        super().get_sqlalchemy_stock_investing_merge_df()
+        super().get_corr_list()
         stock_df = self.complete_df
         with open(f'./pickle/pickle_corr_complete//{self.stock_type}_{self.today}_{self.period}_10개_{self.corr}.pkl', 'rb') as f:
             col_list = pickle.load(f) # 상관 계수에 따른 컬럼 리스트
@@ -239,7 +261,7 @@ class LstmNetwork(DataFrameCreate):
 
         min_abs_scaler = MaxAbsScaler()
         X_stock_sc = min_abs_scaler.fit_transform(X_stock_df)
-
+        dump(min_abs_scaler, open('./download/scaler'))
         X_train, X_test, y_train, y_test = train_test_split(X_stock_sc, y_stock_df
                                                             , test_size=0.3, shuffle=True
                                                             , random_state=42, stratify=y_stock_df)
@@ -263,7 +285,7 @@ class LstmNetwork(DataFrameCreate):
         early_stopping_callback = EarlyStopping(monitor='val_loss', patience=self.patience)
 
         # 모델 이름 설정
-        modelpath=f"./weight/model/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5"
+        modelpath=f"./model/weight/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5"
         # 최적화 모델을 업데이트하고 저장합니다.
         checkpointer = ModelCheckpoint(filepath=modelpath, monitor='val_loss', verbose=0, save_best_only=True)
 
@@ -275,5 +297,8 @@ class LstmNetwork(DataFrameCreate):
 
         with open(f'./model/history/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.json', 'wb') as f:
             pickle.dump(history.history, f)
-            
-        return modelpath
+           
+        model_ = load_model(f"./weight/model/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5")
+        self.col_list =col_list
+        self.model_weight = model_
+        return col_list, model_weight

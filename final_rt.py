@@ -1,4 +1,4 @@
-from final_target import *
+from final_target import get_target_list_db, get_target
 from final_realtime import realtime_trading
 
 # 예측할 종목 설정

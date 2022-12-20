@@ -1,11 +1,12 @@
 from module.setting import instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033, instCpTdNew5331A
+from final_dbconnect import DBConnection_trading
+
+from pandas.tseries.offsets import BDay
 from datetime import date, datetime
+
 import pandas as pd
 import time
 
-from pandas.tseries.offsets import BDay
-
-from final_dbconnect import *
 
 
 

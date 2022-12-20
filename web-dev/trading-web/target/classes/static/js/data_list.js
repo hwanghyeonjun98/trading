@@ -86,16 +86,14 @@ window.addEventListener("load", () => {
 		let name = nowUrl.split("/");
 		name = name[name.length - 1];
 
-		const defaultName = "aedkrw";
-
 		// 가져온 이름과 dataset 이름으로 비교하여
 		// 버튼 활성화하고 데이터 제목 업데이트
 		const btnAll = document.querySelectorAll(".data-view-btn");
 		const dataTitle = document.querySelector(".data-title .data-name");
 		const dataTable = document.querySelector("#data-table");
 
-		if (defaultName !== name) {
-			dataTable.dataset.table = defaultName;
+		if (name === "data") {
+			return false;
 		} else {
 			btnAll.forEach((el) => {
 				const dataName = el.dataset.table;
@@ -104,7 +102,6 @@ window.addEventListener("load", () => {
 					el.classList.add("active");
 					dataTitle.innerText = el.textContent;
 				}
-
 			});
 			dataTable.dataset.table = name;
 		}
@@ -113,15 +110,27 @@ window.addEventListener("load", () => {
 
 // 대분류 클릭 시 하위 메뉴 토글 슬라이드
 const menuTitle = document.querySelectorAll(".menu-title");
+const menuContent = document.querySelectorAll(".menu-content");
+const menu = document.querySelectorAll(".menu-content ul");
 const menuIcon = document.querySelectorAll(".icon-span i");
+
+function menuContentHeight(idx) {
+	let menuMarginTop = parseInt(getComputedStyle(menu[idx]).marginTop);
+	let menuMarginBottom = parseInt(getComputedStyle(menu[idx]).marginBottom);
+	let menuHeight = menu[idx].offsetHeight + menuMarginTop + menuMarginBottom;
+
+	menuContent[idx].style.maxHeight = `${menuHeight}px`;
+}
 
 menuTitle.forEach((el, idx) => {
 	el.addEventListener("click", (event) => {
 		if (!event.currentTarget.classList.contains("active")) {
 			event.currentTarget.classList.add("active");
+			menuContentHeight(idx);
 			menuIcon[idx].className = "bi bi-arrow-bar-up";
 		} else {
 			event.currentTarget.classList.remove("active");
+			menuContent[idx].style.maxHeight = `0`;
 			menuIcon[idx].className = "bi bi-arrow-bar-down";
 		}
 	});
