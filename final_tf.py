@@ -1,6 +1,6 @@
-from final_model import *
-from final_predict import *
-from final_target import *
+from final_target import get_target_list_db, get_target
+from final_predict import stock_predict
+from final_model import LstmNetwork
 
 from keras.models import load_model
 import tensorflow as tf
