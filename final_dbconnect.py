@@ -1,5 +1,6 @@
-import pymysql
 from sqlalchemy import create_engine
+
+import pymysql
 
 class DBConnection():
     def __init__(self):

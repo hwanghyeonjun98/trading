@@ -1,11 +1,13 @@
 from module.setting import instCpCybos, instStockChart
+from module.search import search_by_code 
+from module.get import get_stock_info
 
-from datetime import timedelta
-from datetime import datetime
+from datetime import timedelta, datetime, date
 from random import uniform
 from tqdm import tqdm
 
 import pandas as pd
+import numpy as np
 import time
 import os
 
@@ -25,6 +27,7 @@ concat_path = '../data/20221121/concat/'
 
 label_path = '../data/20221121/complete/'
 
+today = str(date.today()).replace('-','')
 
 # 원하는 폴더에 있는 파일 리스트 추출
 def file_open(file_open):

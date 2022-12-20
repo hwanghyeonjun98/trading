@@ -43,18 +43,6 @@ def get_name_list():
         
     return code_name_list
 
-# # 코스피, 코스닥 수집 안된 리스트 가져오기(네트워크 경로 기반)
-# def get_empty_list():
-#     current_list = []
-
-#     for list in os.listdir(r'\\DESKTOP-H2H6JNB\data\data'):
-#         current_list.append('A'+list.split('_')[0])
-
-#     current_set = set(current_list)
-#     empty_list = [x for x in get_code_list() if x not in current_set]
-    
-#     return empty_list
-
 
 # 코스피, 코스닥(분봉) 수집 안된 리스트 가져오기(네트워크 경로 기반)
 def get_empty_list():
