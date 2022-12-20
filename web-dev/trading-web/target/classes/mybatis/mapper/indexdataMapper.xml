@@ -6,4 +6,8 @@
 		FROM 코스피지수내역
 		ORDER BY dates asc
 	</select>
+	<select id="newsdata" resultType="com.big15.tradingweb.dto.NewsDto">
+		SELECT *
+		FROM news_data
+	</select>
 </mapper>

@@ -210,6 +210,24 @@
 					</div>	
 					</article>
 				</div>
+				<article class="navernews">
+					<span><h2 class="main_title">추천 뉴스</h2></span>
+					<hr>
+					<ul>
+					<c:forEach items="${nnews}" var="nnews">
+						<ul>
+							<li>
+								<a href="${nnews.newsLink}">
+									<h5 class="hove">${nnews.newsName}</h5>
+									<p class="llong">${nnews.news}</p>
+								</a>
+							</li>
+						</ul> 
+					</c:forEach>
+					</ul>
+					
+
+				</article>
 				
 				</section>
 				

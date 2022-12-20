@@ -123,12 +123,34 @@
 
 .hr-solid {
 	border : 0px;
-	border-top: 5px solid var(--color-block);
+	border-top: 1px solid var(--color-block);
 }
 
 .keywords-contents{
 gap: 10px;
     display: flex;
     flex-wrap: wrap;
+}
+
+.navernews{
+	padding: 1px;
+}
+
+
+.llong{
+	width: 200px;
+	white-space: normal;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.llong:hover{
+	color: var(--color-red);
+}
+
+.hove:hover {
+	color: var(--color-red);
 }
 

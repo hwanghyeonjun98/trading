@@ -1,6 +1,7 @@
 package com.big15.tradingweb.controller;
 
 import com.big15.tradingweb.dto.InvestingDto;
+import com.big15.tradingweb.dto.NewsDto;
 import com.big15.tradingweb.mapper.IndexdataMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,13 @@ public class TradingController {
 		List<InvestingDto> kospi_ = indexdataMapper.kospidata();
 		model.addAttribute("kospidata",kospi_);
 
+		List<NewsDto> news = indexdataMapper.newsdata();
+		model.addAttribute("nnews", news);
+
 		
 		return "index";
 	}
+	
+	
 
 }
