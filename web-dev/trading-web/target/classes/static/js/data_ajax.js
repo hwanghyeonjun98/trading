@@ -6,7 +6,12 @@ $(window).on("load", function () {
 	let name = nowUrl.split("/");
 	name = name[name.length - 1];
 
-	let chartUrl = "/api/data/chart/" + name + "내역";
+	let chartUrl;
+	if (name === "data") {
+		chartUrl = "/api/data/chart/aedkrw내역";
+	} else {
+		chartUrl = "/api/data/chart/" + name + "내역";
+	}
 
 	// 차트 AJAX
 	$.getJSON(chartUrl, function (response) {
@@ -27,7 +32,7 @@ $(window).on("load", function () {
 
 // 날짜 검색 관련
 $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼전송 코드
-	// 폼 전송 이벤트 초기화(새로고침 안되게)
+                                                                        // 폼 전송 이벤트 초기화(새로고침 안되게)
 	event.preventDefault();
 
 	// 폼안에 날짜 가져오기
@@ -44,7 +49,7 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼�
 	$.ajax({
 		type    : "POST", // GET, POST, PUT, DELETE
 		url     : searchUrl,
-		dataset : "json", // JSON or XML (HTML도 되지만 사용 지양)
+		dataset : "json", // 데이터 타입, JSON or XML (HTML도 되지만 사용 지양)
 		success : function (reponse) { // 통신 성공시 진행하는 코드
 			$("#data-table tbody tr").remove();
 			$.each(reponse, function (i) {
