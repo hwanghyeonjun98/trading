@@ -2,6 +2,7 @@ const headerMenuBtn = document.querySelector(".header-menu-btn"); // 모바일 �
 const headerMenuList = document.querySelector(".header-menu-list"); // 모바일 화면 사이드 매뉴
 const headerMenuListEl = document.querySelectorAll(".header-menu-list li a"); // 모바일 화면 사이드 메뉴 요소들
 const notLink = document.querySelectorAll("a[href='#']"); // 가상링크로 되어있는 a태그들
+const topBtn = document.querySelector(".top-to-btn"); // 상단으로 올라가는 버튼
 
 // 가상 링크 이벤트 초기화(작동안되게)
 function EventReset(event) {
@@ -45,4 +46,19 @@ notLink.forEach((a) => {
 // 메뉴 관련 이벤트 리스너
 headerMenuBtn.addEventListener("click", mobileMenuClick);
 document.addEventListener("click", otherSpaceClick);
+
+// 오른쪽 하단 버튼 클릭 시 상단으로 이동
+topBtn.addEventListener("click", () => {
+	window.scrollTo(0, 0);
+});
+
+// 일정 수치 만큼 스크롤 시 버튼 표시
+window.addEventListener("scroll", () => {
+	let scrollTop = window.scrollY;
+	if (scrollTop > 500) {
+		topBtn.classList.add("active");
+	} else {
+		topBtn.classList.remove("active");
+	}
+});
 

@@ -85,6 +85,9 @@
 					<%-- 메뉴 영역 --%>
 					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">AED/KRW</span>내역</h4>
 					<%-- 차트 영역 --%>
+					<p class="text-end">
+						<small>2020-01-01 ~ 현재</small>
+					</p>
 					<div id="chart-area"></div>
 					<%-- 차트 영역 --%>
 					<div class="date-search-form w-100 my-3">
@@ -169,6 +172,9 @@
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
 		<%-- footer include--%>
 	</div>
+	<button type="button" class="top-to-btn">
+		<i class="bi bi-arrow-up-circle-fill"></i>
+	</button>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
