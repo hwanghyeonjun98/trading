@@ -30,7 +30,9 @@
 			</script>
 			<section class="main-list">
 				<article class="w-75">
+					<div id="main_chart">
 					그래프들어갈 자리
+					</div>
 				</article>
 				<article class="recommend-list w-25">
 						<div class="clear-wrapper">
@@ -134,7 +136,7 @@
 							</div>
 							<script src='app.js' type="module"></script>
 							<div class="indicator-name">
-								<img src="https://imgnews.pstatic.net/image/018/2022/12/16/0005388149_003_20221216095701914.jpg?type=w540" width="255" height="265">
+								<img src="https://imgnews.pstatic.net/image/018/2022/12/16/0005388149_003_20221216095701914.jpg?type=w540" width="255" height="285">
 								<hr class='hr-solid'>
 								<span>국내 이슈</span>
 							</div>
@@ -148,7 +150,7 @@
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<img src="https://imgnews.pstatic.net/image/008/2022/12/16/0004829736_001_20221216072901029.jpg?type=w540" width="255" height="265">
+								<img src="https://imgnews.pstatic.net/image/008/2022/12/16/0004829736_001_20221216072901029.jpg?type=w540" width="255" height="285">
 								<hr class='hr-solid'>
 								<span>해외 이슈</span>
 							</div>
@@ -161,7 +163,7 @@
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F001%2F2022%2F10%2F05%2FPYH2022100502140001300_P4_20221005092413890.jpg&type=l340_165" width="255" height="265">
+								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F001%2F2022%2F10%2F05%2FPYH2022100502140001300_P4_20221005092413890.jpg&type=l340_165" width="255" height="285">
 								<hr class='hr-solid'>
 								<span>환율 관련</span>
 							</div>
@@ -172,7 +174,7 @@
 						</div>
 						<div class="economic-indicator">
 							<div class="indicator-name">
-								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTJfMTAw%2FMDAxNjY4MjE4MzIxMTAw.uN064CZvfnaj08SWljDs-jm4--M_pjT_9Sk3lP25XpEg.rx2QFgxITz7Kj4joJg5LZkwNq6nH1vVcDvv-WZJ3aZwg.JPEG.p9573198%2F0006452791%25A3%25DF002%25A3%25DF20221112052801742.jpg&type=a340" width="255" height="265">
+								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTJfMTAw%2FMDAxNjY4MjE4MzIxMTAw.uN064CZvfnaj08SWljDs-jm4--M_pjT_9Sk3lP25XpEg.rx2QFgxITz7Kj4joJg5LZkwNq6nH1vVcDvv-WZJ3aZwg.JPEG.p9573198%2F0006452791%25A3%25DF002%25A3%25DF20221112052801742.jpg&type=a340" width="255" height="285">
 								<hr class='hr-solid'>
 								<span>비트코인 관련</span>
 							</div>
@@ -201,13 +203,14 @@
 												<li>7.삼성전자우</li>
 												<li>8.현대차</li>
 												<li>9.NAVER</li>
-												<li>10.카카오</li>
+												<li>10.셀트리온</li>
 											</ul>
 										</div>
 													
 					</div>	
 					</article>
 				</div>
+				
 				</section>
 				
 				
@@ -215,6 +218,9 @@
 		</main>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
 	</div>
+	<button type="button" class="top-to-btn">
+		<i class="bi bi-arrow-up-circle-fill"></i>
+	</button>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>	
