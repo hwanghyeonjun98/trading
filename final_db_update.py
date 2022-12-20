@@ -1,18 +1,19 @@
-import os
-import glob
-import time
-import shutil
-import numpy as np
-import pandas as pd
-
-
-from datetime import datetime
-from datetime import timedelta, date
-from pandas.tseries.offsets import BDay
-from random import uniform
+from module.selenium_crawling import selenium_driver_load, By
 from module.setting import instStockChart, instCpCybos
 from final_dbconnect import DBConnection_stock
-from module.selenium_crawling import *
+
+from pandas.tseries.offsets import BDay
+from datetime import timedelta, date
+from datetime import datetime
+from random import uniform
+
+import pandas as pd
+import numpy as np
+import shutil
+import time
+import glob
+import os
+
 
 today = str(date.today()).replace('-','')
 
@@ -33,18 +34,6 @@ def get_krx_stock_list(path):
     
 
     target = "./download/krx/kos*.csv"
-    csv_list = glob.glob(target)
-
-    if len(csv_list) >= 1:
-        
-        csv_date = csv_list[0].split('.')[1][-8:]
-        
-        if csv_date != today:
-
-            os.remove(csv_list[0])
-            os.remove(csv_list[1])
-        else:
-            return
         
     driver = selenium_driver_load(
         './driver/chromedriver'
@@ -220,11 +209,11 @@ def save_samsung_template(conn):
     template = template.reset_index()
     template = template.set_index(['날짜', '시간'])
     template = template.notnull().replace(True, np.NaN)
-    y_template = pd.read_csv(r'\\DESKTOP-H2H6JNB\data\{0}_fillrow_template.csv'.format(yesterday), encoding='utf-8 sig')
+    y_template = pd.read_csv('./download/template/{0}_fillrow_template.csv'.format(yesterday), encoding='utf-8 sig')
     y_template = y_template.rename(columns={'Unnamed: 0' : '날짜'})
     y_template = y_template.set_index(['날짜', '시간'])
     template = pd.concat([template, y_template], axis=0, ignore_index=False)
-    template.to_csv(r'\\DESKTOP-H2H6JNB\data\{0}_fillrow_template.csv'.format(today), encoding='utf-8 sig')
+    template.to_csv('./download/template/{0}_fillrow_template.csv'.format(today), encoding='utf-8 sig')
     template = template.drop(['index'], axis=1)
     template.reset_index(inplace=True)
     template = template.loc[:,['날짜', '시간']]

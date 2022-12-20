@@ -8,7 +8,7 @@ main * {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	gap: 8rem;
+	gap: 6rem;
 }
 
 .skill-list li {
@@ -16,6 +16,8 @@ main * {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	flex : 1 1 30%;
+	text-align: center;
 }
 
 .img-warp {
@@ -24,6 +26,7 @@ main * {
 	align-items: center;
 	width: 120px;
 	height: 160px;
+	padding: 0 15px;
 	margin-bottom: 1rem;
 }
 

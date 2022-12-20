@@ -144,7 +144,7 @@ class DataFrameCreate(DBNetwork):
 
         # 대형주_20221215_6개월 기준
         # 소형주_20221215_6개월 =>
-
+        
         target = "./pickle/pickle_corr_matrix/*.pkl"
         pkl_list = glob.glob(target)
         check = False
@@ -167,11 +167,13 @@ class DataFrameCreate(DBNetwork):
                 stock_df = self.complete_df
                 corr_matrix = stock_df.corr()
                 corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
+                print('상관계수 저장 완료')
 
         else: # 파일 없는 경우
             stock_df = self.complete_df
             corr_matrix = stock_df.corr()
             corr_matrix.to_pickle(f'./pickle/pickle_corr_matrix/{self.stock_type}_{self.today}_{self.period}_10개.pkl')
+            print('상관계수 저장 완료')
             
         drop_list = []
         for i, cor in tqdm(enumerate(corr_matrix.columns)):
@@ -261,7 +263,7 @@ class LstmNetwork(DataFrameCreate):
         early_stopping_callback = EarlyStopping(monitor='val_loss', patience=self.patience)
 
         # 모델 이름 설정
-        modelpath=f"./model/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5"
+        modelpath=f"./weight/model/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5"
         # 최적화 모델을 업데이트하고 저장합니다.
         checkpointer = ModelCheckpoint(filepath=modelpath, monitor='val_loss', verbose=0, save_best_only=True)
 
@@ -271,7 +273,7 @@ class LstmNetwork(DataFrameCreate):
 
         history=model.fit(X_train, y_train, epochs=self.epochs, batch_size=self.batch_size,verbose=1, validation_data=(X_test, y_test), callbacks=[early_stopping_callback, checkpointer])
 
-        with open(f'./history/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.json', 'wb') as f:
+        with open(f'./model/history/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.json', 'wb') as f:
             pickle.dump(history.history, f)
             
         return modelpath

@@ -26,7 +26,7 @@ def file_name_list(path: str, file_extension: str) -> tuple:
 
 	for file in file_list:
 		try:
-			file_name = file.split('/')[-1].split('.')[0]
+			file_name = file.split('/')[-1].split('\\')[-1].split('.')[0]
 			name = file_name.replace(' ', '').replace('_', '').replace('&', '')
 			normalize_name = normalize('NFC', name)
 			file_names.append(normalize_name)

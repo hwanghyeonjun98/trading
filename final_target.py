@@ -12,6 +12,7 @@ from final_dbconnect import DBConnection, DBConnection_target
 # 날짜 지정 필수
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
+nextday=str(date.today() + BDay(1)).replace('-','').split(' ')[0]
 print('실시간 트레이딩 기준 날짜 : ' + today)
 
 def get_pymysql_db_list(conn, db_name):
@@ -47,19 +48,6 @@ def get_investing_data(conn, investing_data_list):
 
 def get_krx_target(path):
 
-    target = "./download/target/target*.csv"
-    csv_list = glob.glob(target)
-
-    if len(csv_list) >= 1: # 파일이 있는 경우
-        print('KRX target 파일이 존재')
-        csv_date = csv_list[0].split('.')[1][-8:] # 날짜 확인
-        
-        if csv_date != today: # 날짜가 다른 경우
-            os.remove(csv_list[0])
-
-        else:
-            return
-
     driver = selenium_driver_load(
         './driver/chromedriver'
         , "http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020201"
@@ -83,7 +71,7 @@ def get_krx_target(path):
     target_path = "./download/target/data*.csv"
     new_csv_list = glob.glob(target_path)
 
-    shutil.move(new_csv_list[0], f'./download/target/target_{today}.csv')
+    shutil.move(new_csv_list[0], f'./download/target/target_{nextday}.csv')
 
 def get_target_stock_list(conn, type):
 
