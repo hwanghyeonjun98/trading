@@ -75,39 +75,40 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                 day_stock_investing_df = get_pymysql_day_stock(DBConnection_trading().get_sqlalchemy_connect_ip(), code, yesterday, investing_df)
                 
                 # day_stock_investing_df.reset_index(drop=True, inplace=True)
-                # try:
-                sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량, 년, 월, 일 FROM trading_data.{today}_{code} ORDER BY 시간 DESC LIMIT 1"
-                table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
-                table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
+                try:
+                    sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량, 년, 월, 일 FROM trading_data.{today}_{code} ORDER BY 시간 DESC LIMIT 1"
+                    table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
+                    table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
 
-                table_df = pd.concat([table_df, day_stock_investing_df], axis=1 )
-                table_df = table_df.apply(pd.to_numeric)
+                    table_df = pd.concat([table_df, day_stock_investing_df], axis=1 )
+                    table_df = table_df.apply(pd.to_numeric)
+                    
+                    c_list = list(col_list.index)
+                    each_target_df = table_df[c_list]
+                    
+                    # min_abs_scaler = MaxAbsScaler()
+                    min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
+                    
+                    X_pred_sc = min_abs_scaler.transform(each_target_df)
+                    X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
                 
-                c_list = list(col_list.index)
-                each_target_df = table_df[c_list]
+                    predict = model.predict(X_pred)
                 
-                # min_abs_scaler = MaxAbsScaler()
-                min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
-                
-                X_pred_sc = min_abs_scaler.transform(each_target_df)
-                X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
-            
-                predict = model.predict(X_pred)
-            
-                predict_df = pd.DataFrame(predict)
-                predict_df['비교'] = (predict_df[0] - predict_df[1])
-                predict_df['id'] = t
-                pred_df.append(predict_df)
-                
-                pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection())
-                time.sleep(0.2)
-                if pred_cnt == 0:
-                    predict_df.to_sql(name='{0}_{1}'.format(today, code), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
-                else:
-                    predict_df.to_sql(name='{0}_{1}'.format(today, code), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='append', index=False)
+                    predict_df = pd.DataFrame(predict)
+                    predict_df['비교'] = (predict_df[0] - predict_df[1])
+                    predict_df['id'] = t
+                    predict_df['시간'] = str(now.hour) + ':' + str(now.minute)
+                    pred_df.append(predict_df)
+                    
+                    pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection())
+                    time.sleep(0.2)
+                    if pred_cnt == 0:
+                        predict_df.to_sql(name='{0}_{1}'.format(today, code), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
+                    else:
+                        predict_df.to_sql(name='{0}_{1}'.format(today, code), con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='append', index=False)
 
-                # except:
-                    # print('SQL 에러 발생')
+                except:
+                    print('SQL 에러 발생')
                 
     pred_df.to_csv(f'./download/predict_df/{today}_{code}', encoding='utf-8-sig')
             
