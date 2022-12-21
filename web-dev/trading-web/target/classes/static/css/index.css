@@ -165,3 +165,8 @@
 .restnews {
 	padding: 30px;
 }
+
+#trading-data-table tbody tr td:first-child,
+#trading-data-table tbody tr td:nth-child(2) {
+	text-align: center;
+}

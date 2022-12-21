@@ -34,7 +34,7 @@
 							<h3 class="h3">AI 실시간 트레이딩</h3>
 							<small>트레이딩 기준 시간 : 오전 9:00 ~ 오후 3:00</small>
 						</div>
-						<table class="table table-hover table-striped table-sort">
+						<table id="trading-data-table" class="table table-hover table-striped table-sort">
 							<thead class="table-secondary">
 								<tr>
 									<th>종목코드</th>
