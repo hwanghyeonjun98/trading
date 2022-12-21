@@ -14,7 +14,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 kospi_list, kosdaq_list = get_target_list_db()
-investing_df = get_target(path=r'C:\big15\project-dev\trading\download\target') # 각자 컴퓨터의 맞게 변경
+investing_df = get_target(path=r'D:\systrader-dev\trading\download\target') # 각자 컴퓨터의 맞게 변경
 # C:\big15\project-dev\trading\download\target
 # D:\systrader-dev\trading\download\target
 # # 대형주 1년 학습
