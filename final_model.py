@@ -299,7 +299,7 @@ class LstmNetwork(DataFrameCreate):
         with open(f'./model/history/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.json', 'wb') as f:
             pickle.dump(history.history, f)
            
-        model_ = load_model(f"./model/weight/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5")
-        self.col_list =col_list
-        self.model_weight = model_
+        model_weight = load_model(f"./model/weight/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5")
+        self.col_list = col_list
+        self.model_weight = model_weight
         return col_list, model_weight
