@@ -22,7 +22,7 @@
 					<%-- 메뉴 영역 --%>
 					<nav class="data-menu">
 						<div class="menu-area">
-							<div class="menu-title">
+							<div class="menu-title" tabindex="-1">
 								<h3 class="h6 mb-0">환율</h3>
 								<span class="icon-span">
 									<i class="bi bi-arrow-bar-down"></i>
