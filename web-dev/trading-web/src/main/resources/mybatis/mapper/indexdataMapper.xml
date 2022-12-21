@@ -9,5 +9,6 @@
 	<select id="newsdata" resultType="com.big15.tradingweb.dto.NewsDto">
 		SELECT *
 		FROM news_data
+		
 	</select>
 </mapper>

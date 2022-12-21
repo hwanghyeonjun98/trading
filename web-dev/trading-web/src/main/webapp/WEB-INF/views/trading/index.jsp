@@ -211,7 +211,7 @@
 					</article>
 				</div>
 				<article class="navernews">
-					<span><h2 class="main_title">추천 뉴스</h2></span>
+					<span><h3 class="restnews">추천 뉴스</h2></span>
 					<hr>
 					<ul>
 					<c:forEach items="${nnews}" var="nnews">
