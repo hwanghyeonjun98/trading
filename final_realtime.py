@@ -61,13 +61,13 @@ def get_realtime_stock_info(code, today):
     return stock_info.iloc[0:1]
 
 ## 실시간으로 들어오는 정보를 DB에 삽입
-def sqlalchemy_trading_insert(update_df, code, type, conn):
+def sqlalchemy_trading_insert(update_df, code, type, conn, account_name):
 
     update_df['년'] = update_df['날짜'].apply(str).str[:4]
     update_df['월'] = update_df['날짜'].apply(str).str[4:6]
     update_df['일'] = update_df['날짜'].apply(str).str[6:8]
     update_df.sort_index(ascending=False, inplace=True)
-    update_df.to_sql(name='{0}_{1}'.format(today, code), con=conn, if_exists=type, index=False)   
+    update_df.to_sql(name=f'{account_name}_{today}_{code}', con=conn, if_exists=type, index=False)   
 
 
 
@@ -268,12 +268,12 @@ def ds_account_db_update(conn):
     sql = "INSERT INTO big15.account VALUES({0}, '{1}', {2});".format(today,account_name, account_value)
 
     try:
-        result = conn.execute(sql)
+        conn.execute(sql)
         print('계좌 평가금 DB 업데이트 완료')
     except:
         print('계좌 평가금 DB 업데이트 중 오류 발생')
     
-    return account_value
+    return account_name, account_value
 
 def ds_n_conclude_check():
     
@@ -318,11 +318,11 @@ def ds_n_conclude_check():
 ############################################################################################################################################################################################
 
 
-def stock_trading_db(code, investing_df):
+def stock_trading_db(code, account_name):
     # 업데이트 중이 분봉 데이터
     each_target_df = get_realtime_stock_info(code, today) 
     ## DB 저장
-    sqlalchemy_trading_insert(each_target_df, code, 'replace', DBConnection_trading().get_sqlalchemy_connect_ip())
+    sqlalchemy_trading_insert(each_target_df, code, 'replace', DBConnection_trading().get_sqlalchemy_connect_ip(), account_name)
     
     return each_target_df
         
@@ -442,13 +442,14 @@ def get_pymysql_predict_table_check(code, conn):
 
   
 ###########################################################################################################################################################################
-def realtime_trading(stock_list, investing_df):
+def realtime_trading(stock_list , account_name):
     account_value = ds_account_value()  # 주문 가능 예수 금액
+   
     time_cnt = 0
     while True:
         now = datetime.now()
         if (now.minute == 30) & (now.hour == 15):
-            final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
+            _, final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
                   
             break
@@ -461,7 +462,7 @@ def realtime_trading(stock_list, investing_df):
         else:
             for code in stock_list:
                 first_cost = account_value // 10 # 500만원
-                each_target_df = stock_trading_db(code, investing_df)
+                each_target_df = stock_trading_db(code, account_name)
                 while True:
                     print('실시간 트레이딩 진행중')
                     count = get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection())
@@ -470,7 +471,7 @@ def realtime_trading(stock_list, investing_df):
                         break
                 
                 # DB에 테이블이 존재하지 않으면 sleep
-                sql = f"SELECT * FROM predict_data.{today}_{code} order by id desc limit 1"
+                sql = f"SELECT * FROM predict_data.{account_name}_{today}_{code} order by id desc limit 1"
                 pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
                 print(predict_df)
