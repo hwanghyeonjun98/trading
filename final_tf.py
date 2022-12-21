@@ -12,7 +12,7 @@ tf.config.experimental.set_memory_growth(gpus[0], True)
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 kospi_list, kosdaq_list = get_target_list_db()
-investing_df = get_target(path=r'C:\big15\project-dev\trading\download\target')
+investing_df = get_target(path=r'D:\systrader-dev\trading\download\target') # 각자 컴퓨터의 맞게 변경
 
 # # 대형주 1년 학습
 # ls_big_year = LstmNetwork('대형주', kospi_list, '1년', 280, 0.02)
