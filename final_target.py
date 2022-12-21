@@ -104,7 +104,8 @@ def get_target(path):
     
     investing_data_list = get_pymysql_db_list(DBConnection().get_sqlalchemy_connect_ip(), 'investing_data')
     investing_df = get_investing_data(DBConnection().get_sqlalchemy_connect_ip(), investing_data_list)
-
+    investing_df.to_csv(f'./download/investing_df/investing_{today}.csv', encoding='utf-8-sig')
+    
     return investing_df
 
 #########################################################################################################################################

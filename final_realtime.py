@@ -67,7 +67,7 @@ def sqlalchemy_trading_insert(update_df, code, type, conn):
     update_df['월'] = update_df['날짜'].apply(str).str[4:6]
     update_df['일'] = update_df['날짜'].apply(str).str[6:8]
     update_df.sort_index(ascending=False, inplace=True)
-    update_df.to_sql(name='{0}_{1}'.format(code, today), con=conn, if_exists=type, index=False)   
+    update_df.to_sql(name='{0}_{1}'.format(today, code), con=conn, if_exists=type, index=False)   
 
 
 
