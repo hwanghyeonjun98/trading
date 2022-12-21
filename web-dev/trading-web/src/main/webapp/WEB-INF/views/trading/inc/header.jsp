@@ -10,7 +10,7 @@
 		<ul class="header-menu-list">
 			<li><a href="/" class="text-uppercase">HOME</a></li>
 			<li><a href="/dataview/data" class="text-uppercase">DATA</a></li>
-			<li><a href="/developer/developer_info" class="text-uppercase">developer</a></li>
+<%--			<li><a href="/developer/developer_info" class="text-uppercase">developer</a></li>--%>
 		</ul>
 	</nav>
 </header>

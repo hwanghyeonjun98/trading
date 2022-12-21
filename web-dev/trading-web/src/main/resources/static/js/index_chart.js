@@ -67,7 +67,7 @@ const options = {
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
 chart.render();
 
-let chartUrl = "/api/data/chart/코스피지수내역";
+let chartUrl = "/api/data/index/chart/kospi";
 
 $.getJSON(chartUrl, function (response) {
 		let dataList = [];
