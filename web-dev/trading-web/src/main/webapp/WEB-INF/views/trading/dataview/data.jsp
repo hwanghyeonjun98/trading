@@ -83,7 +83,10 @@
 						</div>
 					</nav>
 					<%-- 메뉴 영역 --%>
-					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">AED/KRW</span>내역</h4>
+					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4">
+						<span class="data-name">AED/KRW</span>내역
+						<small class="data-category"></small>
+					</h4>
 					<%-- 차트 영역 --%>
 					<p class="text-end">
 						<small>2020-01-01 ~ 현재</small>
