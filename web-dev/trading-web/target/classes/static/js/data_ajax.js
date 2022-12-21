@@ -32,7 +32,7 @@ $(window).on("load", function () {
 
 // 날짜 검색 관련
 $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼전송 코드
-                                                                        // 폼 전송 이벤트 초기화(새로고침 안되게)
+  // 폼 전송 이벤트 초기화(새로고침 안되게)
 	event.preventDefault();
 
 	// 폼안에 날짜 가져오기
