@@ -118,7 +118,7 @@ class DBConnection_target():
 class DBConnection_present():
     def __init__(self):
         self.ip_address = '192.168.50.123'
-        self.db_name = 'present_condition'
+        self.db_name = 'web_data'
         self.sq_con = None
         self.py_con = None
         
