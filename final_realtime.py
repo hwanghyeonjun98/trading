@@ -343,7 +343,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
 
         try:
             n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0]
-            buy_num = cost // int(end_cost) - int(n_conclude_num)
+            buy_num = (cost // int(end_cost)) - int(n_conclude_num)
         except:
             buy_num = cost // int(end_cost)
             print('미체결 수량이 없습니다.')
