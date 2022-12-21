@@ -97,6 +97,7 @@ def stock_predict(stock_list, investing_df, col_list,  model):
                     predict_df = pd.DataFrame(predict)
                     predict_df['비교'] = (predict_df[0] - predict_df[1])
                     predict_df['id'] = t
+                    predict_df['시간'] = str(now.hour) + ':' + str(now.minute)
                     pred_df.append(predict_df)
                     
                     pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection())
