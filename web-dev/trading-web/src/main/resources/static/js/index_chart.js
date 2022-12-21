@@ -22,11 +22,13 @@ const options = {
 					"pan"           : "이동",
 					"reset"         : "초기화"
 				}
+				
 			}
 		}],
 		defaultLocale : "ko",
 		toolbar : {
 	show : false
+
     }
 	}, tooltip     : {
 		enabled : true,
@@ -57,6 +59,9 @@ const options = {
 	},dataLabels :{
 		enabled: false
 	}
+	,stroke: {
+		width: 1
+		}
 };
 
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
