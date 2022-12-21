@@ -4,8 +4,8 @@
 	--color-block: #333;
 	--color-dark: #B2B2B2;
 	--color-gray: #EDEDED;
-	--color-dark-gray:#ccd0d4;
-	--color-deep-dark-gray:#6A6C6E;
+	--color-dark-gray: #ccd0d4;
+	--color-deep-dark-gray: #6A6C6E;
 	--color-purple: #BEAEE2;
 	--color-dark-purple: #746A8B;
 	--color-pink: #F7DBF0;
@@ -18,7 +18,7 @@
 }
 
 ul, ol {
-	list-style : none;
+	list-style: none;
 }
 
 button {
