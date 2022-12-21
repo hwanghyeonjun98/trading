@@ -13,6 +13,7 @@ from final_dbconnect import DBConnection
 from pandas.tseries.offsets import BDay
 from keras.models import load_model
 from datetime import date
+from pickle import dump
 from tqdm import tqdm
 
 import pandas as pd
@@ -90,7 +91,7 @@ class DBNetwork(DBConnection):
                 investing_df[c] = investing_df[c].fillna(method='ffill')
                 
         investing_df.to_pickle(f'./pickle/pickle_df/investing/{self.today}_{self.period}_10개.pkl')
-        
+    
         self.investing_df = investing_df 
         return investing_df
 
@@ -118,8 +119,8 @@ class DataFrameCreate(DBNetwork):
             drop_list = ['외국인주문한도수량','외국인주문가능수량','수정주가일자','수정주가비율']
             stock_df.drop(drop_list,axis=1, inplace=True)
             
-            
             merge_df = pd.merge(stock_df, investing_df, on='날짜') # stock df 와 investing df 를 날짜 기준으로 merge
+            
             
             complete_df = pd.concat([complete_df, merge_df], axis=0) # merge가 된 df들을 concat하여 하나의 df로 제작
         
@@ -261,7 +262,7 @@ class LstmNetwork(DataFrameCreate):
 
         min_abs_scaler = MaxAbsScaler()
         X_stock_sc = min_abs_scaler.fit_transform(X_stock_df)
-        dump(min_abs_scaler, open('./download/scaler'))
+        dump(min_abs_scaler, open(f'./download/scaler/{self.today}_scaler', 'wb'))
         X_train, X_test, y_train, y_test = train_test_split(X_stock_sc, y_stock_df
                                                             , test_size=0.3, shuffle=True
                                                             , random_state=42, stratify=y_stock_df)
@@ -298,7 +299,7 @@ class LstmNetwork(DataFrameCreate):
         with open(f'./model/history/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.json', 'wb') as f:
             pickle.dump(history.history, f)
            
-        model_ = load_model(f"./weight/model/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5")
-        self.col_list =col_list
-        self.model_weight = model_
+        model_weight = load_model(f"./model/weight/{self.stock_type}_{self.today}_{self.period}_lstm_{self.epochs}ep_{self.batch_size}bs_{self.patience}pa_{self.corr}newcor.hdf5")
+        self.col_list = col_list
+        self.model_weight = model_weight
         return col_list, model_weight

@@ -22,7 +22,7 @@
 					<%-- 메뉴 영역 --%>
 					<nav class="data-menu">
 						<div class="menu-area">
-							<div class="menu-title">
+							<div class="menu-title" tabindex="-1">
 								<h3 class="h6 mb-0">환율</h3>
 								<span class="icon-span">
 									<i class="bi bi-arrow-bar-down"></i>
@@ -83,7 +83,10 @@
 						</div>
 					</nav>
 					<%-- 메뉴 영역 --%>
-					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4"><span class="data-name">AED/KRW</span>내역</h4>
+					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4">
+						<span class="data-name">AED/KRW</span>내역
+						<small class="data-category"></small>
+					</h4>
 					<%-- 차트 영역 --%>
 					<p class="text-end">
 						<small>2020-01-01 ~ 현재</small>

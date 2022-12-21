@@ -81,33 +81,35 @@ menuList(conins, coninsListEl);
 
 // 브라우저 로드 시 버튼 활성화, 제목 변경
 window.addEventListener("load", () => {
-		// 현재 브라우저 URL 불러와 맨뒤 내역 이름 가져오기
-		const nowUrl = decodeURI(window.location.href);
-		let name = nowUrl.split("/");
-		name = name[name.length - 1];
+	// 현재 브라우저 URL 불러와 맨뒤 내역 이름 가져오기
+	const nowUrl = decodeURI(window.location.href);
+	let name = nowUrl.split("/");
+	name = name[name.length - 1];
 
-		// 가져온 이름과 dataset 이름으로 비교하여
-		// 버튼 활성화하고 데이터 제목 업데이트
-		const btnAll = document.querySelectorAll(".data-view-btn");
-		const dataTitle = document.querySelector(".data-title .data-name");
-		const dataTable = document.querySelector("#data-table");
+	// 가져온 이름과 dataset 이름으로 비교하여
+	// 버튼 활성화하고 데이터 제목 업데이트
+	const btnAll = document.querySelectorAll(".data-view-btn");
+	const dataTitle = document.querySelector(".data-title .data-name");
+	const dataTable = document.querySelector("#data-table");
+	const dataCategory = document.querySelector(".data-category");
 
-		if (name === "data") {
-			dataTable.dataset.table = "aedkrw";
-		} else {
-			console.log('다름');
-			btnAll.forEach((el) => {
-				const dataName = el.dataset.table;
+	if (name === "data") {
+		dataTable.dataset.table = "aedkrw";
+		dataCategory.innerHTML = "환율";
+	} else {
+		btnAll.forEach((el) => {
+			const dataName = el.dataset.table;
 
-				if (dataName === name) {
-					el.classList.add("active");
-					dataTitle.innerText = el.textContent;
-				}
-			});
+			if (dataName === name) {
+				let categoryName = el.closest(".menu-area").children[0].children[0].textContent;
+				el.classList.add("active");
+				dataTitle.innerText = el.textContent;
+				dataCategory.innerText = categoryName;
+			}
 			dataTable.dataset.table = name;
-		}
+		});
 	}
-);
+});
 
 // 대분류 클릭 시 하위 메뉴 토글 슬라이드
 const menuTitle = document.querySelectorAll(".menu-title");
@@ -115,6 +117,7 @@ const menuContent = document.querySelectorAll(".menu-content");
 const menu = document.querySelectorAll(".menu-content ul");
 const menuIcon = document.querySelectorAll(".icon-span i");
 
+// 메뉴 콘텐츠 높이 구하기
 function menuContentHeight(idx) {
 	let menuMarginTop = parseInt(getComputedStyle(menu[idx]).marginTop);
 	let menuMarginBottom = parseInt(getComputedStyle(menu[idx]).marginBottom);

@@ -1,0 +1,4 @@
+{"mode": "test", "ver": "v3", "name": "005930", "stock_code": ["005930"], "rl_method": "a3c", "net": "lstm", "backend": "pytorch", "start_date": "20210201", "end_date": "20210228", "lr": 0.0001, "discount_factor": 0.7, "balance": 100000000}
+[005930] RL:a3c NET:lstm LR:0.0001 DF:0.7 
+[005930][Epoch 1/1] Epsilon:0.0000 #Expl.:0/6854 #Buy:18 #Sell:9 #Hold:6827 #Stocks:1244 PV:102,270,497 Loss:0.000000 ET:34.9749
+[005930] Elapsed Time:71.9485 Max PV:102,270,497 #Win:1

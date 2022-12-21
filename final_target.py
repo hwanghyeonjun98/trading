@@ -2,7 +2,7 @@ from final_dbconnect import DBConnection, DBConnection_target
 from module.selenium_crawling import selenium_driver_load, By
 
 from pandas.tseries.offsets import BDay
-from datetime import date
+from datetime import date, datetime
 
 import pandas as pd
 import shutil
@@ -76,6 +76,9 @@ def get_krx_target(path):
 
 def get_target_stock_list(conn, type):
 
+    # 현재 DB에 존재하는 종목 추출
+    db_stock_list = get_pymysql_db_list(conn, 'stock_info')
+
     # 대상 종목 추출
     target_df = pd.read_csv(f'./download/target/target_{today}.csv', encoding='euc-kr')
     target_df = target_df[['종목코드','시장구분','등락률','거래대금','시가총액']]
@@ -88,6 +91,9 @@ def get_target_stock_list(conn, type):
     kospi_list = kospi['종목코드'].to_list()
     kosdaq_list = kosdaq['종목코드'].to_list()
 
+    kospi_list = list(set(kospi_list) & set(db_stock_list))
+    kosdaq_list = list(set(kosdaq_list) & set(db_stock_list))
+
     target_data = {'대형주' : kospi_list, '소형주' : kosdaq_list}
 
     target_df = pd.DataFrame(target_data)
@@ -97,19 +103,36 @@ def get_target_stock_list(conn, type):
 
 def get_target(path):
     # 대상 종목 설정
-    get_krx_target(path=path)
-    get_target_stock_list(DBConnection_target().get_sqlalchemy_connect_ip(), 'replace')
+    now = datetime.now()
+    if (now.hour < 16):
+        pass
+    else:
+        get_krx_target(path=path)
+        get_target_stock_list(DBConnection_target().get_sqlalchemy_connect_ip(), 'replace')
     
     # Investing Data 생성
     
     investing_data_list = get_pymysql_db_list(DBConnection().get_sqlalchemy_connect_ip(), 'investing_data')
     investing_df = get_investing_data(DBConnection().get_sqlalchemy_connect_ip(), investing_data_list)
-
+    investing_df.to_csv(f'./download/investing_df/investing_{today}.csv', encoding='utf-8-sig')
+    
     return investing_df
 
 #########################################################################################################################################
 
 def get_target_list_db():
+    
+    sql = "SELECT * FROM target_data.target_{0}".format(today)
+
+    target_data = DBConnection_target().get_sqlalchemy_connect_ip().execute(sql)
+    target_df = pd.DataFrame(target_data.fetchall())
+
+    kospi_list = target_df['대형주'].to_list()
+    kosdaq_list = target_df['소형주'].to_list()
+
+    return kospi_list, kosdaq_list
+
+def get_target_list_db_rt():
     
     sql = "SELECT * FROM target_data.target_{0}".format(yesterday)
 

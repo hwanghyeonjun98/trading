@@ -45,7 +45,7 @@ table thead tr th {
 
 .top-to-btn {
 	position: fixed;
-	right: 1rem;
+	right: 2rem;
 	bottom: 2rem;
 	color: var(--color-dark-purple);
 	line-height: 1;
