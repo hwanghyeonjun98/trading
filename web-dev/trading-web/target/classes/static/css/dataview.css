@@ -73,6 +73,11 @@
 	gap: .8rem;
 }
 
+.data-title .data-category {
+	font-size: .68em;
+	color: var(--color-deep-dark-gray);
+}
+
 .table-wrap {
 	position: relative;
 }
