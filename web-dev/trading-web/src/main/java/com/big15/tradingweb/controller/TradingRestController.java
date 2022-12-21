@@ -42,6 +42,6 @@ public class TradingRestController {
 		return mapper.kospiChartList();
 	}
 
-	@RequestMapping("/aiTradingData")
+	@RequestMapping("/aiTradingData") // 더미 데이터
 	public List<TradingDto> aiTradingData() {return tradingMapper.aiTradingData();}
 }

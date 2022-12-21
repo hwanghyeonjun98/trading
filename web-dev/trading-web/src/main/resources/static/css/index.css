@@ -37,7 +37,7 @@
 }
 
 .titlecu {
-	margin-bottom: 30px;
+	/*margin-bottom: 30px;*/
 	margin-top: 20px;
 }
 
@@ -120,7 +120,6 @@
 .snap {
 	font-size: 1.2em;
 	text-align: right;
-	padding-bottom: 1rem;
 }
 
 .display {
@@ -169,4 +168,8 @@
 #trading-data-table tbody tr td:first-child,
 #trading-data-table tbody tr td:nth-child(2) {
 	text-align: center;
+}
+
+#trading-data-table tbody tr td:nth-child(n+3):nth-child(n-7){
+	text-align: right;
 }

@@ -13,28 +13,25 @@
 <body>
 	<div class="background-wrap">
 		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
-		<main class="p-3">
-			<div class="snap">TIME : <span id="current" class="display"></span></div>
-			<script>
-				const defaultDate = new Date();
-				document.querySelector("#current").innerHTML = defaultDate.toLocaleTimeString();
-
-				setInterval(displayNow, 1000); // 1초마다 시간 갱신
-				function displayNow() {
-					const now = new Date();
-					//현재 거주 지역에 맞는 시간
-					document.querySelector("#current").innerHTML = now.toLocaleTimeString();
-				}
-
-			</script>
+		<main class="px-3 py-4">
 			<section class="main-list">
 				<article class="w-75">
 					<div id="ai-trading-area" class="pe-4">
 						<div class="table-title">
-							<h3 class="h3">AI 실시간 트레이딩</h3>
-							<small>트레이딩 기준 시간 : 오전 9:00 ~ 오후 3:00</small>
+							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
+							<small>트레이딩 시간 : 9:00 ~ 15:00</small>
+							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 						</div>
 						<table id="trading-data-table" class="table table-hover table-striped table-sort">
+							<colgroup>
+								<col style="width: 180px">
+								<col style="width: 160px">
+								<col style="width: 150px">
+								<col style="width: 220px">
+								<col style="width: 220px">
+								<col style="width: 220px">
+								<col style="width: 220px">
+							</colgroup>
 							<thead class="table-secondary">
 								<tr>
 									<th>종목코드</th>
@@ -56,6 +53,7 @@
 					</div>
 					<div class="recommendation-keywords-container">
 						<div class="titlecu mt-0"><h3>환율 검색 추천</h3></div>
+						<hr>
 						<div class="keywords-container-wrapper">
 							<div class="keywords-contents">
 								<a href="/dataview/data/cadkrw">
@@ -97,6 +95,7 @@
 							</div>
 						</div>
 						<div class="titlecu"><h3>세계지수 검색 추천</h3></div>
+						<hr>
 						<div class="keywords-container-wrapper">
 							<div class="keywords-contents">
 								<a href="/dataview/data/캐나다sptsx">
@@ -228,6 +227,7 @@
 					<article class="w-25">
 						<div class="chartFrame">
 							<h3>코스피 지수 현황</h3>
+							<hr>
 							<div id="chart-area">
 							</div>
 							<h3>시가 총액 상위</h3>

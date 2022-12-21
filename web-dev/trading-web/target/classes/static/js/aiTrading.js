@@ -1,10 +1,9 @@
 (function poll() {
 	$.ajax({
 		type       : "POST",
-		url        : "/api/data/aiTradingData",
+		url        : "/api/data/aiTradingData", // 현재 더미 데이터
 		dataset    : "json",
 		success    : function (trading) {
-			console.table(trading);
 			const list = [];
 			$.each(trading, function (index) {
 				str = "<tr>" +
@@ -18,7 +17,11 @@
 				      "</tr>";
 				list.push(str);
 			});
-			$("#trading-data-table tbody").html(list);
+			if (list.length === 0) {
+				$("#trading-data-table tbody").html("<tr><td colspan='7'>현재는 장중이 아닙니다.</td></tr>");
+			} else {
+				$("#trading-data-table tbody").html(list);
+			}
 		}, timeout : 5000,
 		complete   : setTimeout(function () {
 			poll();

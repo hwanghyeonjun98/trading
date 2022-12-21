@@ -10,9 +10,9 @@ import lombok.Setter;
 public class TradingDto {
 	private String stock_code;
 	private String stock_name;
-	private int quantity;
-	private double average_price;
-	private int appraisal_amount;
-	private double returns;
-	private double book_value;
+	private String quantity;
+	private String average_price;
+	private String appraisal_amount;
+	private String returns;
+	private String book_value;
 }
