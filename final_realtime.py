@@ -298,7 +298,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
     end_cost = each_target_df['종가'].values[0]   # 종가
     high_cost = each_target_df['고가'].values[0]   # 고가
     status_df = ds_account_stock_check()
-    status_df.to_sql(name=f'{today}', con=DBConnection_present().get_sqlalchemy_connect_ip, if_exists='replace', index=False) 
+    status_df.to_sql(name=f'{today}', con=DBConnection_present().get_sqlalchemy_connect_ip(), if_exists='replace', index=False) 
     buy_num = cost // int(end_cost)
 
     if ('A' + code) not in status_df['종목코드'].values.tolist():
