@@ -1,0 +1,1 @@
+{"mode": "train", "ver": "v3", "name": "005930", "stock_code": ["005930"], "rl_method": "a3c", "net": "lstm", "backend": "pytorch", "start_date": "20210901", "end_date": "20211131", "lr": 0.0001, "discount_factor": 0.7, "balance": 100000000}
