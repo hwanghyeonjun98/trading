@@ -2,7 +2,7 @@ from final_dbconnect import DBConnection, DBConnection_target
 from module.selenium_crawling import selenium_driver_load, By
 
 from pandas.tseries.offsets import BDay
-from datetime import date
+from datetime import date, datetime
 
 import pandas as pd
 import shutil
@@ -103,8 +103,12 @@ def get_target_stock_list(conn, type):
 
 def get_target(path):
     # 대상 종목 설정
-    get_krx_target(path=path)
-    get_target_stock_list(DBConnection_target().get_sqlalchemy_connect_ip(), 'replace')
+    now = datetime.now()
+    if (now.hour < 16):
+        pass
+    else:
+        get_krx_target(path=path)
+        get_target_stock_list(DBConnection_target().get_sqlalchemy_connect_ip(), 'replace')
     
     # Investing Data 생성
     
