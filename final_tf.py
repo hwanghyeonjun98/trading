@@ -18,14 +18,14 @@ investing_df = get_target(path=r'D:\systrader-dev\trading\download\target') # �
 # D:\systrader-dev\trading\download\target
 
 
-# # 대형주 1년 학습
-# account_name= '04BIG15'
-# ls_big_year = LstmNetwork('대형주', kospi_list, '1년', 280, 0.02)
-# col_list_big_year = ls_big_year.col_list
-# model_big_year = ls_big_year.model_weight
+# 대형주 1년 학습
+account_name= '04BIG15'
+ls_big_year = LstmNetwork('대형주', kospi_list, '1년', 280, 0.02)
+col_list_big_year = ls_big_year.col_list
+model_big_year = ls_big_year.model_weight
 
-# # 대형주 1년 트레이딩
-# stock_predict(kospi_list, investing_df, col_list_big_year, model_big_year, account_name)
+# 대형주 1년 트레이딩
+stock_predict(kospi_list, investing_df, col_list_big_year, model_big_year, account_name)
 
 
 
@@ -51,16 +51,16 @@ investing_df = get_target(path=r'D:\systrader-dev\trading\download\target') # �
 
 
 
-# 소형주 6개월 학습
-account_name= '01BIG15'
-ls_small_six_month = LstmNetwork('소형주', kosdaq_list, '6개월', 140, 0.03)
-col_list_small_six_month = ls_small_six_month.col_list
-model_small_six_month = ls_small_six_month.model_weight
+# # 소형주 6개월 학습
+# account_name= '01BIG15'
+# ls_small_six_month = LstmNetwork('소형주', kosdaq_list, '6개월', 140, 0.03)
+# col_list_small_six_month = ls_small_six_month.col_list
+# model_small_six_month = ls_small_six_month.model_weight
 
 # with open( './pickle/pickle_corr_complete/소형주_20221216_6개월_10개_0.03.pkl', 'rb') as p:
 #     col_list_small_six_month = pickle.load(p)
 # modelpath_small_six_month = './model/소형주_20221216_6개월_lstm_30ep_64bs_5pa_0.03newcor.hdf5'
 # model_small_six_month = load_model(modelpath_small_six_month)
 
-# 소형주 6개월 트레이딩
-stock_predict(kosdaq_list, investing_df, col_list_small_six_month, model_small_six_month, account_name)
+# # 소형주 6개월 트레이딩
+# stock_predict(kosdaq_list, investing_df, col_list_small_six_month, model_small_six_month, account_name)
