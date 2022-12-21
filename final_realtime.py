@@ -338,7 +338,10 @@ def real_trading(predict_df,cost, code, each_target_df, now):
         end_cost = each_target_df['종가'].values[0]   # 종가
         high_cost = each_target_df['고가'].values[0]   # 고가
         status_df = ds_account_stock_check()
-        status_df.to_sql(name=f'{today}', con=DBConnection_present().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
+        status_db_df = status_df.copy()
+        status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
+                                    , '평가금액' : 'evalValue' , '수익율' : 'ratio', '장부금액' : 'currentValue'}, inplace=True)
+        status_db_df.to_sql(name='account_status', con=DBConnection_present().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
         n_conclude_df = ds_n_conclude_check()
 
         try:
