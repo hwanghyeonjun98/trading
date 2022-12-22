@@ -18,25 +18,25 @@ investing_df = get_target(path=r'D:\systrader-dev\trading\download\target') # �
 # D:\systrader-dev\trading\download\target
 
 
-# 대형주 1년 학습
-account_name= '04BIG15'
-ls_big_year = LstmNetwork('대형주', kospi_list, '1년', 280, 0.02)
-col_list_big_year = ls_big_year.col_list
-model_big_year = ls_big_year.model_weight
+# # 대형주 1년 학습
+# account_name= '04BIG15'
+# ls_big_year = LstmNetwork('대형주', kospi_list, '1년', 280, 0.02)
+# col_list_big_year = ls_big_year.col_list
+# model_big_year = ls_big_year.model_weight
 
-# 대형주 1년 트레이딩
-stock_predict(kospi_list, investing_df, col_list_big_year, model_big_year, account_name)
+# # 대형주 1년 트레이딩
+# stock_predict(kospi_list, investing_df, col_list_big_year, model_big_year, account_name)
 
 
 
-# # 대형주 6개월 학습
-# account_name= '03BIG15'
-# ls_big_six_month = LstmNetwork('대형주', kospi_list, '6개월', 140, 0.04 )
-# col_list_big_six_month = ls_big_six_month.col_list
-# model_big_six_month = ls_big_six_month.model_weight
+# 대형주 6개월 학습
+account_name= '03big15'
+ls_big_six_month = LstmNetwork('대형주', kospi_list, '6개월', 140, 0.04 )
+col_list_big_six_month = ls_big_six_month.col_list
+model_big_six_month = ls_big_six_month.model_weight
 
-# # 대형주 6개월 트레이딩
-# stock_predict(kospi_list, investing_df, col_list_big_six_month, model_big_six_month, account_name)
+# 대형주 6개월 트레이딩
+stock_predict(kospi_list, investing_df, col_list_big_six_month, model_big_six_month, account_name)
 
 
 
