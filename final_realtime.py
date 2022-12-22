@@ -365,6 +365,16 @@ def account_status_delete(conn, account_name):
     sql = f'DELETE FROM web_data.{account_name}_account_status'
     
     conn.execute(sql)
+    
+def account_status_update(df, conn):
+    args = df.values.tolist()
+
+    sql_update = f'INSERT INTO 01big15_account_status VALUES (%s,%s,%s,%s,%s,%s,%s)'
+
+    cursor =  conn.cursor()
+
+    cursor.executemany(sql_update, args)
+    conn.commit()
 
 ############################################################################################################################################################################################
 
@@ -396,7 +406,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
                                     , '평가금액' : 'evalValue' , '수익율' : 'ratio', '장부금액' : 'currentValue'}, inplace=True)
         account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)                                    
-        status_db_df.to_sql(name=f'{account_name}_account_status', con=DBConnection_present().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
+        account_status_update(status_db_df, DBConnection_present().get_pymysql_connection())
         n_conclude_df = ds_n_conclude_check()
 
         try:
