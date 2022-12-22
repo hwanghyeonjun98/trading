@@ -9,6 +9,10 @@
 	<select id="newsdata" resultType="com.big15.tradingweb.dto.NewsDto">
 		SELECT *
 		FROM news_data
-		
+	</select>
+	<select id="marketCapRanking" resultType="com.big15.tradingweb.dto.MarketCapDto">
+		SELECT *
+		FROM market_cap_data
+		order by no limit 10
 	</select>
 </mapper>

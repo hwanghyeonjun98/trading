@@ -19,7 +19,7 @@
 					<div id="ai-trading-area" class="pe-4">
 						<div class="table-title">
 							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
-							<small>트레이딩 시간 : 9:00 ~ 15:00</small>
+							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
 							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 						</div>
 						<table id="trading-data-table" class="table table-hover table-striped table-sort">

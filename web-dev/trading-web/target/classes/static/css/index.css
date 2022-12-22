@@ -100,22 +100,22 @@
 	height: 2em;
 	overflow: hidden;
 	border: 2px solid var(--color-yellow);
-	margin: 10px;
 	width: 100%;
+}
+
+#rolling {
+	transition-timing-function: ease-in-out;
 }
 
 #rolling > li {
 	height: 2em;
-
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-
 	line-height: 1.7em;
-	padding-left: 1em;
+	padding-left: 0em;
 	font-weight: bold;
 }
-
 
 .snap {
 	font-size: 1.2em;
