@@ -431,9 +431,9 @@ def real_trading(predict_df,cost, code, each_target_df, now):
     except:
         print('현재 보유 중인 주식이 없습니다.')
 
-def get_pymysql_predict_table_check(code, conn):
+def get_pymysql_predict_table_check(code, conn,account_name):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
-    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'predict_data' AND table_name = '{today}_{code}'"
+    sql = f"SELECT 1 FROM Information_schema.tables  WHERE table_schema = 'predict_data' AND table_name = '{account_name}_{today}_{code}'"
 
     cur = conn.cursor()
     count = cur.execute(sql)
@@ -465,7 +465,7 @@ def realtime_trading(stock_list , account_name):
                 each_target_df = stock_trading_db(code, account_name)
                 while True:
                     print('실시간 트레이딩 진행중')
-                    count = get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection())
+                    count = get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
                     time.sleep(1)
                     if count == 1:
                         break
