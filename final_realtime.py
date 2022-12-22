@@ -182,9 +182,9 @@ def ds_trade_end(buysell, code, quantity):
 def ds_stock_status(code):
     inStockMst.SetInputValue(0, 'A' + code)
     inStockMst.BlockRequest()
-    sign1 = inStockMst.GetHeaderValue(66) # 관리종목 여부
-    sign2 = inStockMst.GetHeaderValue(67) # 투자경고 여부
-    sign3 = inStockMst.GetHeaderValue(68) # 거래정지 여부
+    sign1 = chr(inStockMst.GetHeaderValue(66)) # 관리종목 여부
+    sign2 = chr(inStockMst.GetHeaderValue(67)) # 투자경고 여부
+    sign3 = chr(inStockMst.GetHeaderValue(68)) # 거래정지 여부
 
     if (sign1 == 'N') & (sign2 == '1') & (sign3 == 'N'):
         return False
