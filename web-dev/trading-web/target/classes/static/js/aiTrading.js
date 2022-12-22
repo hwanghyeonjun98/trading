@@ -7,25 +7,28 @@
 			const list = [];
 			$.each(trading, function (index) {
 				str = "<tr>" +
-				      "<td>" + trading[index].stock_code + "</td>" +
-				      "<td>" + trading[index].stock_name + "</td>" +
-				      "<td>" + trading[index].quantity + "</td>" +
-				      "<td>" + trading[index].average_price + "</td>" +
-				      "<td>" + trading[index].appraisal_amount + "</td>" +
-				      "<td>" + trading[index].returns + "</td>" +
-				      "<td>" + trading[index].book_value + "</td>" +
+				      "<td>" + trading[index].code + "</td>" +
+				      "<td>" + trading[index].name + "</td>" +
+				      "<td>" + trading[index].amount + "</td>" +
+				      "<td>" + trading[index].buyprice + "</td>" +
+				      "<td>" + trading[index].evalValue + "</td>" +
+				      "<td>" + trading[index].ratio + "</td>" +
+				      "<td>" + trading[index].currentValue + "</td>" +
 				      "</tr>";
 				list.push(str);
 			});
 			if (list.length === 0) {
-				$("#trading-data-table tbody").html("<tr><td colspan='7'>현재는 장중이 아닙니다.</td></tr>");
+				$("#trading-data-table tbody").html("<tr><td colspan='7'>거래중입니다. 잠시만 기다려주세요.</td></tr>");
 			} else {
 				$("#trading-data-table tbody").html(list);
 			}
-		}, timeout : 5000,
+		}, timeout : 8000,
 		complete   : setTimeout(function () {
 			poll();
-		}, 5000)
+		}, 8000),
+		error: function () {
+			$("#trading-data-table tbody").html("<tr><td colspan='7'>현재 장중이 아니거나<br>데이터가 없습니다.</td></tr>");
+		}
 	});
 })();
 

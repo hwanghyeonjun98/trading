@@ -32,7 +32,7 @@ $(window).on("load", function () {
 
 // 날짜 검색 관련
 $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼전송 코드
-  // 폼 전송 이벤트 초기화(새로고침 안되게)
+                                                                        // 폼 전송 이벤트 초기화(새로고침 안되게)
 	event.preventDefault();
 
 	// 폼안에 날짜 가져오기
@@ -51,7 +51,7 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼�
 		url     : searchUrl,
 		dataset : "json", // 데이터 타입, JSON or XML (HTML도 되지만 사용 지양)
 		success : function (reponse) { // 통신 성공시 진행하는 코드
-			$("#data-table tbody tr").remove();
+			const dataList = [];
 			$.each(reponse, function (i) {
 				str = "<tr><td>" +
 				      reponse[i].dates +
@@ -68,8 +68,10 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼�
 				      "</td><td>" +
 				      reponse[i].changes +
 				      "%</td></tr>";
-				$("#data-table tbody").append(str);
+				dataList.push(str);
+
 			});
+			$("#data-table tbody").html(dataList);
 			$("#data-table").attr("data-table", tableName);
 		},
 		error   : function () { // 통신 실패시 진행하는 코드

@@ -1,8 +1,8 @@
 const options = {
-	series         : [],
-	chart          : {
-		zoom: {
-			enabled: false
+	series        : [],
+	chart         : {
+		zoom          : {
+			enabled : false
 		},
 		type          : "area",
 		height        : 350,
@@ -22,21 +22,21 @@ const options = {
 					"pan"           : "이동",
 					"reset"         : "초기화"
 				}
-				
+
 			}
 		}],
 		defaultLocale : "ko",
-		toolbar : {
-	show : false
+		toolbar       : {
+			show : false
 
-    }
-	}, tooltip     : {
+		}
+	}, tooltip    : {
 		enabled : true,
 		x       : {
-			show      : true,
-			format    : "MM/dd",
+			show   : true,
+			format : "MM/dd",
 		}
-	}, xaxis       : {
+	}, xaxis      : {
 		type   : "datetime",
 		labels : {
 			datetimeFormatter : {
@@ -45,23 +45,23 @@ const options = {
 				day   : "MM월 dd일"
 			}
 		}
-	}, yaxis       : {
+	}, yaxis      : {
 		tooltip : {
 			enabled : true,
 		}
-	}, noData      : {
+	}, noData     : {
 		text          : "데이터가 없습니다.",
 		align         : "center",
 		verticalAlign : "middle",
 		style         : {
 			fontSize : "2.4rem"
 		}
-	},dataLabels :{
-		enabled: false
+	}, dataLabels : {
+		enabled : false
 	}
-	,stroke: {
-		width: 1
-		}
+	, stroke      : {
+		width : 1
+	}
 };
 
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
@@ -70,16 +70,16 @@ chart.render();
 let chartUrl = "/api/data/index/chart/kospi";
 
 $.getJSON(chartUrl, function (response) {
-		let dataList = [];
+	let dataList = [];
 
-		response.forEach((item) => {
-			dataList.push([item.dates, item.closes]);
-		});
-
-		chart.updateSeries([{
-			name : "KOSPI",
-			data : dataList
-		}]);
+	response.forEach((item) => {
+		dataList.push([item.dates, item.closes]);
 	});
+
+	chart.updateSeries([{
+		name : "KOSPI",
+		data : dataList
+	}]);
+});
 
 
