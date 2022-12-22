@@ -2,6 +2,7 @@ from  pywinauto.application  import  Application
 import pyautogui
 import time
 
+time.sleep(15)
 app  =  Application(backend = "uia").start('C:\CREON\STARTER\coStarter.exe')
 
 # Notepad.exe 프로세스 내부의 창 설명 
