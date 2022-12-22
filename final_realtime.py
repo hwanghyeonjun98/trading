@@ -1,4 +1,4 @@
-from module.setting import instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033, instCpTdNew5331A, instCpTd5339, instCpTd0314
+from module.setting import instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033, instCpTdNew5331A, instCpTd5339, instCpTd0314, inStockMst
 from final_dbconnect import DBConnection_trading, DBConnection_present
 
 from pandas.tseries.offsets import BDay
@@ -179,7 +179,17 @@ def ds_trade_end(buysell, code, quantity):
     if rqStatus != 0:
         print('Trade_Stock Dib 연결 실패 : ', rqStatus, errMsg)
 
+def ds_stock_status(code):
+    inStockMst.SetInputValue(0, 'A' + code)
+    inStockMst.BlockRequest()
+    sign1 = inStockMst.GetHeaderValue(66) # 관리종목 여부
+    sign2 = inStockMst.GetHeaderValue(67) # 투자경고 여부
+    sign3 = inStockMst.GetHeaderValue(68) # 거래정지 여부
 
+    if (sign1 == 'N') & (sign2 == '1') & (sign3 == 'N'):
+        return True
+    else:
+        return False
 
 # 잔고 조회
 def ds_account_stock_check():
@@ -351,6 +361,11 @@ def ds_n_conclude_check():
 
     return n_conclude_df
 
+def account_status_delete(conn, account_name):
+    sql = f'DELETE FROM web_data.{account_name}_account_status'
+    
+    conn.execute(sql)
+
 ############################################################################################################################################################################################
 
 
@@ -364,6 +379,9 @@ def stock_trading_db(code, account_name):
         
 ## DB에서 predict 결과 값 가져오기
 def real_trading(predict_df,cost, code, each_target_df, now, account_name):
+
+    if ds_stock_status(code):
+        return code
     
     try:
         print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -377,6 +395,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
         status_db_df = status_df.copy()
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
                                     , '평가금액' : 'evalValue' , '수익율' : 'ratio', '장부금액' : 'currentValue'}, inplace=True)
+        account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)                                    
         status_db_df.to_sql(name=f'{account_name}_account_status', con=DBConnection_present().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
         n_conclude_df = ds_n_conclude_check()
 
