@@ -187,9 +187,9 @@ def ds_stock_status(code):
     sign3 = inStockMst.GetHeaderValue(68) # 거래정지 여부
 
     if (sign1 == 'N') & (sign2 == '1') & (sign3 == 'N'):
-        return True
-    else:
         return False
+    else:
+        return True
 
 # 잔고 조회
 def ds_account_stock_check():
