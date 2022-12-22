@@ -11,6 +11,5 @@ import java.util.List;
 public interface IndexdataMapper {
     List<InvestingDto> kospidata();
     List<NewsDto> newsdata();
-
     List<MarketCapDto> marketCapRanking();
 }

@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.big15.tradingweb.mapper.AiTradingMapper">
 	<select id="aiTradingData" resultType="com.big15.tradingweb.dto.AiTradingDto">
-		SELECT code, name, format(amount, 0) as amount, format(buyprice, 2) as buyprice, format(evalValue, 0) as evalValue, format(ratio, 4) as ratio,format(currentValue, 0) as currentValue
+		SELECT code
+		     , name
+		     , format(amount, 0) as amount
+		     , format(buyprice, 2) as buyprice
+		     , format(evalValue, 0) as evalValue
+		     , format(ratio, 4) as ratio
+		     ,format(currentValue, 0) as currentValue
 		FROM web_data.account_status
 		order by code asc
 	</select>
