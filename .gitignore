@@ -30,6 +30,10 @@ final_tf.py
 
 # driver 디렉토리 무시
 driver/
+download/krx/
+download/scaler/
+download/target/
+download/investing_df/
 
 # module/__pycache__ 디렉토리 무시
 module/__pycache__/
