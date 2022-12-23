@@ -13,7 +13,7 @@
 <body>
 	<div class="background-wrap">
 		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
-		<main class="px-3 py-4">
+		<main class="px-4 py-4">
 			<section class="main-list">
 				<article class="w-75">
 					<div id="ai-trading-area" class="pe-4">
@@ -212,7 +212,7 @@
 						<div>
 							<h3 class="mb-0">추천 뉴스</h3>
 							<hr>
-							<ul class="ps-2">
+							<ul class="ps-3">
 								<c:forEach items="${nnews}" var="nnews">
 									<li>
 										<a href="${nnews.newsLink}" class="news-link">
