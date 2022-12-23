@@ -1,4 +1,4 @@
-from module.setting import instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033, instCpTdNew5331A, instCpTd5339
+from module.setting import instStockChart, instCpCybos, instCpTdUtil, instCpTd0311, instCpTd6033, instCpTdNew5331A, instCpTd5339, instCpTd0314, inStockMst
 from final_dbconnect import DBConnection_trading, DBConnection_present
 
 from pandas.tseries.offsets import BDay
@@ -112,6 +112,38 @@ def ds_trade_stock(buysell, code, quantity, price):
     if rqStatus != 0:
         print('Trade_Stock Dib 연결 실패 : ', rqStatus, errMsg)
 
+def ds_order_cancel(code, ordernum):
+
+    # 주문 초기화
+    initCheck = instCpTdUtil.TradeInit(0)
+    if (initCheck != 0):
+        print('주문 초기화 실패, 연결 상태 확인 필요')
+        return
+
+
+    # # 주식 매수 주문
+    acc = instCpTdUtil.AccountNumber[0] #계좌번호
+    accFlag = instCpTdUtil.GoodsList(acc, 1)  # 주식상품 구분
+
+    instCpTd0314.SetInputValue(1, ordernum)  #  원주문 번호 - 정정을 하려는 주문 번호
+    instCpTd0314.SetInputValue(2, acc)  # 상품구분 - 주식 상품 중 첫번째
+    instCpTd0314.SetInputValue(3, accFlag[0])  # 상품구분 - 주식 상품 중 첫번째
+    instCpTd0314.SetInputValue(4, code)  # 종목코드
+    instCpTd0314.SetInputValue(5, 0)  # 정정 수량, 0 이면 잔량 취소임
+
+    # 매수 주문 요청
+    nRet = instCpTd0314.BlockRequest()
+    if (nRet != 0) :
+        print('주문요청 오류', nRet)    
+        # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 
+    else:
+        print('주문 정상 접수')
+
+    rqStatus = instCpTd0314.GetDibStatus() # Dib Server 상태 확인
+    errMsg = instCpTd0314.GetDibMsg1() # 확인 메시지 출력
+    if rqStatus != 0:
+        print('Order_Cancel Dib 연결 실패 : ', rqStatus, errMsg)
+
 def ds_trade_end(buysell, code, quantity):
 
     # 주문 초기화
@@ -147,7 +179,17 @@ def ds_trade_end(buysell, code, quantity):
     if rqStatus != 0:
         print('Trade_Stock Dib 연결 실패 : ', rqStatus, errMsg)
 
+def ds_stock_status(code):
+    inStockMst.SetInputValue(0, 'A' + code)
+    inStockMst.BlockRequest()
+    sign1 = chr(inStockMst.GetHeaderValue(66)) # 관리종목 여부
+    sign2 = chr(inStockMst.GetHeaderValue(67)) # 투자경고 여부
+    sign3 = chr(inStockMst.GetHeaderValue(68)) # 거래정지 여부
 
+    if (sign1 == 'N') & (sign2 == '1') & (sign3 == 'N'):
+        return False
+    else:
+        return True
 
 # 잔고 조회
 def ds_account_stock_check():
@@ -297,23 +339,42 @@ def ds_n_conclude_check():
 
     cnt = instCpTd5339.GetHeaderValue(5)
 
+    order_list = []
     code_list = []
     nconclude_list = []
 
     for i in range(cnt):
         # print("종목코드 종목명 체결잔고수량 체결장부단가 평가금액 평가손익")
+        order_number = instCpTd5339.GetDataValue(1, i)  # 주문번호
         code = instCpTd5339.GetDataValue(3, i)  # 종목코드
         nconclude = instCpTd5339.GetDataValue(11, i) # 주문 수량
         
+        order_list.append(order_number)
         code_list.append(code)
         nconclude_list.append(nconclude)
 
     n_conclude_data = {'종목코드': code_list
                    , '미체결수량' : nconclude_list
+                   , '주문번호' : order_list
                    }
     n_conclude_df = pd.DataFrame(n_conclude_data)
 
     return n_conclude_df
+
+def account_status_delete(conn, account_name):
+    sql = f'DELETE FROM web_data.{account_name}_account_status'
+    
+    conn.execute(sql)
+    
+def account_status_update(df, conn):
+    args = df.values.tolist()
+
+    sql_update = f'INSERT INTO 01big15_account_status VALUES (%s,%s,%s,%s,%s,%s,%s)'
+
+    cursor =  conn.cursor()
+
+    cursor.executemany(sql_update, args)
+    conn.commit()
 
 ############################################################################################################################################################################################
 
@@ -327,7 +388,10 @@ def stock_trading_db(code, account_name):
     return each_target_df
         
 ## DB에서 predict 결과 값 가져오기
-def real_trading(predict_df,cost, code, each_target_df, now):
+def real_trading(predict_df,cost, code, each_target_df, now, account_name):
+
+    if ds_stock_status(code):
+        return code
     
     try:
         print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -341,14 +405,15 @@ def real_trading(predict_df,cost, code, each_target_df, now):
         status_db_df = status_df.copy()
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
                                     , '평가금액' : 'evalValue' , '수익율' : 'ratio', '장부금액' : 'currentValue'}, inplace=True)
-        status_db_df.to_sql(name='account_status', con=DBConnection_present().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
+        account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)                                    
+        account_status_update(status_db_df, DBConnection_present().get_pymysql_connection())
         n_conclude_df = ds_n_conclude_check()
 
         try:
             n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0]
-            buy_num = (cost // int(end_cost)) - int(n_conclude_num)
+            buy_num = (cost // int(end_cost)) - int(n_conclude_num) # 총 매수량
         except:
-            buy_num = cost // int(end_cost)
+            buy_num = cost // int(end_cost) # 총 매수량
             print('미체결 수량이 없습니다.')
         
 
@@ -359,7 +424,13 @@ def real_trading(predict_df,cost, code, each_target_df, now):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 try:
-                    ds_trade_stock('2', code, buy_num , end_cost)
+                    if n_conclude_num == 0:
+                        if (end_cost) <= 100000:
+                            num = 1000000 / int(end_cost)
+                        else:
+                            num = 1
+                        ds_trade_stock('2', code, num , end_cost)
+
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -371,7 +442,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
             end = status_df[status_df['종목코드'] == 'A' + code]['평단가'].values[0]
 
             current_value = status_df[status_df['종목코드'] == 'A' + code]['장부금액'].values[0]
-            buy_num = (cost-current_value) // int(end_cost)
+            buy_num = ((cost-current_value) // int(end_cost)) - int(n_conclude_num)
 
             if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) :
 
@@ -379,13 +450,18 @@ def real_trading(predict_df,cost, code, each_target_df, now):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 try:
-                    ds_trade_stock('2', code, buy_num , end_cost)
+                    if n_conclude_num == 0:
+                        if (end_cost) <= 100000:
+                            num = 1000000 / int(end_cost)
+                        else:
+                            num = 1
+                        ds_trade_stock('2', code, buy_num , end_cost)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
 
             ### 구매시 종가보다 몇 퍼센트 이상 증가했으면 바로 팔아라
-            elif ((end*1.03) < float(end_cost)) & (amount > 0):
+            elif ((end*1.1) < float(end_cost)) & (amount > 0):
                 print('------------------------------- 매도 위치 -------------------------------')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
@@ -396,6 +472,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
                     
                 print('------------------------------------------------------------------------')
+                return code
                 
             elif (predict_df['0'].values[0] > predict_df['1'].values[0]) & (amount > 0):
                 print('------------------------------- 매도 위치 -------------------------------')
@@ -409,6 +486,7 @@ def real_trading(predict_df,cost, code, each_target_df, now):
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
                 
                 print('------------------------------------------------------------------------')
+                return code
 
             elif (amount > 0) & (now.minute >= 20) & (now.hour >= 15):
                 
@@ -416,6 +494,9 @@ def real_trading(predict_df,cost, code, each_target_df, now):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('**********************************************************************')
                 try:
+                    if n_conclude_num != 0:
+                        order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
+                        ds_order_cancel(code, order_num)
                     ds_trade_end('1', code, amount)
                     end = 0
                 except:
@@ -430,6 +511,8 @@ def real_trading(predict_df,cost, code, each_target_df, now):
                 #  잔고가 얼마냐?
     except:
         print('현재 보유 중인 주식이 없습니다.')
+
+    return 0
 
 def get_pymysql_predict_table_check(code, conn,account_name):
     # 현재 DB 내 존재하는 테이블 존재 여부 확인
@@ -475,7 +558,14 @@ def realtime_trading(stock_list , account_name):
                 pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
                 print(predict_df)
-                real_trading(predict_df, first_cost, code, each_target_df, now)
+
+                sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name)
+
+                if sell_code == 0:
+                    pass
+                else:
+                    stock_list.remove(sell_code)
+
                 
 
     

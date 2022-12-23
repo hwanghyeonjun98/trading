@@ -132,6 +132,8 @@ class DBConnection_present():
         return self.sq_con
      # mysql connect하기 위한 아이디 비밀번호 포트 데이터베이스 등록 및 conn 리턴
     def get_pymysql_connection(self):
+        
+        pymysql.install_as_MySQLdb()
         conn = pymysql.connect(host=self.ip_address, user='admin', password='big15'
                             , db=self.db_name, charset='utf8')
         self.py_con = conn
