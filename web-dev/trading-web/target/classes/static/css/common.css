@@ -23,6 +23,12 @@ header {
 	left: 0;
 }
 
+header h1 a {
+	width: 160px;
+	text-align: center;
+	letter-spacing: -4px;
+}
+
 main {
 	min-height: calc(100vh - (74px + 18vh));
 }
