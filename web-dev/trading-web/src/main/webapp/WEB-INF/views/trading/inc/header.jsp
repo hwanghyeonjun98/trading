@@ -14,7 +14,7 @@
 				<a href="/login" class="login-btn">로그인</a>
 			</c:if>
 			<c:if test="${userAccount != null}">
-				<a href="/logout" class="logout-btn">로그아웃</a>
+				<button type="button" class="logout-btn">로그아웃</button>
 			</c:if>
 		</div>
 		<ul class="header-menu-list">

@@ -17,7 +17,7 @@ function login() {
 					location.href = "/";
 				} else {
 					// event.preventDefault();
-					alert("로그인 정보를 확인하세요.");
+					alert("아이디 또는 비밀번호가 잘못 되었습니다.\n로그인 정보를 확인하세요.");
 				}
 			},
 			error      : function () {
