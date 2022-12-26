@@ -3,6 +3,7 @@ const headerMenuList = document.querySelector(".header-menu-list"); // 모바일
 const headerMenuListEl = document.querySelectorAll(".header-menu-list li a"); // 모바일 화면 사이드 메뉴 요소들
 const notLink = document.querySelectorAll("a[href='#']"); // 가상링크로 되어있는 a태그들
 const topBtn = document.querySelector(".top-to-btn"); // 상단으로 올라가는 버튼
+const logoutBtn = document.querySelector(".logout-btn"); // 로그아웃 버튼
 
 // 가상 링크 이벤트 초기화(작동안되게)
 function EventReset(event) {
@@ -62,3 +63,19 @@ window.addEventListener("scroll", () => {
 	}
 });
 
+// 로그아웃 버튼 존재시 적용
+if (logoutBtn !== null) {
+	// 로그아웃 이벤트
+	function logoutClick() {
+		const logpoutConfrim = confirm("로그아웃 하시겠습니까?");
+		if (logpoutConfrim === true) {
+			location.href = "/logout";
+		}
+
+		if (logpoutConfrim === false) {
+			return false;
+		}
+	}
+
+	logoutBtn.addEventListener("click", logoutClick);
+}

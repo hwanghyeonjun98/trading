@@ -67,7 +67,7 @@ window.addEventListener("scroll", () => {
 if (logoutBtn !== null) {
 	// 로그아웃 이벤트
 	function logoutClick() {
-		const logpoutConfrim = confirm("로그아웃 하시겠습니가?");
+		const logpoutConfrim = confirm("로그아웃 하시겠습니까?");
 		if (logpoutConfrim === true) {
 			location.href = "/logout";
 		}

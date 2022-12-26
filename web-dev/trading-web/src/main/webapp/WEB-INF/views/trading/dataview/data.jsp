@@ -10,6 +10,12 @@
 	<%-- 기본적으로 불러와야 하는 것--%>
 	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
 	<link rel="stylesheet" href="/css/dataview.css">
+	<c:if test="${error_msg != null}">
+		<script>
+			alert("${error_msg}");
+			history.back();
+		</script>
+	</c:if>
 </head>
 <body>
 	<div class="background-wrap">

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -20,7 +21,11 @@ public class TradingDataController {
 	private InvestingMapper mapper;
 
 	@GetMapping("/data")
-	public String dataDefultList(Model model) {
+	public String dataDefultList(HttpSession session, Model model) {
+		if (session.getAttribute("userName") == null) {
+			model.addAttribute("error_msg", "멤버 전용 페이지 입니다.로그인해주세요!");
+		}
+
 		List<InvestingDto> defaultData = mapper.dataDefultList();
 		model.addAttribute("dataList", defaultData);
 		model.addAttribute("defaultDataName", "aedkrw");

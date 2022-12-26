@@ -29,12 +29,8 @@ public class LoginRestcontroller {
 			LoginDto user = loginMapper.login(user_id);
 
 			if (user != null && user_id.equals(user.getUser_id()) && user_pw.equals(user.getUser_pw())) {
-				log.info("로그인");
 				session.setAttribute("userName", user.getUser_name());
 				session.setAttribute("userAccount", user.getUser_account());
-
-				log.info("세선 생성");
-				log.info("계좌번호" + user.getUser_account());
 				response.getWriter().print(true);
 
 				model.addAttribute("info", user.getUser_name() + "님 안녕하세요!");
