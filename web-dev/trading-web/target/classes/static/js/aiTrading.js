@@ -38,7 +38,7 @@ if (nowMin < 570 || nowMin > 930) {
 			}, 2000),
 			error      : function () {
 				clearTimeout(poll);
-				$("#trading-data-table tbody").html("<tr><td colspan='7'>현재 장중이 아니거나<br>데이터가 없습니다.</td></tr>");
+				$("#trading-data-table tbody").html("<tr><td colspan='7'>로그인해주세요.</td></tr>");
 			}
 		});
 	})();

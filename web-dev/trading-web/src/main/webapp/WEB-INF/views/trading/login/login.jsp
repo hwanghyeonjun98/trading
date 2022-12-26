@@ -17,19 +17,27 @@
 			<section>
 				<div class="login-area">
 					<h3>로그인</h3>
-					<ul>
-						<li>
-							<label for="user_id">ID</label>
-							<input type="text" id="user_id" name="user_id" placeholder="아이디를 입력하세요."/>
-						</li>
-						<li>
-							<label for="user_pw">PW</label>
-							<input type="password" id="user_pw" name="user_pw" placeholder="비밀번호를 입력하세요."/>
-						</li>
-						<li>
-							<button type="button" class="btn" id="login-btn">로그인</button>
-						</li>
-					</ul>
+					<form action="#">
+						<ul class="login-input">
+							<li>
+								<label for="user_id">ID</label>
+								<div class="input-bar-style">
+									<input type="text" id="user_id" name="user_id" placeholder="아이디를 입력하세요." autocomplete="false"/>
+									<div class="input-bar"></div>
+								</div>
+							</li>
+							<li>
+								<label for="user_pw">PW</label>
+								<div class="input-bar-style">
+									<input type="password" id="user_pw" name="user_pw" placeholder="비밀번호를 입력하세요."/>
+									<div class="input-bar"></div>
+								</div>
+							</li>
+							<li>
+								<button type="button" class="btn" id="login-btn">로그인</button>
+							</li>
+						</ul>
+					</form>
 				</div>
 			</section>
 		</main>

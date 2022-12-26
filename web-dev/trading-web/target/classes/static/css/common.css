@@ -80,47 +80,47 @@ table thead tr th {
 		display: none;
 	}
 
-	nav {
+	.header-nav {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-end;
 		flex: 1 1 80%;
 	}
 
-	nav .login-btn-area {
+	.header-nav .login-btn-area {
 		order: 2;
 		padding-right: 1rem;
 	}
 
-	nav .login-btn-area .login-btn {
+	.header-nav .login-btn-area .login-btn {
 		padding: .4rem .8rem;
 		color: var(--color-white);
 		background-color: var(--color-dark-green);
 		border-radius: 8px;
 	}
 
-	nav .login-btn-area .login-btn:hover,
-	nav .login-btn-area .login-btn:active,
-	nav .login-btn-area .login-btn:focus {
+	.header-nav .login-btn-area .login-btn:hover,
+	.header-nav .login-btn-area .login-btn:active,
+	.header-nav .login-btn-area .login-btn:focus {
 		color: var(--color-block);
 		background-color: var(--color-green);
 	}
 
-	nav .login-btn-area .logout-btn {
+	.header-nav .login-btn-area .logout-btn {
 		padding: .4rem .8rem;
 		color: var(--color-white);
 		background-color: var(--color-red);
 		border-radius: 8px;
 	}
 
-	nav .login-btn-area .logout-btn:hover,
-	nav .login-btn-area .logout-btn:active,
-	nav .login-btn-area .logout-btn:focus {
+	.header-nav .login-btn-area .logout-btn:hover,
+	.header-nav .login-btn-area .logout-btn:active,
+	.header-nav .login-btn-area .logout-btn:focus {
 		color: var(--color-white);
 		background-color: var(--color-dark-red);
 	}
 
-	nav .header-menu-list {
+	.header-nav .header-menu-list {
 		order: 1;
 		display: flex;
 		justify-content: flex-start;
@@ -129,14 +129,14 @@ table thead tr th {
 		margin: 0;
 	}
 
-	nav .header-menu-list a {
+	.header-nav .header-menu-list a {
 		width: 150px;
 		padding: .4rem 0;
 		text-align: center;
 		transition: all .2s ease-in-out;
 	}
 
-	nav .header-menu-list li:hover a {
+	.header-nav .header-menu-list li:hover a {
 		background-color: var(--color-pink);
 	}
 
@@ -169,20 +169,20 @@ table thead tr th {
 		justify-content: space-between;
 	}
 
-	nav {
+	.header-nav {
 		position: relative;
 	}
 
-	nav .header-menu-btn {
+	.header-nav .header-menu-btn {
 		width: 40px;
 		font-size: 1.6rem;
 	}
 
-	nav .header-menu-list li:not(:last-child) {
+	.header-nav .header-menu-list li:not(:last-child) {
 		margin-bottom: .6rem;
 	}
 
-	nav .header-menu-list a {
+	.header-nav .header-menu-list a {
 		width: 100%;
 		padding: .5rem .8rem;
 		position: relative;
@@ -191,7 +191,7 @@ table thead tr th {
 		transition: all .3s ease-in-out;
 	}
 
-	nav .header-menu-list {
+	.header-nav .header-menu-list {
 		width: 32vw;
 		min-height: 100vh;
 		padding: 1rem .8rem;
@@ -203,22 +203,22 @@ table thead tr th {
 		transition: all .6s ease-in-out;
 	}
 
-	nav .header-menu-list.active {
+	.header-nav .header-menu-list.active {
 		right: 0;
 	}
 
-	nav .header-menu-list.active a {
+	.header-nav .header-menu-list.active a {
 		right: 0;
 		opacity: 1;
 	}
 
-	nav .header-menu-list.active li:hover a {
+	.header-nav .header-menu-list.active li:hover a {
 		background-color: var(--color-pink);
 	}
 }
 
 @media screen and (max-width: 680px) {
-	nav .header-menu-list {
+	.header-nav .header-menu-list {
 		width: 75%;
 	}
 

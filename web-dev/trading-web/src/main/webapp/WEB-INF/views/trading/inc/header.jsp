@@ -3,7 +3,7 @@
 	<h1 class="h2 mb-0 d-flex justify-content-start align-items-center">
 		<a href="/">AITRADING</a>
 	</h1>
-	<nav>
+	<nav class="header-nav">
 		<div class="mobile-show">
 			<button type="button" class="header-menu-btn">
 				<i class="bi bi-list"></i>
