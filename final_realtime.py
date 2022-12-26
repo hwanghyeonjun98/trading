@@ -67,7 +67,9 @@ def sqlalchemy_trading_insert(update_df, code, type, conn, account_name):
     update_df['월'] = update_df['날짜'].apply(str).str[4:6]
     update_df['일'] = update_df['날짜'].apply(str).str[6:8]
     update_df.sort_index(ascending=False, inplace=True)
-    update_df.to_sql(name=f'{account_name}_{today}_{code}', con=conn, if_exists=type, index=False)   
+    account_name = account_name.lower()
+    update_df.to_sql(name=f'{account_name}_{today}_{code}', con=conn, if_exists=type, index=False)
+    conn.close()   
 
 
 
@@ -128,7 +130,7 @@ def ds_order_cancel(code, ordernum):
     instCpTd0314.SetInputValue(1, ordernum)  #  원주문 번호 - 정정을 하려는 주문 번호
     instCpTd0314.SetInputValue(2, acc)  # 상품구분 - 주식 상품 중 첫번째
     instCpTd0314.SetInputValue(3, accFlag[0])  # 상품구분 - 주식 상품 중 첫번째
-    instCpTd0314.SetInputValue(4, code)  # 종목코드
+    instCpTd0314.SetInputValue(4, 'A' + code)  # 종목코드
     instCpTd0314.SetInputValue(5, 0)  # 정정 수량, 0 이면 잔량 취소임
 
     # 매수 주문 요청
@@ -138,11 +140,6 @@ def ds_order_cancel(code, ordernum):
         # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 
     else:
         print('주문 정상 접수')
-
-    rqStatus = instCpTd0314.GetDibStatus() # Dib Server 상태 확인
-    errMsg = instCpTd0314.GetDibMsg1() # 확인 메시지 출력
-    if rqStatus != 0:
-        print('Order_Cancel Dib 연결 실패 : ', rqStatus, errMsg)
 
 def ds_trade_end(buysell, code, quantity):
 
@@ -277,7 +274,7 @@ def ds_account_value():
 
     account_value = instCpTdNew5331A.GetHeaderValue(10)
 
-    return account_value
+    return int(account_value)
 
 
 def ds_account_db_update(conn):
@@ -312,6 +309,7 @@ def ds_account_db_update(conn):
     try:
         conn.execute(sql)
         print('계좌 평가금 DB 업데이트 완료')
+        conn.close()
     except:
         print('계좌 평가금 DB 업데이트 중 오류 발생')
     
@@ -362,19 +360,23 @@ def ds_n_conclude_check():
     return n_conclude_df
 
 def account_status_delete(conn, account_name):
+    account_name = account_name.lower()
     sql = f'DELETE FROM web_data.{account_name}_account_status'
     
     conn.execute(sql)
+    conn.close()
     
-def account_status_update(df, conn):
+def account_status_update(df, conn, account_name):
     args = df.values.tolist()
+    account_name = account_name.lower()
 
-    sql_update = f'INSERT INTO 01big15_account_status VALUES (%s,%s,%s,%s,%s,%s,%s)'
+    sql_update = f'INSERT INTO {account_name}_account_status VALUES (%s,%s,%s,%s,%s,%s,%s)'
 
     cursor =  conn.cursor()
 
     cursor.executemany(sql_update, args)
     conn.commit()
+    conn.close()
 
 ############################################################################################################################################################################################
 
@@ -399,20 +401,26 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
         print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
         print('초기자금 : ' + str(cost))
         print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-        end_cost = each_target_df['종가'].values[0]   # 종가
-        high_cost = each_target_df['고가'].values[0]   # 고가
+        end_cost = int(each_target_df['종가'].values[0])   # 종가
+        high_cost = int(each_target_df['고가'].values[0])   # 고가
         status_df = ds_account_stock_check()
         status_db_df = status_df.copy()
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
                                     , '평가금액' : 'evalValue' , '수익율' : 'ratio', '장부금액' : 'currentValue'}, inplace=True)
         account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)                                    
-        account_status_update(status_db_df, DBConnection_present().get_pymysql_connection())
+        account_status_update(status_db_df, DBConnection_present().get_pymysql_connection(), account_name)
         n_conclude_df = ds_n_conclude_check()
 
         try:
             n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0]
             buy_num = (cost // int(end_cost)) - int(n_conclude_num) # 총 매수량
+            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (int(status_db_df[status_db_df['code'] == 'A' + str(code)]['ratio'].values[0]) > 0):
+                order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
+                ds_order_cancel(code, order_num)
+                print('미체결 주문 취소 완료')
+                n_conclude_num = 0 
         except:
+            n_conclude_num = 0
             buy_num = cost // int(end_cost) # 총 매수량
             print('미체결 수량이 없습니다.')
         
@@ -425,8 +433,10 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 try:
                     if n_conclude_num == 0:
-                        if (end_cost) <= 100000:
-                            num = 1000000 / int(end_cost)
+                        if float(predict_df['비교'].values[0]) < -0.4:
+                            num = 500000 // end_cost
+                        elif (int(end_cost)) <= 100000:
+                            num = 100000 / int(end_cost)
                         else:
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
@@ -451,11 +461,13 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 try:
                     if n_conclude_num == 0:
-                        if (end_cost) <= 100000:
-                            num = 1000000 / int(end_cost)
+                        if float(predict_df['비교'].values[0]) < -0.4:
+                            num = 500000 // end_cost
+                        elif (end_cost) <= 100000:
+                            num = 100000 // int(end_cost)
                         else:
                             num = 1
-                        ds_trade_stock('2', code, buy_num , end_cost)
+                        ds_trade_stock('2', code, num , end_cost)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -466,7 +478,10 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
                 try:
-                    ds_trade_stock('1', code, amount , end_cost)
+                    ds_trade_end('1', code, amount , end_cost)
+                    if n_conclude_num != 0:
+                        order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
+                        ds_order_cancel(code, order_num)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -479,7 +494,10 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
                 try:
-                    ds_trade_stock('1', code, amount , end_cost)
+                    ds_trade_end('1', code, amount , end_cost)
+                    if n_conclude_num != 0:
+                        order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
+                        ds_order_cancel(code, order_num)
                     end= 0
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
@@ -520,6 +538,7 @@ def get_pymysql_predict_table_check(code, conn,account_name):
 
     cur = conn.cursor()
     count = cur.execute(sql)
+    conn.close()
 
     return count
 
@@ -534,7 +553,6 @@ def realtime_trading(stock_list , account_name):
         if (now.minute == 30) & (now.hour == 15):
             _, final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
-                  
             break
         elif (now.hour < 9) | (now.hour > 16):
             time_cnt += 1
@@ -555,16 +573,18 @@ def realtime_trading(stock_list , account_name):
                 
                 # DB에 테이블이 존재하지 않으면 sleep
                 sql = f"SELECT * FROM predict_data.{account_name}_{today}_{code} order by id desc limit 1"
-                pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
+                pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql)
                 predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
                 print(predict_df)
 
                 sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name)
 
                 if sell_code == 0:
-                    pass
+                    continue
                 else:
                     stock_list.remove(sell_code)
+
+                
 
                 
 

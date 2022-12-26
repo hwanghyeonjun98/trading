@@ -119,6 +119,8 @@
 	line-height: 1.7em;
 	padding-left: 0em;
 	font-weight: bold;
+
+	
 }
 
 .snap {
@@ -177,3 +179,4 @@
 #trading-data-table tbody tr td:nth-child(n+3):nth-child(n-7){
 	text-align: right;
 }
+

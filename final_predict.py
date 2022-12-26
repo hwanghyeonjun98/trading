@@ -18,6 +18,7 @@ def get_pymysql_traidng_table_check(table_schema, code, conn, account_name):
 
     cur = conn.cursor()
     count = cur.execute(sql)
+    conn.close()
 
     return count
 
@@ -32,12 +33,14 @@ def get_pymysql_day_stock(conn, code, yesterday, investing_df):
     # target_df.set_index('날짜', inplace=True)
     # target_df.rename(index={int(yesterday):today}, inplace=True)
     target_df = pd.concat([target_df, investing_df], axis=1)
+    conn.close()
 
     return target_df
 
 ## predict 값 DB에 넣기
 def stock_predict(stock_list, investing_df, col_list,  model, account_name):
 
+    account_name = account_name.lower()
     time_cnt = 0
    
     while True:
@@ -99,7 +102,6 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                     predict_df['시간'] = str(now.hour) + ':' + str(now.minute)
                     
                     pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection(), account_name)
-                    
                     time.sleep(0.2)
                     if pred_cnt == 0:
                         predict_df.to_sql(name=f'{account_name}_{today}_{code}', con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='replace', index=False)
@@ -108,7 +110,7 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                         predict_df.to_sql(name=f'{account_name}_{today}_{code}', con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='append', index=False)
 
                 except:
-                    print('SQL 에러 발생')    
+                    print('SQL 에러 발생')
             
             
                
