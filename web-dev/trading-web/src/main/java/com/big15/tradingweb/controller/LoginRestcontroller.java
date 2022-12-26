@@ -1,6 +1,6 @@
 package com.big15.tradingweb.controller;
 
-import com.big15.tradingweb.dto.LoginDto;
+import com.big15.tradingweb.dto.UserInfoDto;
 import com.big15.tradingweb.mapper.LoginMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class LoginRestcontroller {
 		try {
 			HttpSession session = request.getSession(true);
 
-			LoginDto user = loginMapper.login(user_id);
+			UserInfoDto user = loginMapper.login(user_id);
 
 			if (user != null && user_id.equals(user.getUser_id()) && user_pw.equals(user.getUser_pw())) {
 				session.setAttribute("userName", user.getUser_name());
