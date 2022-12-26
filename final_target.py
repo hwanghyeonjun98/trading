@@ -85,8 +85,8 @@ def get_target_stock_list(conn, type):
     target_df['value_cap_ratio'] = target_df['거래대금'] / target_df['시가총액']
 
     gubun, market_cap, ratio = target_df['시장구분'], target_df['시가총액'], target_df['등락률']
-    kospi = target_df[(gubun == 'KOSPI') & (market_cap> 300000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:10]
-    kosdaq = target_df[(gubun == 'KOSDAQ') & (market_cap> 100000000000) & (market_cap < 500000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:10]
+    kospi = target_df[(gubun == 'KOSPI') & (market_cap> 5000000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:10]
+    kosdaq = target_df[((gubun == 'KOSDAQ') | (gubun == 'KOSDAQ GLOBAL')) & (market_cap> 100000000000) & (market_cap < 500000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:10]
 
     kospi_list = kospi['종목코드'].to_list()
     kosdaq_list = kosdaq['종목코드'].to_list()

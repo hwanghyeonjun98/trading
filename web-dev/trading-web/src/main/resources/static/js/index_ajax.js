@@ -1,17 +1,59 @@
-var rolling = document.getElementById("rolling");
+(function ranking() {
+	$.ajax({
+		type       : "POST",
+		url        : "/api/data/marketCapRanking",
+		dataset    : "json",
+		success    : function (ranking) {
+			const list = [];
+			$.each(ranking, function (index) {
+				str = "<li>" + ranking[index].no + ". " + ranking[index].stock_name + "</li>";
+				list.push(str);
+			});
+			$("#rolling").html(list);
+		}, timeout : 60000,
+		complete   : setTimeout(function () {
+			ranking();
+		}, 60000),
+		error      : function () {
+			$("#rolling").html("<li>데이터가 없습니다.</li>");
+		}
+	});
+})();
 
-window.setInterval(function () {
 
-	rolling.style.transitionDuration = "400ms";
+const rolling = document.getElementById("rolling");
+
+let rollingBanner = setInterval(function () {
+
+	rolling.style.transitionDuration = "1000ms";
 	rolling.style.marginTop = "-2em";
 
-	window.setTimeout(function () {
+	setTimeout(function () {
 
 		rolling.removeAttribute("style");
 		rolling.appendChild(rolling.firstElementChild);
 
-	}, 400);
-}, 2000);
+	}, 1000);
+}, 5000);
+rolling.addEventListener("mouseenter", () => {
+	console.log("마우스 올림");
+	clearInterval(rollingBanner);
+});
+
+rolling.addEventListener("mouseleave", () => {
+	rollingBanner = setInterval(function () {
+
+		rolling.style.transitionDuration = "1000ms";
+		rolling.style.marginTop = "-2em";
+
+		setTimeout(function () {
+
+			rolling.removeAttribute("style");
+			rolling.appendChild(rolling.firstElementChild);
+
+		}, 1000);
+	}, 5000);
+});
 
 const defaultDate = new Date();
 document.querySelector("#current").innerHTML = defaultDate.toLocaleTimeString();

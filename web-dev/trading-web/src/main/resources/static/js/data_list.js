@@ -167,9 +167,10 @@ date.setMonth(date.getMonth() - 1);
 const dateCalc = date.toISOString().split("T")[0];
 
 startDateInput.value = dateCalc;
-console.log(dateCalc);
 
 // 현재 날짜
 endDateInput.value = nowDate;
-// 검색 최대 날짜 정해기
+
+// 검색 최대 날짜
+startDateInput.setAttribute("max", nowDate);
 endDateInput.setAttribute("max", nowDate);

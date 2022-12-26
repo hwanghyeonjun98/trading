@@ -39,7 +39,6 @@ public class TradingController {
 
 		List<NewsDto> news = indexdataMapper.newsdata();
 		model.addAttribute("nnews", news);
-
 		
 		return "index";
 	}
