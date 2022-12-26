@@ -9,6 +9,14 @@
 				<i class="bi bi-list"></i>
 			</button>
 		</div>
+		<div class="login-btn-area">
+			<c:if test="${userAccount == null}">
+				<a href="/login" class="login-btn">로그인</a>
+			</c:if>
+			<c:if test="${userAccount != null}">
+				<a href="/logout" class="logout-btn">로그아웃</a>
+			</c:if>
+		</div>
 		<ul class="header-menu-list">
 			<li><a href="/" class="text-uppercase">HOME</a></li>
 			<li><a href="/dataview/data" class="text-uppercase">DATA</a></li>

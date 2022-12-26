@@ -1,5 +1,6 @@
 const time = new Date();
 const nowMin = time.getHours() * 60;
+const account = $("#account").val();
 
 if (nowMin < 570 || nowMin > 930) {
 	console.log(nowMin);
@@ -8,7 +9,7 @@ if (nowMin < 570 || nowMin > 930) {
 	(function poll() {
 		$.ajax({
 			type       : "POST",
-			url        : "/api/data/aiTradingData",
+			url        : "/api/data/aiTradingData/" + account,
 			dataset    : "json",
 			success    : function (trading) {
 				const list = [];
@@ -29,13 +30,14 @@ if (nowMin < 570 || nowMin > 930) {
 				} else {
 					$("#trading-data-table tbody").html(list);
 				}
-			}, timeout : 8000,
+			}, timeout : 2000,
 			complete   : setTimeout(function () {
 				poll();
 
 
-			}, 8000),
+			}, 2000),
 			error      : function () {
+				clearTimeout(poll);
 				$("#trading-data-table tbody").html("<tr><td colspan='7'>현재 장중이 아니거나<br>데이터가 없습니다.</td></tr>");
 			}
 		});

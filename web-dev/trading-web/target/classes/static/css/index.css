@@ -103,6 +103,10 @@
 	width: 100%;
 }
 
+#container:hover {
+	border: 2px solid var(--color-red);
+}
+
 #rolling {
 	transition-timing-function: ease-in-out;
 }
