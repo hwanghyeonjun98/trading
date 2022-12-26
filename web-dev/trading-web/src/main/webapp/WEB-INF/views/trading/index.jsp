@@ -211,7 +211,7 @@
 							</div>
 						</div>
 						<div>
-							<h3 class="mb-0">추천 뉴스</h3>
+							<h3 class="mb-0 mt-4">추천 뉴스</h3>
 							<hr>
 							<ul class="ps-3">
 								<c:forEach items="${nnews}" var="nnews">
