@@ -9,7 +9,11 @@
 	</select>
 
 	<select id="chartList" resultType="com.big15.tradingweb.dto.InvestingDto">
-		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, opens, highs, lows, closes
+		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates,
+		       opens,
+		       highs,
+		       lows,
+		       closes
 		FROM ${names}
 		ORDER BY dates asc
 	</select>
