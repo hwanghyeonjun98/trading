@@ -80,7 +80,48 @@ table thead tr th {
 		display: none;
 	}
 
+	nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		flex: 1 1 80%;
+	}
+
+	nav .login-btn-area {
+		order: 2;
+		padding-right: 1rem;
+	}
+
+	nav .login-btn-area .login-btn {
+		padding: .4rem .8rem;
+		color: var(--color-white);
+		background-color: var(--color-dark-green);
+		border-radius: 8px;
+	}
+
+	nav .login-btn-area .login-btn:hover,
+	nav .login-btn-area .login-btn:active,
+	nav .login-btn-area .login-btn:focus {
+		color: var(--color-block);
+		background-color: var(--color-green);
+	}
+
+	nav .login-btn-area .logout-btn {
+		padding: .4rem .8rem;
+		color: var(--color-white);
+		background-color: var(--color-red);
+		border-radius: 8px;
+	}
+
+	nav .login-btn-area .logout-btn:hover,
+	nav .login-btn-area .logout-btn:active,
+	nav .login-btn-area .logout-btn:focus {
+		color: var(--color-white);
+		background-color: var(--color-dark-red);
+	}
+
 	nav .header-menu-list {
+		order: 1;
 		display: flex;
 		justify-content: flex-start;
 		align-content: center;

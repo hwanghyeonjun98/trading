@@ -17,6 +17,7 @@
 			<section class="main-list">
 				<article class="w-75">
 					<div id="ai-trading-area" class="pe-4">
+						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
 						<div class="table-title">
 							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
 							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
