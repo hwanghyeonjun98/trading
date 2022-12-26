@@ -17,6 +17,7 @@
 			<section class="main-list">
 				<article class="w-75">
 					<div id="ai-trading-area" class="pe-4">
+						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
 						<div class="table-title">
 							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
 							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
@@ -184,7 +185,7 @@
 							</div>
 							<div class="economic-indicator">
 								<div class="indicator-name">
-									<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F001%2F2022%2F10%2F05%2FPYh3022100502140001300_P4_20221005092413890.jpg&type=l340_165" width="255" height="285">
+									<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F016%2F2022%2F09%2F23%2F20220923000346_0_20220923111203283.jpg&type=l340_165" width="255" height="285">
 									<hr class='hr-solid'>
 									<span>환율 관련</span>
 								</div>
@@ -243,7 +244,7 @@
 									<li>7.삼성전자우</li>
 									<li>8.현대차</li>
 									<li>9.NAVER</li>
-									<li>10.셀트리온</li>
+									<li>10.기아</li>
 								</ul>
 							</div>
 						</div>

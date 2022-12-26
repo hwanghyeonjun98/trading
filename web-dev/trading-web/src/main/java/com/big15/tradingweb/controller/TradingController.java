@@ -25,7 +25,7 @@ public class TradingController {
 	// 브라우저 체크
 	// index 페이지 접근시 브라우저가 인터넷 익스플로러면
 	// 다른 브라우저 접속 다운로드 안내 페이지로 이동
-	@GetMapping("/")
+	@GetMapping("")
 	public String Index(HttpServletRequest request, Locale locale, Model model) {
 		String userAgent = request.getHeader("User-Agent");
 

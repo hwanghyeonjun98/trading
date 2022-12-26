@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 // 에러 처리 컨트롤러
 @Slf4j
 @Controller
+@RequestMapping("/")
 public class Error implements ErrorController {
 	private String ERROR_TEMPLATES_PATH = "/errors/";
 
-	@RequestMapping(value = "/*")
+	@RequestMapping(value = "*")
 	public String handleError(HttpServletRequest request) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		if (status != null) {
@@ -33,6 +34,6 @@ public class Error implements ErrorController {
 				return ERROR_TEMPLATES_PATH + "500";
 			}
 		}
-		return "redirect:/";
+		return "";
 	}
 }

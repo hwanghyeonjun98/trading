@@ -47,9 +47,9 @@ public class TradingRestController {
 	}
 
 	@Transactional
-	@RequestMapping("/aiTradingData") // 더미 데이터
-	public List<AiTradingDto> aiTradingData() {
-		return aiTradingData.aiTradingData();
+	@RequestMapping("/aiTradingData/{account}") // 더미 데이터
+	public List<AiTradingDto> aiTradingData(@PathVariable("account") String account) {
+		return aiTradingData.aiTradingData(account);
 	}
 
 
