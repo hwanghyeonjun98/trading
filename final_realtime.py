@@ -69,7 +69,7 @@ def sqlalchemy_trading_insert(update_df, code, type, conn, account_name):
     update_df.sort_index(ascending=False, inplace=True)
     account_name = account_name.lower()
     update_df.to_sql(name=f'{account_name}_{today}_{code}', con=conn, if_exists=type, index=False)
-    conn.close()   
+    conn.close()
 
 
 
@@ -186,6 +186,7 @@ def ds_stock_status(code):
     if (sign1 == 'N') & (sign2 == '1') & (sign3 == 'N'):
         return False
     else:
+        print('이상 종목 발견 리스트에서 제외됩니다.')
         return True
 
 # 잔고 조회
@@ -478,10 +479,10 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
                 try:
-                    ds_trade_end('1', code, amount , end_cost)
                     if n_conclude_num != 0:
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
+                    ds_trade_end('1', code, amount)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -494,11 +495,11 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
                 try:
-                    ds_trade_end('1', code, amount , end_cost)
                     if n_conclude_num != 0:
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
                     end= 0
+                    ds_trade_end('1', code, amount)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -546,7 +547,6 @@ def get_pymysql_predict_table_check(code, conn,account_name):
 ###########################################################################################################################################################################
 def realtime_trading(stock_list , account_name):
     account_value = ds_account_value()  # 주문 가능 예수 금액
-   
     time_cnt = 0
     while True:
         now = datetime.now()
@@ -554,37 +554,41 @@ def realtime_trading(stock_list , account_name):
             _, final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
             break
+        
         elif (now.hour < 9) | (now.hour > 16):
             time_cnt += 1
             if time_cnt == 100:
                 print('박대기중~~~~~~~')
                 time_cnt = 0
             time.sleep(1)
+            
         else:
             for code in stock_list:
                 first_cost = account_value // 10 # 500만원
                 each_target_df = stock_trading_db(code, account_name)
-                while True:
-                    print('실시간 트레이딩 진행중')
+                try:
+                    # print('실시간 트레이딩 진행중')
                     count = get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
                     time.sleep(1)
-                    if count == 1:
-                        break
+
+                except:
+                    print('Trading_Data가 존재하지 않습니다.')
                 
                 # DB에 테이블이 존재하지 않으면 sleep
-                sql = f"SELECT * FROM predict_data.{account_name}_{today}_{code} order by id desc limit 1"
-                pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql)
-                predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
-                print(predict_df)
+                try:
+                    sql = f"SELECT * FROM predict_data.{account_name}_{today}_{code} order by id desc limit 1"
+                    pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql)
+                    predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
+                    print(predict_df)
 
-                sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name)
+                    sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name)
 
-                if sell_code == 0:
-                    continue
-                else:
-                    stock_list.remove(sell_code)
-
-                
+                    if sell_code == 0:
+                        continue
+                    else:
+                        stock_list.remove(sell_code)
+                except:
+                    print('트레이딩 에러 발생')                
 
                 
 

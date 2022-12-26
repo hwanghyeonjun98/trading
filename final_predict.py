@@ -2,7 +2,7 @@ from final_dbconnect import DBConnection_trading, DBConnection_predict
 
 from sklearn.preprocessing import MaxAbsScaler
 from pandas.tseries.offsets import BDay
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pickle import load
 
 import pandas as pd
@@ -80,6 +80,10 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                 try:
                     sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량, 년, 월, 일 FROM trading_data.`{account_name}_{today}_{code}` ORDER BY 시간 DESC LIMIT 1"
                     table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
+                except:
+                    print('SQL 조회 에러 발생')
+                
+                try:
                     table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
                     table_df = pd.concat([table_df, day_stock_investing_df], axis=1 )
                     table_df = table_df.apply(pd.to_numeric)
@@ -87,20 +91,37 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                     c_list = list(col_list.index)
                     
                     each_target_df = table_df[c_list]
+                except:
+                    print('trading_df 추출 에러')
                     
+                try:
                     # min_abs_scaler = MaxAbsScaler()
-                    min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
-                    
-                    X_pred_sc = min_abs_scaler.transform(each_target_df)
-                    X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
-                    
-                    predict = model.predict(X_pred)
-                
+                    try:
+                        min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
+                        
+                        X_pred_sc = min_abs_scaler.transform(each_target_df)
+                        X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
+                        
+                        predict = model.predict(X_pred)
+                    except:
+                        temp_day=str(date.today() - timedelta(1)).replace('-','').split(' ')[0]
+                        min_abs_scaler = load(open(f'./download/scaler/{temp_day}_scaler', 'rb'))
+                        X_pred_sc = min_abs_scaler.transform(each_target_df)
+                        X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
+                        
+                        predict = model.predict(X_pred)
+                except:
+                    print('scaler 에러')
+                try:
                     predict_df = pd.DataFrame(predict)
                     predict_df['비교'] = (predict_df[0] - predict_df[1])
                     predict_df['id'] = t
                     predict_df['시간'] = str(now.hour) + ':' + str(now.minute)
-                    
+
+                except:
+                    print('predict dataframe 에러')
+                
+                try:
                     pred_cnt =  get_pymysql_traidng_table_check('predict_data',code, DBConnection_trading().get_pymysql_connection(), account_name)
                     time.sleep(0.2)
                     if pred_cnt == 0:
@@ -108,10 +129,10 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                         
                     else:
                         predict_df.to_sql(name=f'{account_name}_{today}_{code}', con=DBConnection_predict().get_sqlalchemy_connect_ip(), if_exists='append', index=False)
-
                 except:
-                    print('SQL 에러 발생')
-            
+                    print('predict 에러')
+
+        
             
                
             
