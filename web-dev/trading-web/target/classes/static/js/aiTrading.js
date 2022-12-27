@@ -37,12 +37,12 @@ if (account !== "") {
 					} else {
 						$("#trading-data-table tbody").html(list);
 					}
-				}, timeout : 5000,
+				}, timeout : 2000,
 				complete   : setTimeout(function () {
 					poll();
 
 
-				}, 5000),
+				}, 2000),
 				error      : function () {
 					clearTimeout(poll);
 					$("#trading-data-table tbody").html("<tr><td colspan='7'>로그인해주세요.</td></tr>");

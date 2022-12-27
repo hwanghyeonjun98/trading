@@ -11,7 +11,7 @@
 		FROM web_data.news_data
 	</select>
 	<select id="marketCapRanking" resultType="com.big15.tradingweb.dto.MarketCapDto">
-		SELECT *
+		SELECT no, stock_name, format(market_cap,0) as market_cap
 		FROM web_data.market_cap_data
 		order by no
 		limit 10
