@@ -309,10 +309,13 @@ def ds_account_db_update(conn):
 
     try:
         conn.execute(sql)
-        print('계좌 평가금 DB 업데이트 완료')
+        print('계좌 평가금 DB 생성 완료')
         conn.close()
     except:
-        print('계좌 평가금 DB 업데이트 중 오류 발생')
+        sql = "UPDATE big15.account SET acc_value = '{2}' WHERE date = '{0}' and acc_name = '{1}'".format(today,account_name, account_value)
+        conn.execute(sql)
+        conn.close()
+        print('계좌 평가금 DB 업데이트')
     
     return account_name, account_value
 
@@ -482,13 +485,16 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 print('**************************** 장 마감 전 매도 **************************')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('**********************************************************************')
+                
                 try:
-                    if n_conclude_num != 0:
+                    if (n_conclude_num != amount) & (n_conclude_num != 0):
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
+
                     ds_trade_end('1', code, amount)
                     trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
                     end = 0
+                        
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
