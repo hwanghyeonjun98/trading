@@ -16,7 +16,6 @@ $(window).on("load", function () {
 	// 차트 AJAX
 	$.getJSON(chartUrl, function (response) {
 		let dataList = [];
-		console.table(response);
 
 		// 차트 리스트 만들기
 		response.forEach((item) => {

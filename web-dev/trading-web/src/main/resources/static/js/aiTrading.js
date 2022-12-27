@@ -5,7 +5,7 @@ const account = $("#account").val();
 // 실기간 트레이딩
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
-	if (nowMin < 570 || nowMin > 930) {
+	if (nowMin < 570 || nowMin > 932) {
 		console.log(nowMin);
 		$("#trading-data-table tbody").html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
 	} else {
