@@ -18,7 +18,7 @@ public class JoinRestController {
 
 	JoinMapper joinMapper;
 
-	@PutMapping("/join")
+	@PostMapping("/userJoin")
 	public void join(@RequestParam(value = "user_id") String user_id
 		, @RequestParam(value = "user_pw", required = false) String user_pw
 		, @RequestParam(value = "user_name", required = false) String user_name
@@ -39,12 +39,13 @@ public class JoinRestController {
 	@RequestMapping("/idCheck/{user_id}")
 	public void idCheck(@PathVariable("user_id") String user_id, HttpServletResponse response) throws IOException {
 		List<UserInfoDto> user = joinMapper.idCheck(user_id);
+		System.out.println(user);
 
-		if (user == null) {
+		if (user.size() == 0) {
 			response.getWriter().print("notId");
 		}
 
-		if (user != null) {
+		if (user.size() > 0) {
 			response.getWriter().print("hadId");
 		}
 	}
