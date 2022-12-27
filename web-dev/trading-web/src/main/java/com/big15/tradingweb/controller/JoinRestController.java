@@ -18,7 +18,6 @@ public class JoinRestController {
 
 	JoinMapper joinMapper;
 
-
 	@PutMapping("/join")
 	public void join(@RequestParam(value = "user_id") String user_id
 		, @RequestParam(value = "user_pw", required = false) String user_pw
