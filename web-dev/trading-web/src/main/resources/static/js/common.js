@@ -67,7 +67,7 @@ window.addEventListener("scroll", () => {
 if (logoutBtn !== null) {
 	// 로그아웃 이벤트
 	function logoutClick() {
-		const logpoutConfrim = confirm("로그아웃 하시겠습니가?");
+		const logpoutConfrim = confirm("로그아웃 하시겠습니까?");
 		if (logpoutConfrim === true) {
 			location.href = "/logout";
 		}
@@ -79,3 +79,8 @@ if (logoutBtn !== null) {
 
 	logoutBtn.addEventListener("click", logoutClick);
 }
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	return new bootstrap.Tooltip(tooltipTriggerEl)
+})
