@@ -15,31 +15,55 @@
 		<%@ include file="/WEB-INF/views/trading/inc/header.jsp" %>
 		<main class="px-4 py-4">
 			<section>
-					<div class="wrapper">
-                        <div class="title"><h1 style="font-size: 21px;">회원가입</h1></div>
-                        <div class="user_id">
-                            <input id="id"  type="text" placeholder="아이디를 입력해 주세요.">
-                            <div id="idError" class="error"></div>
-                        </div>
-                        <div class="user_pw">
-                            <input id="password" type="password" placeholder="비밀번호를 입력해 주세요.">
-                            <div id="passwordError" class="error"></div>
-                        </div>
-                        <div class="user_name">
-                            <input id="name" type="text" placeholder="이름을 입력해 주세요.">
-                            <div id="nameError" class="error"></div>
-                        </div>
-                        <div class="user_account">
-                            <input id="account" type="password" placeholder="계좌번호를 입력해 주세요.">
-                            <div id="accountError" class="error"></div>
-                        </div>                        
-                        <div class="line">
-                            <hr>
-                        </div>
-                        <div class="signUp">
-                            <button id="signUpButton" disabled onclick="signUpCheck()">가입하기</button>
-                        </div>
-                    </div>
+				<div class="join-area">
+					<h3>회원가입</h3>
+					<form action="/join/userJoin" method="post" name="userJoin" id="put">
+						<input type="hidden" name="_method" value="put">
+						<ul class="join-input">
+							<li>
+								<label for="user_id">이름 *</label>
+								<div class="input-bar-style">
+									<input id="user_name" name="user_name" type="text" placeholder="이름을 입력해 주세요." required>
+									<div class="input-bar"></div>
+								</div>
+							</li>
+							<li>
+								<label for="user_id">아이디 *</label>
+								<div class="input-bar-style me-3">
+									<input id="user_id" name="user_id" type="text" placeholder="아이디를 입력해 주세요." required>
+									<div class="input-bar"></div>
+								</div>
+								<button id="idCheckBtn" type="button" class="btn btn-sm">중복확인</button>
+								<p class="id-check-li">중복 되는 아이디가 있습니다.</p>
+							</li>
+							<li>
+								<label for="user_pw">비밀번호 *</label>
+								<div class="input-bar-style">
+									<input id="user_pw" name="user_pw" type="password" placeholder="비밀번호를 입력해 주세요.(8-12자리)" maxlength="12" required>
+									<div class="input-bar"></div>
+								</div>
+							</li>
+							<li>
+								<label for="pw_check">비밀번호 <br>확인 *</label>
+								<div class="input-bar-style">
+									<input id="pw_check" type="password" placeholder="비밀번호를 다시 입력해 주세요."  maxlength="12"required>
+									<div class="input-bar"></div>
+								</div>
+								<p class="pw-check-li">비밀번호가 다릅니다. 비밀번호를 확인해주세요.</p>
+							</li>
+							<li>
+								<label for="user_id">계좌번호 *</label>
+								<div class="input-bar-style">
+									<input id="user_account" name="user_account" type="text" placeholder="계좌번호를 입력해 주세요." required>
+									<div class="input-bar"></div>
+								</div>
+							</li>
+							<li>
+								<button id="signUpButton" type="submit">가입하기</button>
+							</li>
+						</ul>
+					</form>
+				</div>
 			</section>
 		</main>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
