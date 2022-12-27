@@ -379,6 +379,28 @@ def account_status_update(df, conn, account_name):
     conn.commit()
     conn.close()
 
+def trading_history(conn, account_name, code, num, amount):
+    now = datetime.now()
+    time_ = str(now.year) +'-' + str(now.month) + '-' + str(now.day) + ' ' + str(now.hour) +':' + str(now.minute)
+    account_name = account_name.lower()
+    args = [(str(account_name), 'A' + str(code), str(num), str(amount), str(time_))]  # 계좌이름, 종목코드, 매수, 매도
+
+    try: 
+        sql_create = f'create table web_data.{account_name}_history(account_name varchar(20), stock_code varchar(20), buy_num varchar(20), sell_num varchar(20), his_time varchar(50))'
+        cur = conn.cursor()
+        cur.execute(sql_create)
+    except:
+        print('')
+
+    sql_update = f'INSERT INTO web_data.{account_name}_history VALUES (%s,%s,%s,%s,%s)'
+    cursor =  conn.cursor()
+
+    cursor.executemany(sql_update, args)
+    conn.commit()
+    conn.close()
+
+
+
 ############################################################################################################################################################################################
 
 
@@ -437,11 +459,11 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                         if float(predict_df['비교'].values[0]) < -0.4:
                             num = 500000 // end_cost
                         elif (int(end_cost)) <= 100000:
-                            num = 100000 / int(end_cost)
+                            num = 100000 // int(end_cost)
                         else:
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
-
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, 0)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -469,6 +491,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                         else:
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, 0)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -483,6 +506,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
                     ds_trade_end('1', code, amount)
+                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -500,6 +524,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                         ds_order_cancel(code, order_num)
                     end= 0
                     ds_trade_end('1', code, amount)
+                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -517,6 +542,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
                     ds_trade_end('1', code, amount)
+                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
                     end = 0
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
@@ -568,7 +594,7 @@ def realtime_trading(stock_list , account_name):
                 each_target_df = stock_trading_db(code, account_name)
                 try:
                     # print('실시간 트레이딩 진행중')
-                    count = get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
+                    get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
                     time.sleep(1)
 
                 except:
