@@ -6,5 +6,3 @@ call conda activate py39_32
 call cd D:\systrader-dev\trading
 call python final_tg.py
 call conda deactivate
-
-cmd /k
