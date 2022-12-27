@@ -477,7 +477,24 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
             current_value = status_df[status_df['종목코드'] == 'A' + code]['장부금액'].values[0]
             buy_num = ((cost-current_value) // int(end_cost)) - int(n_conclude_num)
 
-            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) :
+            if (amount > 0) & (now.minute >= 20) & (now.hour >= 15):
+                
+                print('**************************** 장 마감 전 매도 **************************')
+                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print('**********************************************************************')
+                try:
+                    if n_conclude_num != 0:
+                        order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
+                        ds_order_cancel(code, order_num)
+                    ds_trade_end('1', code, amount)
+                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
+                    end = 0
+                except:
+                    print('현재 매수 매도를 할 수 없습니다.')
+                    print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
+                print('**********************************************************************')
+
+            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) :
 
                 print('+++++++++++++++++++++++++++++++ 매수 위치 +++++++++++++++++++++++++++++++')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
@@ -531,23 +548,6 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name):
                 
                 print('------------------------------------------------------------------------')
                 return code
-
-            elif (amount > 0) & (now.minute >= 20) & (now.hour >= 15):
-                
-                print('**************************** 장 마감 전 매도 **************************')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
-                print('**********************************************************************')
-                try:
-                    if n_conclude_num != 0:
-                        order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
-                        ds_order_cancel(code, order_num)
-                    ds_trade_end('1', code, amount)
-                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
-                    end = 0
-                except:
-                    print('현재 매수 매도를 할 수 없습니다.')
-                    print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
-                print('**********************************************************************')
                 
             else:
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 보유 수량 : ' + str(amount))
