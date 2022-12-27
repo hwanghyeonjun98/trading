@@ -21,11 +21,11 @@
 		select his_time
 				 , account_name
 				 , stock_code
-				 , buy_num
-				 , sell_num
+				 , format(buy_num, 2)  as buy_num
+				 , format(sell_num, 2) as buy_num
 		from ${account}_history
 		where account_name = #{account}
-					and stock_code = ${replaceCode}
+			and stock_code = ${replaceCode}
 		order by his_time desc
 	</select>
 </mapper>
