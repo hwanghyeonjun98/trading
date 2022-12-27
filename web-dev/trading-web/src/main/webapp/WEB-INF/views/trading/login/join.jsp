@@ -17,7 +17,7 @@
 			<section>
 				<div class="join-area">
 					<h3>회원가입</h3>
-					<form action="/join/join" method="post" name="userJoin" id="put">
+					<form action="/join/userJoin" method="post" name="userJoin" id="put">
 						<input type="hidden" name="_method" value="put">
 						<ul class="join-input">
 							<li>
