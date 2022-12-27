@@ -24,7 +24,6 @@ public class JoinRestController {
 		, @RequestParam(value = "user_name", required = false) String user_name
 		, @RequestParam(value = "user_account", required = false) String user_account
 		, HttpServletResponse response) throws IOException {
-		log.info(user_id);
 		int join = joinMapper.join(user_id, user_pw, user_name, user_account);
 
 		if (join == 0) {

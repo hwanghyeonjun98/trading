@@ -1,5 +1,6 @@
 package com.big15.tradingweb.controller;
 
+import com.big15.tradingweb.dto.AccountHistoryDto;
 import com.big15.tradingweb.dto.AiTradingDto;
 import com.big15.tradingweb.dto.InvestingDto;
 import com.big15.tradingweb.dto.MarketCapDto;
@@ -47,14 +48,19 @@ public class TradingRestController {
 	}
 
 	@Transactional
-	@RequestMapping("/aiTradingData/{account}") // 더미 데이터
+	@RequestMapping("/aiTradingData/{account}")
 	public List<AiTradingDto> aiTradingData(@PathVariable("account") String account) {
 		return aiTradingData.aiTradingData(account);
 	}
 
-
 	@RequestMapping("/marketCapRanking")
 	public List<MarketCapDto> marketCapRanking() {
 		return indexdataMapper.marketCapRanking();
+	}
+
+	@RequestMapping("/accountHistory/{account}/{stock_code}")
+	public List<AccountHistoryDto> accountHistory(@PathVariable("account") String account, @PathVariable("stock_code") String stock_code) {
+		String replaceCode = stock_code.replace("A", "");
+		return indexdataMapper.accountHistory(account, replaceCode);
 	}
 }
