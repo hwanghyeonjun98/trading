@@ -44,6 +44,7 @@
 	padding: 0 .8rem;
 	margin-top: .6rem;
 }
+
 .data-menu .menu-content ul li {
 	min-width: calc(100% / 12);
 }
@@ -64,13 +65,6 @@
 	color: var(--color-block);
 	background-color: var(--color-purple);
 	border: 1px solid var(--color-purple);
-}
-
-#dateSearchFrm {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: .8rem;
 }
 
 .data-title .data-category {
