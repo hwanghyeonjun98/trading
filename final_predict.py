@@ -61,8 +61,7 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                 
                 today = str(date.today()).replace('-','')
                 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
-                print(yesterday)
-                
+
                 cnt = 0
                 count = 0
                 while True:
