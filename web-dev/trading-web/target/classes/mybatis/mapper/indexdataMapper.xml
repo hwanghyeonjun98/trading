@@ -22,10 +22,10 @@
 				 , account_name
 				 , stock_code
 				 , format(buy_num, 2)  as buy_num
-				 , format(sell_num, 2) as buy_num
+				 , format(sell_num, 2) as sell_num
 		from ${account}_history
 		where account_name = #{account}
-			and stock_code = ${replaceCode}
+			and stock_code = #{stock_code}
 		order by his_time desc
 	</select>
 </mapper>

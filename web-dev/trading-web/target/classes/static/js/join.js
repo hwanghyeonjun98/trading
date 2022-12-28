@@ -29,7 +29,7 @@ idCheckbtn.on("click", function () {
 	});
 });
 
-// 비밇번호 체크
+// 비밀번호 체크
 $("input[id*=pw]").on("change", function () {
 	if ($("#user_pw").val() !== $("#pw_check").val()) {
 		$(".pw-check-li").addClass("active");
@@ -39,3 +39,24 @@ $("input[id*=pw]").on("change", function () {
 });
 
 // 가입하기
+$("input").on("submit", function () {
+	if (idInput.val() === "") {
+	$(".id-check-li").text("아이디를 입력하세요,");
+	$(".id-check-li").addClass("active");
+	
+	$("#user_pw").val() !== $("#pw_check").val() ;
+	$(".pw-check-li").addClass("active");
+		
+		
+		return idCheck,pwcheck = false ; 
+	}
+	else {(userId === "" || userPw === "") 
+		// event.preventDefault();
+		alert("로그인 정보를 입력하세요.");
+
+		$("#user_id").focus();
+	}
+});
+
+
+

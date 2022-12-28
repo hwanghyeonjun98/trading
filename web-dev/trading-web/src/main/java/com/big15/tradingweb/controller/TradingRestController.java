@@ -60,7 +60,6 @@ public class TradingRestController {
 
 	@RequestMapping("/accountHistory/{account}/{stock_code}")
 	public List<AccountHistoryDto> accountHistory(@PathVariable("account") String account, @PathVariable("stock_code") String stock_code) {
-		String replaceCode = stock_code.replace("A", "");
-		return indexdataMapper.accountHistory(account, replaceCode);
+		return indexdataMapper.accountHistory(account, stock_code);
 	}
 }

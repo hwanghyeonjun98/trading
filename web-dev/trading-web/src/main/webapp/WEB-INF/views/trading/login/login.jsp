@@ -36,7 +36,16 @@
 							<li>
 								<button type="button" class="btn" id="login-btn">로그인</button>
 							</li>
+							<li>
+								<button type="button" class="btn btn-success" >
+									<a href="/join">
+									회원가입
+									</a>
+								</button>
+							</li>
+							
 						</ul>
+						
 					</form>
 				</div>
 			</section>
