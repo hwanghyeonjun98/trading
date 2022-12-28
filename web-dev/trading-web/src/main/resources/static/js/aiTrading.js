@@ -6,7 +6,6 @@ const account = $("#account").val();
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
 	if (nowMin < 570 || nowMin > 932) {
-		console.log(nowMin);
 		$("#trading-data-table tbody").html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
 	} else {
 		(function poll() {
@@ -37,11 +36,9 @@ if (account !== "") {
 					} else {
 						$("#trading-data-table tbody").html(list);
 					}
-				}, timeout : 2000,
+				}, timeout : 5000,
 				complete   : setTimeout(function () {
 					poll();
-
-
 				}, 2000),
 				error      : function () {
 					clearTimeout(poll);
@@ -78,6 +75,9 @@ $(document).on("click", "#trading-data-table button", function () {
 				historyList.push(str);
 			});
 			$("#histoyTable tbody").html(historyList);
+			if(historyList.length === 0) {
+				$("#histoyTable tbody").html("<tr><td colspan='4'>거래 내역이 없습니다.</td></tr>")
+			}
 		}, error : function () {
 			$("#histoyTable tbody").html("<tr><td colspan='4'>거래 내역이 없습니다.</td></tr>");
 		}
