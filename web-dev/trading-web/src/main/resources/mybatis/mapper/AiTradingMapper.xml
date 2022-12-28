@@ -9,7 +9,7 @@
 		     , format(evalValue, 0) as evalValue
 		     , format(ratio, 4) as ratio
 		     , format(currentValue, 0) as currentValue
-		FROM web_data.${account}
+		FROM web_data.${account}_account_status
 		order by code asc
 	</select>
 </mapper>

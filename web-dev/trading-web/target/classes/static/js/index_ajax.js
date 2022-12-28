@@ -6,7 +6,7 @@
 		success    : function (ranking) {
 			const list = [];
 			$.each(ranking, function (index) {
-				str = "<li>" + ranking[index].no + ". " + ranking[index].stock_name + "</li>";
+				str = "<li>" + ranking[index].no + ". " + ranking[index].stock_name + " ("+ ranking[index].market_cap +")</li>";
 				list.push(str);
 			});
 			$("#rolling").html(list);

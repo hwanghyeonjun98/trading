@@ -3,38 +3,38 @@
 <mapper namespace="com.big15.tradingweb.mapper.InvestingMapper">
 	<select id="investingDateSearchList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, format(closes, 2) as closes, format(opens,2) as opens, format(highs,2) as highs, format(lows, 2) as lows, format(volumes, 0) as volumes, changes
-		FROM ${names}
+		FROM web_data.${names}
 		WHERE dates between #{startDate} AND #{endDate}
 		ORDER BY dates desc
 	</select>
 
 	<select id="chartList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates,
-		       opens,
-		       highs,
-		       lows,
-		       closes
-		FROM ${names}
+		       format(opens,3) as opens,
+		       format(highs,3) as highs,
+		       format(lows, 3) as lows,
+		       format(closes, 3) as closes
+		FROM web_data.${names}
 		ORDER BY dates asc
 	</select>
 
 	<select id="dataDefultList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, format(closes, 2) as closes, format(opens,2) as opens, format(highs,2) as highs, format(lows, 2) as lows, format(volumes, 0) as volumes, changes
-		FROM aedkrw내역
+		FROM web_data.aedkrw내역
 		WHERE dates between DATE_FORMAT(CURRENT_DATE() - interval 1 month, '%Y%m%d') AND DATE_FORMAT(CURDATE(), '%Y%m%d')
 		ORDER BY dates desc
 	</select>
 
 	<select id="dataList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, format(closes, 2) as closes, format(opens,2) as opens, format(highs,2) as highs, format(lows, 2) as lows, format(volumes, 0) as volumes, changes
-		FROM ${names}내역
+		FROM web_data.${names}내역
 		WHERE dates between DATE_FORMAT(CURRENT_DATE() - interval 1 month, '%Y%m%d') AND DATE_FORMAT(CURDATE(), '%Y%m%d')
 		ORDER BY dates desc
 	</select>
 
 	<select id="kospiChartList" resultType="com.big15.tradingweb.dto.InvestingDto">
 		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, closes
-		FROM 코스피지수내역
+		FROM web_data.코스피지수내역
 		ORDER BY dates asc
 	</select>
 </mapper>

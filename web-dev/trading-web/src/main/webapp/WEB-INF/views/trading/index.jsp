@@ -20,7 +20,7 @@
 						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
 						<div class="table-title">
 							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
-							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
+							<small>트레이딩 시간 : 9:00 ~ 16:30</small>
 							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 						</div>
 						<table id="trading-data-table" class="table table-hover table-striped table-sort">
@@ -35,7 +35,12 @@
 							</colgroup>
 							<thead class="table-secondary">
 								<tr>
-									<th>종목코드</th>
+									<th>
+										종목코드
+										<a href="#" data-bs-toggle="tooltip" data-bs-html="true" title="종목 코드를 클릭하면, <br>종목 거래 내역이 나옵니다.">
+											<i class="bi bi-info-circle-fill"></i>
+										</a>
+									</th>
 									<th>종목명</th>
 									<th>보유수량</th>
 									<th>평단가</th>
@@ -252,14 +257,44 @@
 				</div>
 			</section>
 		</main>
+		<div class="modal fade" tabindex="-1" id="histoyModal">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">${userAccount} / <span id="stockCode"></span> 내역</h5>
+						<button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body p-0">
+						<div class="m-3">
+							<table id="histoyTable" class="table table-hover table-striped table-sort">
+								<colgroup>
+									<col style="width: 180px;">
+								</colgroup>
+								<thead class="table-secondary">
+									<tr>
+										<th>거래시간</th>
+										<th>종목코드</th>
+										<th>매도량</th>
+										<th>매수량</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-sm modal-close" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
 	</div>
 	<button type="button" class="top-to-btn">
 		<i class="bi bi-arrow-up-circle-fill"></i>
 	</button>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="/js/common.js"></script>
 	<script src="/js/index_chart.js"></script>

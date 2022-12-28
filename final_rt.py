@@ -4,7 +4,6 @@ from final_dbconnect import DBConnection_trading
 
 from pandas.tseries.offsets import BDay
 from datetime import date
-import pandas as pd
 
 account_name, _ = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
