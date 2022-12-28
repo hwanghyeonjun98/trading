@@ -17,5 +17,5 @@ public interface IndexdataMapper {
 
 	List<MarketCapDto> marketCapRanking();
 
-	List<AccountHistoryDto> accountHistory(@Param("account") String account, @Param("replaceCode") String replaceCode);
+	List<AccountHistoryDto> accountHistory(@Param("account") String account, @Param("stock_code") String stock_code);
 }

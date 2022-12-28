@@ -1,12 +1,14 @@
 const time = new Date();
 const nowMin = time.getHours() * 60;
 const account = $("#account").val();
+const tradingDataTableBdoy = $("#trading-data-table tbody");
+const histoyTableBody = $("#histoyTable tbody");
 
 // 실기간 트레이딩
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
 	if (nowMin < 570 || nowMin > 932) {
-		$("#trading-data-table tbody").html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
+		tradingDataTableBdoy.html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
 	} else {
 		(function poll() {
 			$.ajax({
@@ -32,9 +34,9 @@ if (account !== "") {
 						list.push(str);
 					});
 					if (list.length === 0) {
-						$("#trading-data-table tbody").html("<tr><td colspan='7'>거래중입니다. 잠시만 기다려주세요.</td></tr>");
+						tradingDataTableBdoy.html("<tr><td colspan='7'>거래중입니다. 잠시만 기다려주세요.</td></tr>");
 					} else {
-						$("#trading-data-table tbody").html(list);
+						tradingDataTableBdoy.html(list);
 					}
 				}, timeout : 5000,
 				complete   : setTimeout(function () {
@@ -42,20 +44,19 @@ if (account !== "") {
 				}, 2000),
 				error      : function () {
 					clearTimeout(poll);
-					$("#trading-data-table tbody").html("<tr><td colspan='7'>로그인해주세요.</td></tr>");
+					tradingDataTableBdoy.html("<tr><td colspan='7'>로그인해주세요.</td></tr>");
 				}
 			});
 		})();
 	}
 } else {
-	$("#trading-data-table tbody").html("<tr><td colspan='7'>로그인 시 활성화 됩니다.</td></tr>");
+	tradingDataTableBdoy.html("<tr><td colspan='7'>로그인 시 활성화 됩니다.</td></tr>");
 }
 
 
 // 거래 내역 가져오기
 $(document).on("click", "#trading-data-table button", function () {
-	let url = "/api/data/accountHistory/" + account.replace("_account_status", "") + "/" + $(this).attr(
-		"id").replace("_history", "");
+	let url = "/api/data/accountHistory/" + account + "/" + $(this).attr("id").replace("_history", "");
 	let code = $(this).attr("id").replace("_history", "");
 	$("#stockCode").text(code);
 
@@ -74,12 +75,12 @@ $(document).on("click", "#trading-data-table button", function () {
 				      "</tr>";
 				historyList.push(str);
 			});
-			$("#histoyTable tbody").html(historyList);
-			if(historyList.length === 0) {
-				$("#histoyTable tbody").html("<tr><td colspan='4'>거래 내역이 없습니다.</td></tr>")
+			histoyTableBody.html(historyList);
+			if (historyList.length === 0) {
+				histoyTableBody.html("<tr><td colspan='4'>거래 내역이 없습니다.</td></tr>");
 			}
 		}, error : function () {
-			$("#histoyTable tbody").html("<tr><td colspan='4'>거래 내역이 없습니다.</td></tr>");
+			histoyTableBody.html("<tr><td colspan='4'>거래 내역이 없습니다.</td></tr>");
 		}
 	});
 });
