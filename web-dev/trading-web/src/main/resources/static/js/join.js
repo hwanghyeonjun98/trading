@@ -39,7 +39,6 @@ $("input[id*=pw]").on("change", function () {
 });
 
 // 가입하기
-<<<<<<< HEAD
 $("input").on("submit", function () {
 	if (idInput.val() === "") {
 	$(".id-check-li").text("아이디를 입력하세요,");
@@ -58,8 +57,3 @@ $("input").on("submit", function () {
 		$("#user_id").focus();
 	}
 });
-
-
-
-=======
->>>>>>> 4e01d98cb180e417f88523db2ff5d8656e1a077d
