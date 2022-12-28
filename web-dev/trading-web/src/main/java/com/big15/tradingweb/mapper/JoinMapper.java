@@ -11,6 +11,11 @@ public interface JoinMapper {
 
 	List<UserInfoDto> idCheck(@Param("user_id") String user_id);
 
-	int join(@Param("user_id") String user_id, @Param("user_pw") String user_pw, @Param("user_name") String user_name, @Param("user_account") String user_account);
+	int join(@Param("user_id") String user_id
+		, @Param("user_pw") String user_pw
+		, @Param("user_name") String user_name
+		, @Param("user_account_name") String user_account_name
+		, @Param("user_account") String user_account);
 
+	void createTable(@Param("sql") String sql);
 }

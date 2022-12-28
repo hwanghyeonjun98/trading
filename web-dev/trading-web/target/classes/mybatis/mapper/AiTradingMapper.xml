@@ -3,13 +3,38 @@
 <mapper namespace="com.big15.tradingweb.mapper.AiTradingMapper">
 	<select id="aiTradingData" resultType="com.big15.tradingweb.dto.AiTradingDto">
 		SELECT code
-		     , name
-		     , format(amount, 0) as amount
-		     , format(buyprice, 2) as buyprice
-		     , format(evalValue, 0) as evalValue
-		     , format(ratio, 4) as ratio
-		     , format(currentValue, 0) as currentValue
+				 , name
+				 , format(amount, 0)       as amount
+				 , format(buyprice, 2)     as buyprice
+				 , format(evalValue, 0)    as evalValue
+				 , format(ratio, 4)        as ratio
+				 , format(currentValue, 0) as currentValue
 		FROM web_data.${account}_account_status
 		order by code asc
+	</select>
+
+	<select id="accountHistory" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
+		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
+				 , account_name
+				 , stock_code
+				 , buy_num
+				 , sell_num
+		from ${account}_history
+			where account_name = #{account}
+			and stock_code = #{stock_code}
+		order by his_time desc
+	</select>
+
+	<select id="accountHistorySearch" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
+		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
+				 , account_name
+				 , stock_code
+				 , buy_num
+				 , sell_num
+		from ${account}_history
+		where account_name = #{account}
+			and stock_code = #{stock_code}
+			and his_time between #{start_date} and #{end_date}
+		order by his_time desc
 	</select>
 </mapper>

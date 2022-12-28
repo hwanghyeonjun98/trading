@@ -1,3 +1,5 @@
+const bsesstion = window.sessionStorage; // 세션 스토리지
+
 function login() {
 	const userId = $("#user_id").val();
 	const userPw = $("#user_pw").val();
@@ -15,6 +17,7 @@ function login() {
 			success    : function (data) {
 				if (data === "true") {
 					location.href = "/";
+					bsesstion.removeItem("joinCheck");
 				} else {
 					// event.preventDefault();
 					alert("아이디 또는 비밀번호가 잘못 되었습니다.\n로그인 정보를 확인하세요.");
@@ -43,3 +46,12 @@ $("input").on("change", function () {
 
 $("#login-btn").on("click", event => login(event));
 $(window).on("keyup", event => loginButtonKeyPress(event));
+
+
+if (Boolean(bsesstion.getItem("joinCheck"))) {
+	history.pushState(null, null, location.href);
+
+	window.onpopstate = function (event) {
+		history.go(1);
+	};
+}

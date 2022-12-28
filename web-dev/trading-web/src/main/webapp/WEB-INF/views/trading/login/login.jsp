@@ -33,19 +33,13 @@
 									<div class="input-bar"></div>
 								</div>
 							</li>
-							<li>
-								<button type="button" class="btn" id="login-btn">로그인</button>
-							</li>
-							<li>
-								<button type="button" class="btn btn-success" >
-									<a href="/join">
+							<li class="btn-area">
+								<button type="button" class="btn btn-primary" id="login-btn">로그인</button>
+								<a href="/join" class="btn btn-warning" id="join-btn">
 									회원가입
-									</a>
-								</button>
+								</a>
 							</li>
-							
 						</ul>
-						
 					</form>
 				</div>
 			</section>

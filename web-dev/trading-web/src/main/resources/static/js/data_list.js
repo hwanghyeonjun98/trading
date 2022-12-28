@@ -154,23 +154,3 @@ menuBtn.forEach((btn) => {
 		dataTitle.innerText = btn.textContent;
 	});
 });
-
-// 날짜 관련
-const startDateInput = document.querySelector("#startDate");
-const endDateInput = document.querySelector("#endDate");
-let date = new Date(); // 날짜 object 생성
-const TIME_ZONE = 3240 * 10000; // 한국 시간대로 타임존 setting
-const nowDate = new Date(+date + TIME_ZONE).toISOString().split("T")[0]; // 한국 시간으로 불러와 T를 기준으로 split
-
-// 한달전 날짜
-date.setMonth(date.getMonth() - 1);
-const dateCalc = date.toISOString().split("T")[0];
-
-startDateInput.value = dateCalc;
-
-// 현재 날짜
-endDateInput.value = nowDate;
-
-// 검색 최대 날짜
-startDateInput.setAttribute("max", nowDate);
-endDateInput.setAttribute("max", nowDate);

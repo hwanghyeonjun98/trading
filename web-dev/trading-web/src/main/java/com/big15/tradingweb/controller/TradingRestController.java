@@ -59,7 +59,18 @@ public class TradingRestController {
 	}
 
 	@RequestMapping("/accountHistory/{account}/{stock_code}")
-	public List<AccountHistoryDto> accountHistory(@PathVariable("account") String account, @PathVariable("stock_code") String stock_code) {
-		return indexdataMapper.accountHistory(account, stock_code);
+	public List<AccountHistoryDto> accountHistory(@PathVariable("account") String account,
+	                                              @PathVariable("stock_code") String stock_code
+	) {
+		return aiTradingData.accountHistory(account, stock_code);
+	}
+
+	@RequestMapping("/accountHistorySearch/{account}/{stock_code}/{start_date}/{end_date}")
+	public List<AccountHistoryDto> accountHistorySearch(@PathVariable("account") String account,
+	                                                    @PathVariable("stock_code") String stock_code,
+	                                                    @PathVariable("start_date") String start_date,
+	                                                    @PathVariable("end_date") String end_date
+	) {
+		return aiTradingData.accountHistorySearch(account, stock_code, start_date, end_date);
 	}
 }

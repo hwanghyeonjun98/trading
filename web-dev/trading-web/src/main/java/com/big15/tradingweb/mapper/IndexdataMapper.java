@@ -1,11 +1,9 @@
 package com.big15.tradingweb.mapper;
 
-import com.big15.tradingweb.dto.AccountHistoryDto;
 import com.big15.tradingweb.dto.InvestingDto;
 import com.big15.tradingweb.dto.MarketCapDto;
 import com.big15.tradingweb.dto.NewsDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +14,4 @@ public interface IndexdataMapper {
 	List<NewsDto> newsdata();
 
 	List<MarketCapDto> marketCapRanking();
-
-	List<AccountHistoryDto> accountHistory(@Param("account") String account, @Param("stock_code") String stock_code);
 }

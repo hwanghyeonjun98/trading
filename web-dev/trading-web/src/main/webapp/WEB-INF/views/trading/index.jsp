@@ -20,7 +20,7 @@
 						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
 						<div class="table-title">
 							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
-							<small>트레이딩 시간 : 9:00 ~ 16:30</small>
+							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
 							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 						</div>
 						<table id="trading-data-table" class="table table-hover table-striped table-sort">
@@ -258,14 +258,32 @@
 			</section>
 		</main>
 		<div class="modal fade" tabindex="-1" id="histoyModal">
-			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">${userAccount} / <span id="stockCode"></span> 내역</h5>
+					<div class="modal-header mb-3">
+						<h5 class="modal-title">
+							${userAccount}<br>
+							<span id="stockName"></span><small>(<span id="stockCode"></span>)</small> 내역
+						</h5>
 						<button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body p-0">
-						<div class="m-3">
+						<div class="m-3 mt-0">
+							<form name="dateSearchFrm" id="dateSearchFrm" class="mb-3" method="post">
+								<div>
+									날짜 검색 :
+								</div>
+								<div class="col-sm-4">
+									<label for="startDate" class="visually-hidden">시작 날짜</label>
+									<input type="datetime-local" name="startDate" id="startDate" class="form-control" min="2020-01-01T00:00">
+								</div>
+								<div class="col-sm-4">
+									<label for="endDate" class="visually-hidden">끝 날짜</label>
+									<input type="datetime-local" name="endDate" id="endDate" class="form-control" max="" value="">
+								</div>
+								<button type="submit" class="btn btn-outline-success btn-sm"><i class="bi bi-search"></i>
+								</button>
+							</form>
 							<table id="histoyTable" class="table table-hover table-striped table-sort">
 								<colgroup>
 									<col style="width: 180px;">
