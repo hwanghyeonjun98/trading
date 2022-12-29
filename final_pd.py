@@ -1,5 +1,5 @@
-from final_target import get_target_list_db_rt
-from final_predict import stock_predict
+from final_module.final_target import get_target_list_db_rt
+from final_module.final_predict import stock_predict
 
 from pandas.tseries.offsets import BDay
 from keras.models import load_model
