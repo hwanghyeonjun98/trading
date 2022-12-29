@@ -304,15 +304,13 @@ def ds_account_db_update(conn):
     # account_value_2 = instCpTd6033.GetHeaderValue(8) # 5 : 없음, 6 : 대출금액, 7 : 수신개수, 8 : 수익율, 9 : D+2 예상 예수금
     # account_value_3 = instCpTd6033.GetHeaderValue(11) # 10 : 대주평가금액, 11 : 잔고평가금액, 12 : 대주금액
 
-    # 현재 DB 내 존재하는 테이블(종목) 추출
-    sql = "INSERT INTO big15.account VALUES({0}, '{1}', {2});".format(today,account_name, account_value)
-
     try:
+        sql = "INSERT INTO web_data.account VALUES({0}, '{1}', {2});".format(today,account_name, account_value)
         conn.execute(sql)
         print('계좌 평가금 DB 생성 완료')
         conn.close()
     except:
-        sql = "UPDATE big15.account SET acc_value = '{2}' WHERE date = '{0}' and acc_name = '{1}'".format(today,account_name, account_value)
+        sql = "UPDATE web_data.account SET acc_value = '{2}' WHERE date = '{0}' and acc_name = '{1}'".format(today,account_name, account_value)
         conn.execute(sql)
         conn.close()
         print('계좌 평가금 DB 업데이트')
@@ -382,27 +380,46 @@ def account_status_update(df, conn, account_name):
     conn.commit()
     conn.close()
 
-def trading_history(conn, account_name, code, num, amount):
+def trading_history(conn, account_name, code_name, code, buy_num, sell_num, amount, ratio, pyungga, jangbu):
     now = datetime.now()
     time_ = str(now.year) +'-' + str(now.month) + '-' + str(now.day) + ' ' + str(now.hour) +':' + str(now.minute)
     account_name = account_name.lower()
-    args = [(str(account_name), 'A' + str(code), str(num), str(amount), str(time_))]  # 계좌이름, 종목코드, 매수, 매도
+    profit = str(int(pyungga) - int(jangbu))
+    args = [(str(account_name), str(time_), str(code_name), 'A' + str(code), str(buy_num), str(sell_num), str(amount), str(ratio), str(profit))]  # 계좌이름, 종목코드, 매수, 매도
 
     try: 
-        sql_create = f'create table web_data.{account_name}_history(account_name varchar(20), stock_code varchar(20), buy_num varchar(20), sell_num varchar(20), his_time varchar(50))'
+        sql_create = f'''create table web_data.{account_name}_history(
+            account_name varchar(20)
+            , his_time varchar(50)
+            , code_name varchar(30)
+            , stock_code varchar(20)
+            , buy_num varchar(20)
+            , sell_num varchar(20)
+            , amount varchar(20)
+            , ratio varchar(10)
+            , profit varchar(20)
+            )'''
         cur = conn.cursor()
         cur.execute(sql_create)
     except:
         print('')
 
-    sql_update = f'INSERT INTO web_data.{account_name}_history VALUES (%s,%s,%s,%s,%s)'
+    sql_update = f'INSERT INTO web_data.{account_name}_history VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     cursor =  conn.cursor()
 
     cursor.executemany(sql_update, args)
     conn.commit()
     conn.close()
 
+def status_history(code):
+    status_df = ds_account_stock_check()
+    code_name = status_df[status_df['종목코드'] == 'A' + code]['종목명'].values[0]
+    amount = status_df[status_df['종목코드'] == 'A' + code]['보유수량'].values[0]
+    ratio = round(status_df[status_df['종목코드'] == 'A' + code]['수익율'].values[0], 4)
+    pyungga = status_df[status_df['종목코드'] == 'A' + code]['평가금액'].values[0]
+    jangbu = status_df[status_df['종목코드'] == 'A' + code]['장부금액'].values[0]
 
+    return code_name, amount, ratio, pyungga, jangbu
 
 ############################################################################################################################################################################################
 
@@ -476,7 +493,10 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name):
                         else:
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, 0)
+                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                        print('주문완료')
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
+                        print('HISTORY 업데이트')
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -502,9 +522,11 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name):
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
 
+                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                     ds_trade_end('1', code, amount)
-                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
+                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu)
                     end = 0
+                    time.sleep(3)
                     return code
                         
                 except:
@@ -527,7 +549,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name):
                         else:
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, 0)
+                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -545,7 +568,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name):
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
                     ds_trade_end('1', code, amount)
-                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
+                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -572,7 +596,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name):
                         
                         end= 0
                         ds_trade_end('1', code, amount)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, 0, amount)
+                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu)
                         print('')
                         return code
 
@@ -621,35 +646,32 @@ def realtime_trading(stock_list , account_name):
             time.sleep(1)
             
         else:
-            try:
-                for code in stock_list:
-                    first_cost = account_value // 10 # 500만원
-                    each_target_df = stock_trading_db(code, account_name)
-                    try:
-                        # print('실시간 트레이딩 진행중')
-                        get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
-                        time.sleep(1)
-
-                    except:
-                        print('Trading_Data가 존재하지 않습니다.')
-                    
-                    # DB에 테이블이 존재하지 않으면 sleep
-                    try:
-                        sql = f"SELECT * FROM predict_data.{account_name}_{today}_{code} order by id desc limit 1"
-                        pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql)
-                        predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
-
-                        sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name)
-
-                        if sell_code == 0:
-                            continue
-                        else:
-                            stock_list.remove(sell_code)
-                    except:
-                        print('트레이딩 에러 발생')                
-            except:
+            if len(stock_list) == 0:
                 print('모든 종목 매도 완료')
+                time.sleep(5)
 
+            for code in stock_list:
+                first_cost = account_value // 10 # 500만원
+                each_target_df = stock_trading_db(code, account_name)
+                try:
+                    # print('실시간 트레이딩 진행중')
+                    get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
+                    time.sleep(1)
+
+                except:
+                    print('Trading_Data가 존재하지 않습니다.')
                 
+                # DB에 테이블이 존재하지 않으면 sleep
+                try:
+                    sql = f"SELECT * FROM predict_data.{account_name}_{today}_{code} order by id desc limit 1"
+                    pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql)
+                    predict_df = pd.DataFrame(pred_data.fetchall())  # DB내 테이블을 DF로 변환
 
-    
+                    sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name)
+
+                    if sell_code == 0:
+                        continue
+                    else:
+                        stock_list.remove(sell_code)
+                except:
+                    print('트레이딩 에러 발생')
