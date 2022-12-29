@@ -77,10 +77,10 @@ def get_krx_target(path):
 def get_target_stock_list(conn, type):
 
     # 현재 DB에 존재하는 종목 추출
-    db_stock_list = get_pymysql_db_list(conn, 'stock_info')
+    db_stock_list = get_pymysql_db_list(DBConnection_target().get_sqlalchemy_connect_ip(), 'stock_info')
 
     # 대상 종목 추출
-    target_df = pd.read_csv(f'./download/target/target_{today}.csv', encoding='euc-kr')
+    target_df = pd.read_csv(f'./download/target/target_{nextday}.csv', encoding='euc-kr')
     target_df = target_df[['종목코드','시장구분','등락률','거래대금','시가총액']]
     target_df['value_cap_ratio'] = target_df['거래대금'] / target_df['시가총액']
 
@@ -98,6 +98,7 @@ def get_target_stock_list(conn, type):
         target_data = {'대형주' : kospi_list, '소형주' : kosdaq_list}
 
         target_df = pd.DataFrame(target_data)
+
     except:
         gubun, market_cap, ratio = target_df['시장구분'], target_df['시가총액'], target_df['등락률']
         kospi = target_df[(gubun == 'KOSPI') & (market_cap> 2000000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:10]
@@ -106,8 +107,20 @@ def get_target_stock_list(conn, type):
         kospi_list = kospi['종목코드'].to_list()
         kosdaq_list = kosdaq['종목코드'].to_list()
 
-        kospi_list = list(set(kospi_list) & set(db_stock_list))
-        kosdaq_list = list(set(kosdaq_list) & set(db_stock_list))
+        un_kospi_list = list(set(kospi_list) - set(db_stock_list))
+        un_kosdaq_list = list(set(kosdaq_list) - set(db_stock_list))
+
+        if (len(un_kospi_list) != 0) | (len(un_kosdaq_list) != 0):
+
+            kospi = target_df[(gubun == 'KOSPI') & (market_cap> 2000000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:(10+len(un_kospi_list))]
+            kosdaq = target_df[((gubun == 'KOSDAQ') | (gubun == 'KOSDAQ GLOBAL')) & (market_cap> 100000000000) & (market_cap < 500000000000) & (ratio > 0)].sort_values(by='value_cap_ratio', ascending=False).iloc[0:(10+len(un_kosdaq_list))]
+
+            kospi_list = kospi['종목코드'].to_list()
+            kosdaq_list = kosdaq['종목코드'].to_list()
+
+            kospi_list = list(set(kospi_list) & set(db_stock_list))
+            kosdaq_list = list(set(kosdaq_list) & set(db_stock_list))
+            
 
         target_data = {'대형주' : kospi_list, '소형주' : kosdaq_list}
 

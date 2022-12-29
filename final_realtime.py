@@ -435,8 +435,10 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name):
         print('========================================================================')
         print('초기자금 : ' + str(cost) + ' 매도 확률 : ' + str(predict_df['0'].values[0]) + ' 매수 확률 : ' + str(predict_df['1'].values[0]))
         print('========================================================================')
+        
         end_cost = int(each_target_df['종가'].values[0])   # 종가
         high_cost = int(each_target_df['고가'].values[0])   # 고가
+
         status_db_df = status_df.copy()
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
                                     , '평가금액' : 'evalValue' , '수익율' : 'ratio', '장부금액' : 'currentValue'}, inplace=True)
