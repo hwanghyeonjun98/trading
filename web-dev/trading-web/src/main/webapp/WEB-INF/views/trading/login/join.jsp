@@ -53,16 +53,16 @@
 								<p class="pw-check-li">비밀번호 또는 형식이 다릅니다. 다시 입력해 주세요.</p>
 							</li>
 							<li>
-								<label for="user_id">계좌이름 *</label>
+								<label for="user_id">은행이름 *</label>
 								<div class="input-bar-style">
-									<input id="user_account_name" name="user_account_name" type="text" placeholder="계좌번호를 입력해 주세요." required>
+									<input id="user_account_name" name="user_account_name" type="text" placeholder="은행이름을 입력해 주세요." required>
 									<div class="input-bar"></div>
 								</div>
 							</li>
 							<li>
 								<label for="user_id">계좌번호 *</label>
 								<div class="input-bar-style">
-									<input id="user_account" name="user_account" type="text" placeholder="계좌번호를 입력해 주세요." required>
+									<input id="user_account" name="user_account" type="text" pattern="^\d+$" placeholder="계좌번호를 입력해 주세요.(- 제외)" required>
 									<div class="input-bar"></div>
 								</div>
 							</li>
@@ -86,4 +86,4 @@
 	<script src="/js/common.js"></script>
 	<script src="/js/join.js"></script>
 </body>
-</html>
+</html>a

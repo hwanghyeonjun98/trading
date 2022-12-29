@@ -171,14 +171,13 @@
 	padding: 30px;
 }
 
-#trading-data-table tbody tr td:first-child,
-#trading-data-table tbody tr td:nth-child(2) {
+#trading-data-table tbody tr td {
 	text-align: center;
 }
 
-#trading-data-table tbody tr td:nth-child(n+3):nth-child(n-7) {
-	text-align: right;
-}
+/*#trading-data-table tbody tr td:nth-child(n+3):nth-child(n-7) {*/
+/*	text-align: right;*/
+/*}*/
 
 #trading-data-table tbody tr td button[id*="_history"] {
 	border: 1px solid transparent;
