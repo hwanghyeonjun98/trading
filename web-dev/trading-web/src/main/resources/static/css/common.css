@@ -49,6 +49,7 @@ table thead tr th {
 	text-align: center;
 }
 
+/* 페이지 상단 이동 버튼 */
 .top-to-btn {
 	position: fixed;
 	right: 2rem;
@@ -73,6 +74,14 @@ table thead tr th {
 
 .top-to-btn i {
 	font-size: 3rem;
+}
+
+/* 데이터 날짜 검색 */
+#dateSearchFrm {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: .8rem;
 }
 
 @media screen and (min-width: 1024px) {

@@ -18,13 +18,14 @@ public class JoinRestController {
 
 	JoinMapper joinMapper;
 
-	@PostMapping("/userJoin")
+	@PutMapping("/userJoin")
 	public void join(@RequestParam(value = "user_id") String user_id
-		, @RequestParam(value = "user_pw", required = false) String user_pw
-		, @RequestParam(value = "user_name", required = false) String user_name
-		, @RequestParam(value = "user_account", required = false) String user_account
+		, @RequestParam(value = "user_pw") String user_pw
+		, @RequestParam(value = "user_name") String user_name
+		, @RequestParam(value = "user_account_name") String user_account_name
+		, @RequestParam(value = "user_account") String user_account
 		, HttpServletResponse response) throws IOException {
-		int join = joinMapper.join(user_id, user_pw, user_name, user_account);
+		int join = joinMapper.join(user_id, user_pw, user_name, user_account_name, user_account);
 
 		if (join == 0) {
 			response.getWriter().print("joinFalse");
@@ -32,13 +33,24 @@ public class JoinRestController {
 
 		if (join == 1) {
 			response.getWriter().print("joinTrue");
+			String sql = "CREATE TABLE web_data." + user_account + "_account_status(" +
+				"     code text" +
+				"   , name text" +
+				"   , amount text" +
+				"   , buyprice text" +
+				"   , evalValue text" +
+				"   , ratio text" +
+				"   , currentValue text )";
+
+			joinMapper.createTable(sql);
 		}
+		String redirect_url = "/login";
+		response.sendRedirect(redirect_url);
 	}
 
 	@RequestMapping("/idCheck/{user_id}")
 	public void idCheck(@PathVariable("user_id") String user_id, HttpServletResponse response) throws IOException {
 		List<UserInfoDto> user = joinMapper.idCheck(user_id);
-		System.out.println(user);
 
 		if (user.size() == 0) {
 			response.getWriter().print("notId");
