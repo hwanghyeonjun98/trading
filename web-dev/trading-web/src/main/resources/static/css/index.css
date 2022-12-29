@@ -191,6 +191,16 @@
 	border: 1px solid var(--color-blue);
 }
 
+#trading-data-table tbody tr td.stock-evalValue.up,
+#trading-data-table tbody tr td.stock-ratio.up {
+	color: var(--color-red);
+}
+
+#trading-data-table tbody tr td.stock-evalValue.down,
+#trading-data-table tbody tr td.stock-ratio.down {
+	color: var(--color-blue);
+}
+
 #histoyTable tbody tr td {
 	text-align: center;
 }

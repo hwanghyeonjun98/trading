@@ -54,98 +54,97 @@
 						</table>
 					</div>
 				</article>
-				<article class="recommend-list w-25">
-					<div class="clear-wrapper">
-					</div>
-					<div class="recommendation-keywords-container">
-						<div class="titlecu mt-0"><h3>환율 검색 추천</h3></div>
-						<hr>
-						<div class="keywords-container-wrapper">
-							<div class="keywords-contents">
-								<a href="/dataview/data/cadkrw">
-									<div class="keyword item">CAD/KRW</div>
-								</a>
-								<a href="/dataview/data/chfkrw">
-									<div class="keyword item">CHF/KRW</div>
-								</a>
-								<a href="/dataview/data/cnykrw">
-									<div class="keyword item">CNY/KRW</div>
-								</a>
-								<a href="/dataview/data/dkkkrw">
-									<div class="keyword item">DKK/KRW</div>
-								</a>
-								<a href="/dataview/data/eurkrw">
-									<div class="keyword item">EUR/KRW</div>
-								</a>
-								<a href="/dataview/data/gbpkrw">
-									<div class="keyword item">GBP/KRWS</div>
-								</a>
-								<a href="/dataview/data/hkdkrw">
-									<div class="keyword item">HKD/KRW</div>
-								</a>
-								<a href="/dataview/data/idrkrw">
-									<div class="keyword item">IDR/KRW</div>
-								</a>
-								<a href="/dataview/data/jpykrw">
-									<div class="keyword item">JPY/KRW</div>
-								</a>
-								<a href="/dataview/data/sgdkrw">
-									<div class="keyword item">SGD/KRW</div>
-								</a>
-								<a href="/dataview/data/thbkrw">
-									<div class="keyword item">THB/KRW</div>
-								</a>
-								<a href="/dataview/data/usdkrw">
-									<div class="keyword item">USD/KRW</div>
-								</a>
-							</div>
-						</div>
-						<div class="titlecu"><h3>세계지수 검색 추천</h3></div>
-						<hr>
-						<div class="keywords-container-wrapper">
-							<div class="keywords-contents">
-								<a href="/dataview/data/캐나다sptsx">
-									<div class="keyword item">캐나다 S&P TSX</div>
-								</a>
-								<a href="/dataview/data/나스닥종합지수">
-									<div class="keyword item">나스닥종합지수</div>
-								</a>
-								<a href="/dataview/data/네덜란드aex">
-									<div class="keyword item">네덜란드 AEX</div>
-								</a>
-								<a href="/dataview/data/닛케이">
-									<div class="keyword item">닛케이</div>
-								</a>
-								<a href="/dataview/data/다우존스">
-									<div class="keyword item">다우존스</div>
-								</a>
-								<a href="/dataview/data/대만가권">
-									<div class="keyword item">대만 가권</div>
-								</a>
-								<a href="/dataview/data/러셀2000지수">
-									<div class="keyword item">러셀 2000 지수</div>
-								</a>
-								<a href="/dataview/data/러시아moexrussia">
-									<div class="keyword item">러시아 MOEX Russia</div>
-								</a>
-								<a href="/dataview/data/벨기에bel">
-									<div class="keyword item">벨기에 BEL</div>
-								</a>
-								<a href="/dataview/data/브라질보베스파">
-									<div class="keyword item">브라질 보베스파</div>
-								</a>
-								<a href="/dataview/data/사우디아라비아tadawul">
-									<div class="keyword item">사우디아라비아 Tadawul</div>
-								</a>
-							</div>
-						</div>
-					</div>
+				<article>
+					<%-- 차트 들어갈 영역 --%>
+					<%-- 차트 들어갈 영역 --%>
 				</article>
 			</section>
-			<article>
-				<a href="https://deepsearch-jira.atlassian.net/servicedesk/customer/kb/view/636583937" class="banner" target="_blank" rel="noopener noreferrer">
-					<img src="https://deepsearchimages.wpcomstaging.com/wp-content/uploads/cards/2022/11/banner_20221124-20221124-053132.png" alt="[DAP] 경제 지표 개선 공지">
-				</a>
+			<article class="recommend-list w-25">
+				<div class="clear-wrapper">
+				</div>
+				<div class="recommendation-keywords-container">
+					<div class="titlecu mt-0"><h3>환율 검색 추천</h3></div>
+					<hr>
+					<div class="keywords-container-wrapper">
+						<div class="keywords-contents">
+							<a href="/dataview/data/cadkrw">
+								<div class="keyword item">CAD/KRW</div>
+							</a>
+							<a href="/dataview/data/chfkrw">
+								<div class="keyword item">CHF/KRW</div>
+							</a>
+							<a href="/dataview/data/cnykrw">
+								<div class="keyword item">CNY/KRW</div>
+							</a>
+							<a href="/dataview/data/dkkkrw">
+								<div class="keyword item">DKK/KRW</div>
+							</a>
+							<a href="/dataview/data/eurkrw">
+								<div class="keyword item">EUR/KRW</div>
+							</a>
+							<a href="/dataview/data/gbpkrw">
+								<div class="keyword item">GBP/KRWS</div>
+							</a>
+							<a href="/dataview/data/hkdkrw">
+								<div class="keyword item">HKD/KRW</div>
+							</a>
+							<a href="/dataview/data/idrkrw">
+								<div class="keyword item">IDR/KRW</div>
+							</a>
+							<a href="/dataview/data/jpykrw">
+								<div class="keyword item">JPY/KRW</div>
+							</a>
+							<a href="/dataview/data/sgdkrw">
+								<div class="keyword item">SGD/KRW</div>
+							</a>
+							<a href="/dataview/data/thbkrw">
+								<div class="keyword item">THB/KRW</div>
+							</a>
+							<a href="/dataview/data/usdkrw">
+								<div class="keyword item">USD/KRW</div>
+							</a>
+						</div>
+					</div>
+					<div class="titlecu"><h3>세계지수 검색 추천</h3></div>
+					<hr>
+					<div class="keywords-container-wrapper">
+						<div class="keywords-contents">
+							<a href="/dataview/data/캐나다sptsx">
+								<div class="keyword item">캐나다 S&P TSX</div>
+							</a>
+							<a href="/dataview/data/나스닥종합지수">
+								<div class="keyword item">나스닥종합지수</div>
+							</a>
+							<a href="/dataview/data/네덜란드aex">
+								<div class="keyword item">네덜란드 AEX</div>
+							</a>
+							<a href="/dataview/data/닛케이">
+								<div class="keyword item">닛케이</div>
+							</a>
+							<a href="/dataview/data/다우존스">
+								<div class="keyword item">다우존스</div>
+							</a>
+							<a href="/dataview/data/대만가권">
+								<div class="keyword item">대만 가권</div>
+							</a>
+							<a href="/dataview/data/러셀2000지수">
+								<div class="keyword item">러셀 2000 지수</div>
+							</a>
+							<a href="/dataview/data/러시아moexrussia">
+								<div class="keyword item">러시아 MOEX Russia</div>
+							</a>
+							<a href="/dataview/data/벨기에bel">
+								<div class="keyword item">벨기에 BEL</div>
+							</a>
+							<a href="/dataview/data/브라질보베스파">
+								<div class="keyword item">브라질 보베스파</div>
+							</a>
+							<a href="/dataview/data/사우디아라비아tadawul">
+								<div class="keyword item">사우디아라비아 Tadawul</div>
+							</a>
+						</div>
+					</div>
+				</div>
 			</article>
 			<section class="main-list">
 				<h3 class="main_title">주식 관련 기사 추천</h3>

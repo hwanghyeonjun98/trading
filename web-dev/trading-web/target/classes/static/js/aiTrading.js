@@ -16,19 +16,31 @@ if (account !== "") {
 			success    : function (trading) {
 				const list = [];
 				$.each(trading, function (index) {
-					str = "<tr>" +
-					      "<td>" +
-					      "<button type='button' id='" + trading[index].code + "_history' data-bs-toggle='modal' data-bs-target='#histoyModal'>"
-					      + trading[index].code +
-					      "</button>" +
-					      "</td>" +
-					      "<td>" + trading[index].name + "</td>" +
-					      "<td>" + trading[index].amount + "</td>" +
-					      "<td>" + trading[index].buyprice + "</td>" +
-					      "<td>" + trading[index].evalValue + "</td>" +
-					      "<td>" + trading[index].ratio + "</td>" +
-					      "<td>" + trading[index].currentValue + "</td>" +
-					      "</tr>";
+					let ratio = trading[index].ratio;
+					let evalValue = trading[index].evalValue;
+
+					str1 = "<tr>" +
+					       "<td>" +
+					       "<button type='button' id='" + trading[index].code + "_history' data-bs-toggle='modal' data-bs-target='#histoyModal'>"
+					       + trading[index].code +
+					       "</button>" +
+					       "</td>" +
+					       "<td>" + trading[index].name + "</td>" +
+					       "<td>" + trading[index].amount + "</td>" +
+					       "<td>" + trading[index].buyprice + "</td>";
+
+					if (ratio < 0) {
+						str2 = "<td class='stock-evalValue down'>" + evalValue + "</td>" +
+						       "<td class='stock-ratio down'>" + ratio + "</td>";
+					} else {
+						str2 = "<td class='stock-evalValue up'>" + evalValue + "</td>" +
+						       "<td class='stock-ratio up'>" + ratio + "</td>";
+					}
+
+					str3 = "<td>" + trading[index].currentValue + "</td>" +
+					       "</tr>";
+
+					str = str1 + str2 + str3;
 					list.push(str);
 				});
 				if (list.length === 0) {
@@ -39,7 +51,7 @@ if (account !== "") {
 			}, timeout : 5000,
 			complete   : setTimeout(function () {
 				poll();
-			}, 2000),
+			}, 20000),
 			error      : function () {
 				clearTimeout(poll);
 				tradingDataTableBdoy.html("<tr><td colspan='7'>데이터가 없습니다.</td></tr>");
