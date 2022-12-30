@@ -21,4 +21,12 @@ public interface AiTradingMapper {
 	                                             @Param("end_date") String end_date
 	);
 
+	List<AccountHistoryDto> historyData(@Param("account") String account);
+
+	List<AccountHistoryDto> allHistoryDataSearch(@Param("account") String account,
+	                                             @Param("start_date") String start_date,
+	                                             @Param("end_date") String end_date,
+	                                             @Param("code") String code);
+	List<AccountHistoryDto> coList(@Param("account") String account);
+
 }
