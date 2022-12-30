@@ -1,4 +1,9 @@
 @charset "utf-8";
+
+hr {
+	margin: .5rem 0 1rem;
+}
+
 .main-list {
 	display: flex;
 	justify-content: flex-start;
@@ -22,14 +27,33 @@
 }
 
 .recommendation-keywords-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
 	border: 1px solid var(--color-dark-green);
 	padding: 15px;
 }
+
+.recommendation-keywords-container > div {
+	width: 49%;
+}
+
+.keywords-contents a {
+	width: calc(100% / 4);
+	text-align: center;
+}
+
 
 .keyword.item {
 	background: var(--color-gray);
 	border-radius: 4px;
 	padding: 8px 16px;
+}
+
+.keywords-contents a:hover .keyword.item,
+.keywords-contents a:focus .keyword.item,
+.keywords-contents a:active .keyword.item {
+	background-color: var(--color-dark-gray);
 }
 
 .icon-search {
@@ -171,7 +195,9 @@
 	padding: 30px;
 }
 
-#trading-data-table tbody tr td {
+#trading-data-table tbody tr td,
+#histoyTable tbody tr td,
+#allHistoyTable tbody tr td {
 	text-align: center;
 }
 
@@ -180,6 +206,7 @@
 /*}*/
 
 #trading-data-table tbody tr td button[id*="_history"] {
+	color: var(--color-blue);
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
@@ -201,14 +228,51 @@
 	color: var(--color-blue);
 }
 
-#histoyTable tbody tr td {
-	text-align: center;
-}
-
 #histoyTable thead {
 	position: sticky;
 	top: 0;
 	left: 0;
+}
+
+.history-area {
+	margin-bottom: 1.4rem;
+}
+
+.history-area .history-btn-area {
+	padding-right: 1rem;
+	margin-right: 1rem;
+	border-right: 1px solid var(--color-gray);
+}
+
+.history-area .history-btn-area #all-history-btn {
+	background-color: var(--color-gray);
+}
+
+.history-area .history-btn-area #all-history-btn:hover,
+.history-area .history-btn-area #all-history-btn:focus,
+.history-area .history-btn-area #all-history-btn:active {
+	background-color: var(--color-dark-gray);
+}
+
+.history-area .history-list-area .history-list {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow-X: auto;
+}
+
+.history-area .history-list-area .history-list li button {
+	background-color: var(--color-gray);
+}
+
+.history-area .history-list-area .history-list li button:hover,
+.history-area .history-list-area .history-list li button:focus,
+.history-area .history-list-area .history-list li button:active {
+	background-color: var(--color-dark-gray);
 }
 
 

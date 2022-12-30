@@ -16,9 +16,13 @@
 	<select id="accountHistory" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
 		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
 				 , account_name
+				 , code_name
 				 , stock_code
 				 , buy_num
 				 , sell_num
+				 , amount
+				 , ratio
+				 , profit
 		from ${account}_history
 			where account_name = #{account}
 			and stock_code = #{stock_code}
@@ -28,13 +32,68 @@
 	<select id="accountHistorySearch" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
 		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
 				 , account_name
+				 , code_name
 				 , stock_code
 				 , buy_num
 				 , sell_num
+				 , amount
+				 , ratio
+				 , profit
 		from ${account}_history
 		where account_name = #{account}
 			and stock_code = #{stock_code}
 			and his_time between #{start_date} and #{end_date}
 		order by his_time desc
+	</select>
+
+	<select id="historyData" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
+		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
+				 , account_name
+				 , code_name
+				 , stock_code
+				 , buy_num
+				 , sell_num
+				 , amount
+				 , ratio
+				 , format(profit, 0) as profit
+		from ${account}_history
+		where account_name = #{account}
+		order by his_time desc
+	</select>
+
+	<select id="allHistoryDataSearch" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
+		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
+				 , account_name
+				 , code_name
+				 , stock_code
+				 , buy_num
+				 , sell_num
+				 , amount
+				 , ratio
+				 , format(profit, 0) as profit
+		from ${account}_history
+		where account_name = #{account}
+		  <if test="!code.equals('null')">
+				and code_name like CONCAT('%', #{code}, '%')
+		  </if>
+			and his_time between #{start_date} and #{end_date}
+		order by his_time desc
+	</select>
+
+	<select id="coList" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
+		select DATE_FORMAT(his_time, '%Y-%m-%d') as date, code_name, stock_code
+		from ${account}_history
+		where account_name = #{account}
+			and DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+		group by code_name, date, stock_code
+		order by code_name asc;
+	</select>
+
+	<select>
+		select DATE_FORMAT(his_time, '%Y-%m-%d') as date, sum(ratio) as ratio ,sum(profit) as profit
+		from ${account}_history
+		where DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+		group by date
+		order by code_name asc;
 	</select>
 </mapper>

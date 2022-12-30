@@ -1,0 +1,65 @@
+@charset "utf-8";
+
+.color-block {
+	color: #333 !important;
+}
+
+.color-dark {
+	color: #B2B2B2 !important;
+}
+
+.color-gray {
+	color: #EDEDED !important;
+}
+
+.color-dark-gray {
+	color: #ccd0d4 !important;
+}
+
+.color-deep-dark-gray {
+	color: #6A6C6E !important;
+}
+
+.color-bright-purple {
+	color: #D2DAFF !important;
+}
+
+.color-purple {
+	color: #BEAEE2 !important;
+}
+
+.color-dark-purple {
+	color: #746A8B !important;
+}
+
+.color-pink {
+	color: #F7DBF0 !important;
+}
+
+.color-blue {
+	color: #4D96FF !important;
+}
+
+.color-red {
+	color: #FF6B6B !important;
+}
+
+.color-dark-red {
+	color: #702B2B !important;
+}
+
+.color-yellow {
+	color: #FFD93D !important;
+}
+
+.color-green {
+	color: #6BCB77 !important;
+}
+
+.color-dark-green {
+	color: #519959 !important;
+}
+
+.color-white {
+	color: #F9F9F9 !important;
+}
