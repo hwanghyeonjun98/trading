@@ -1,6 +1,6 @@
-from final_target import get_target_list_db_rt
-from final_realtime import realtime_trading, ds_account_db_update
-from final_dbconnect import DBConnection_trading
+from final_module.final_target import get_target_list_db_rt
+from final_module.final_realtime import realtime_trading, ds_account_db_update
+from final_module.final_dbconnect import DBConnection_trading
 
 from pandas.tseries.offsets import BDay
 from datetime import date
