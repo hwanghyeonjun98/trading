@@ -16,9 +16,9 @@ yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 nextday=str(date.today() + BDay(1)).replace('-','').split(' ')[0]
 print('실시간 트레이딩 기준 날짜 : ' + today)
 
+# 현재 DB 내 존재하는 테이블(종목) 추출
 def get_pymysql_db_list(conn, db_name):
 
-    # 현재 DB 내 존재하는 테이블(종목) 추출
     sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{0}'".format(db_name)
 
     result = conn.execute(sql)
@@ -26,12 +26,11 @@ def get_pymysql_db_list(conn, db_name):
 
     return db_list
 
-
+# investing 데이터 추출
 def get_investing_data(conn, investing_data_list):
 
     investing_df = pd.DataFrame()
 
-    # 현재 DB 내 존재하는 테이블(종목) 추출
     for table in investing_data_list:
         conn = DBConnection().get_sqlalchemy_connect_ip()
         sql = "SELECT * FROM investing_data.`{0}` ORDER BY 날짜 DESC LIMIT 1 ".format(table)
@@ -42,11 +41,10 @@ def get_investing_data(conn, investing_data_list):
         investing_df = pd.concat([investing_df, temp_df], axis=1)
     
     investing_df.drop(columns='날짜', axis=1, inplace=True) # 어제 날짜
-    # investing_df.rename(index={0:today}, inplace=True) # 오늘 날짜로 reindex
     
     return investing_df
 
-
+# krx 데이터 수집
 def get_krx_target(path):
 
     driver = selenium_driver_load(
@@ -74,6 +72,7 @@ def get_krx_target(path):
 
     shutil.move(new_csv_list[0], f'./download/target/target_{nextday}.csv')
 
+# 매매 대상 종목 리스트 추출
 def get_target_stock_list(conn, type):
 
     # 현재 DB에 존재하는 종목 추출
