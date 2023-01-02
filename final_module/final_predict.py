@@ -11,6 +11,7 @@ import time
 
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
+temp_day = str(date.today() - timedelta(1)).replace('-','').split(' ')[0]
 
 # 현재 DB 내 존재하는 테이블 존재 여부 확인
 def get_pymysql_traidng_table_check(table_schema, code, conn, account_name):
@@ -29,8 +30,12 @@ def get_pymysql_day_stock(conn, code, yesterday, investing_df):
 
     code = code[-6:]
     sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={yesterday} ORDER BY 시간 DESC LIMIT 1"
-    
     result = conn.execute(sql)
+
+    if len(result.fetchall()) == 0:
+        twoday = str(date.today() - BDay(2)).replace('-','').split(' ')[0]
+        sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={twoday} ORDER BY 시간 DESC LIMIT 1"    
+        result = conn.execute(sql)
 
     target_df = pd.DataFrame(result.fetchall())
     target_df = pd.concat([target_df, investing_df], axis=1)
@@ -68,9 +73,6 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
             for code in stock_list: 
                 
                 # 날짜 변동 시 실시간 반영
-                today = str(date.today()).replace('-','')
-                yesterday = str(date.today() - BDay(1)).replace('-','').split(' ')[0]
-                temp_day = str(date.today() - timedelta(1)).replace('-','').split(' ')[0]
                 cnt = 0
                 count = 0
                 while True:
