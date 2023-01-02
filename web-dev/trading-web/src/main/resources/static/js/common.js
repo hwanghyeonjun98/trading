@@ -5,6 +5,8 @@ const notLink = document.querySelectorAll("a[href='#']"); // 가상링크로 되
 const topBtn = document.querySelector(".top-to-btn"); // 상단으로 올라가는 버튼
 const logoutBtn = document.querySelector(".logout-btn"); // 로그아웃 버튼
 
+const bsesstion = window.sessionStorage; // 세션 스토리지
+
 // 가상 링크 이벤트 초기화(작동안되게)
 function EventReset(event) {
 	event.preventDefault();

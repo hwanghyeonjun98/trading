@@ -62,9 +62,16 @@
 						<hr class="w-100">
 						<div class="d-flex align-items-center">
 							<div class="history-btn-area">
-								<button type="button" id="all-history-btn" class="btn" data-bs-toggle='modal' data-bs-target='#allHistoyModal'>
-									전체 거래내역 보기
-								</button>
+								<c:if test="${userAccount == null}">
+									<button type="button" id="all-history-none-btn" class="btn">
+										전체 거래내역 보기
+									</button>
+								</c:if>
+								<c:if test="${userAccount != null}">
+									<button type="button" id="all-history-btn" class="btn" data-bs-toggle='modal' data-bs-target='#allHistoyModal'>
+										전체 거래내역 보기
+									</button>
+								</c:if>
 							</div>
 							<div class="history-list-area">
 								<ul class="history-list">
@@ -355,6 +362,11 @@
 								<button type="submit" class="btn btn-outline-success btn-sm"><i class="bi bi-search"></i>
 								</button>
 							</form>
+							<div class="profit-area">
+								<p>
+
+								</p>
+							</div>
 							<table id="allHistoyTable" class="table table-hover table-striped table-sort">
 								<colgroup>
 									<col style="width: 180px;">
