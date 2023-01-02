@@ -15,6 +15,6 @@ public class LogoutController {
 		if (session.getAttribute("userName") != null && session.getAttribute("userAccount") != null) {
 			session.invalidate();
 		}
-		return "redirect:/index";
+		return "redirect:/";
 	}
 }

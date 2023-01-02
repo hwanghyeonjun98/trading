@@ -6,6 +6,7 @@
 		from web_data.user_info
 		where user_id = #{user_id}
 	</select>
+
 	<insert id="join" parameterType="com.big15.tradingweb.dto.UserInfoDto">
 		INSERT INTO web_data.user_info(user_id, user_pw, user_name, user_account_name, user_account)
 		values (#{user_id}, #{user_pw}, #{user_name}, #{user_account_name}, #{user_account})

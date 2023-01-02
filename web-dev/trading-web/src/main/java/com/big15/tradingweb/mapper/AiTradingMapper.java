@@ -28,5 +28,6 @@ public interface AiTradingMapper {
 	                                             @Param("end_date") String end_date,
 	                                             @Param("code") String code);
 	List<AccountHistoryDto> coList(@Param("account") String account);
+	List<AccountHistoryDto> profit(@Param("account") String account);
 
 }

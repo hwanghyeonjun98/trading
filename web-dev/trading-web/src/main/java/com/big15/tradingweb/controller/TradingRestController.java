@@ -23,7 +23,6 @@ public class TradingRestController {
 	private InvestingMapper mapper;
 	@Autowired
 	private AiTradingMapper aiTradingData;
-
 	@Autowired
 	private IndexdataMapper indexdataMapper;
 
@@ -64,6 +63,10 @@ public class TradingRestController {
 	                                                    @PathVariable("endDate") String endDate,
 	                                                    @PathVariable("code") String code
 	) {
+		log.info(account);
+		log.info(startDate);
+		log.info(endDate);
+		log.info(code);
 		return aiTradingData.allHistoryDataSearch(account, startDate, endDate, code);
 	}
 
@@ -76,6 +79,12 @@ public class TradingRestController {
 	public List<AccountHistoryDto> coListSearch(@PathVariable("account") String account,
 	                                            @PathVariable("stock_code") String stock_code) {
 		return aiTradingData.accountHistory(account, stock_code);
+	}
+
+
+	@RequestMapping("/profit/{account}")
+	public List<AccountHistoryDto> coListSearch(@PathVariable("account") String account) {
+		return aiTradingData.profit(account);
 	}
 
 	@RequestMapping("/marketCapRanking")
