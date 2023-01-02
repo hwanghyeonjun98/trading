@@ -66,7 +66,6 @@ document.querySelector("#current").innerHTML = defaultDate.toLocaleTimeString();
 setInterval(displayNow, 1000); // 1초마다 시간 갱신
 function displayNow() {
 	const now = new Date();
-	//현재 거주 지역에 맞는 시간
 	document.querySelector("#current").innerHTML = now.toLocaleTimeString();
 }
 
@@ -139,23 +138,23 @@ $(document).on("submit", "form[name=codeSearchFrm]", function (event) {
 		success  : function (reponse) {
 			let dataList = [];
 			$.each(reponse, function (idx) {
-				if (parseInt(history[idx].profit) < 0) {
+				if (parseInt(reponse[idx].profit) < 0) {
 					str = "<tr>" +
-					      "<td class='color-blue'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-blue'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].amount + "</td>" +
-					      "<td class='color-blue'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-blue'>" + history[idx].profit + "</td>" +
+					      "<td class='color-blue'>" + reponse[idx].his_time + "</td>" +
+					      "<td class='color-blue'>" + reponse[idx].sell_num + "</td>" +
+					      "<td class='color-blue'>" + reponse[idx].buy_num + "</td>" +
+					      "<td class='color-blue'>" + reponse[idx].amount + "</td>" +
+					      "<td class='color-blue'>" + reponse[idx].ratio + "</td>" +
+					      "<td class='color-blue'>" + reponse[idx].profit + "</td>" +
 					      "</tr>";
 				} else {
 					str = "<tr>" +
-					      "<td class='color-red'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-red'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].amount + "</td>" +
-					      "<td class='color-red'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-red'>" + history[idx].profit + "</td>" +
+					      "<td class='color-red'>" + reponse[idx].his_time + "</td>" +
+					      "<td class='color-red'>" + reponse[idx].sell_num + "</td>" +
+					      "<td class='color-red'>" + reponse[idx].buy_num + "</td>" +
+					      "<td class='color-red'>" + reponse[idx].amount + "</td>" +
+					      "<td class='color-red'>" + reponse[idx].ratio + "</td>" +
+					      "<td class='color-red'>" + reponse[idx].profit + "</td>" +
 					      "</tr>";
 				}
 				dataList.push(str);
@@ -231,7 +230,7 @@ $(document).on("click", "#all-history-btn", function () {
 				      "</span>" +
 				      "<span class='fw-bold'>(" +
 				      nowDate +
-				      "</span>)";
+				      "</span> 1일 기준)";
 			} else {
 				str = "<span class='color-red fw-bold'>" +
 				      "수익율 : " + rate[0].ratio + "%, " +

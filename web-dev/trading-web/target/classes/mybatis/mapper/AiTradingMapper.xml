@@ -42,7 +42,7 @@
 		from ${account}_history
 		where account_name = #{account}
 			and stock_code = #{stock_code}
-			and his_time between #{start_date} and #{end_date}
+			and DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') between #{start_date} and #{end_date}
 		order by his_time desc
 	</select>
 

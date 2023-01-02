@@ -1,11 +1,14 @@
 const tradingDataTableBdoy = $("#trading-data-table tbody");
+const nowMin = date.getMinutes() * 60;
+console.log(nowMin);
 
 // 실기간 트레이딩
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
-	// if (nowMin < 570 || nowMin > 932) {
-	// 	tradingDataTableBdoy.html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
-	// } else {
+
+	if (nowMin < 570 || nowMin > 932) {
+		tradingDataTableBdoy.html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
+	} else {
 	(function poll() {
 		$.ajax({
 			type       : "POST",
@@ -46,17 +49,17 @@ if (account !== "") {
 				} else {
 					tradingDataTableBdoy.html(list);
 				}
-			}, timeout : 5000,
+			}, timeout : 10000,
 			complete   : setTimeout(function () {
 				poll();
-			}, 2000),
+			}, 5000),
 			error      : function () {
 				clearTimeout(poll);
 				tradingDataTableBdoy.html("<tr><td colspan='7'>데이터가 없습니다.</td></tr>");
 			}
 		});
 	})();
-	// }
+	}
 } else {
 	tradingDataTableBdoy.html("<tr><td colspan='7'>로그인 시 활성화 됩니다.<br>로그인해주세요.</td></tr>");
 }
