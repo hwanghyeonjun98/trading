@@ -98,4 +98,12 @@
 		group by date
 		order by code_name asc;
 	</select>
+
+	<select id="accountChartList" resultType="com.big15.tradingweb.dto.AccountDto">
+		select date_format(date, '%Y-%m-%d') as date
+				 , acc_name
+				 , acc_value
+		from web_data.account
+		where acc_name = #{account}
+	</select>
 </mapper>

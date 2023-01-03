@@ -206,7 +206,7 @@ hr {
 /*}*/
 
 .trading-data-table-wrap {
-	height: 440px;
+	height: 520px;
 }
 
 #trading-data-table tbody tr td button[id*="_history"] {
