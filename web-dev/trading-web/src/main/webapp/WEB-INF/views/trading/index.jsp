@@ -25,7 +25,7 @@
 							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 						</div>
 						<hr>
-						<div>
+						<div class="trading-data-table-wrap">
 							<table id="trading-data-table" class="table table-hover table-striped table-sort">
 								<colgroup>
 									<col style="width: 180px">
@@ -336,7 +336,7 @@
 			</div>
 		</div>
 		<div class="modal fade" tabindex="-1" id="allHistoyModal">
-			<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-header mb-3">
 						<h5 class="modal-title">
