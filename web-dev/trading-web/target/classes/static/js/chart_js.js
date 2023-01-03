@@ -46,10 +46,10 @@ const options = {
 			show   : true,
 			format : "MM/dd",
 		}, custom : function ({seriesIndex, dataPointIndex, w}) {
-			const o = w.globals.seriesCandleO[seriesIndex][dataPointIndex];
-			const h = w.globals.seriesCandleH[seriesIndex][dataPointIndex];
-			const l = w.globals.seriesCandleL[seriesIndex][dataPointIndex];
-			const c = w.globals.seriesCandleC[seriesIndex][dataPointIndex];
+			const o = w.globals.seriesCandleO[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			const h = w.globals.seriesCandleH[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			const l = w.globals.seriesCandleL[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			const c = w.globals.seriesCandleC[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			return (
 				"<div class=\"apexcharts-tooltip-box apexcharts-tooltip-candlestick\">" +
 				"<div>시가: <span class=\"value\">" +
@@ -78,8 +78,15 @@ const options = {
 			}
 		}
 	}, yaxis       : {
-		tooltip : {
+		tooltip   : {
 			enabled : true,
+		}, labels : {
+			formatter : function (val) {
+				if(typeof val === "number") {
+					return val.toFixed(2).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+				}
+				return val;
+			}
 		}
 	}, plotOptions : {
 		candlestick : {
@@ -103,21 +110,6 @@ const options = {
 const chart = new ApexCharts(document.querySelector("#chart-area"), options);
 // 차트 랜더딩
 chart.render();
-
-// 기본 차트 리스트 호출
-const defaulturl = "/api/data/chart/aedkrw내역";
-$.getJSON(defaulturl, function (response) {
-	let dataList = [];
-
-	response.forEach((item) => {
-		dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
-	});
-
-	chart.updateSeries([{
-		name : "table",
-		data : dataList
-	}]);
-});
 
 
 

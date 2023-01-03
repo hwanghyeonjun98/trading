@@ -82,6 +82,7 @@
 				</article>
 				<article>
 					<%-- 차트 들어갈 영역 --%>
+					<div id="account-chart"></div>
 					<%-- 차트 들어갈 영역 --%>
 				</article>
 			</section>
@@ -403,8 +404,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="/js/common.js"></script>
-	<script src="/js/index_chart.js"></script>
 	<script src="/js/index_ajax.js"></script>
+	<script src="/js/index_chart.js"></script>
 	<script src="/js/aiTrading.js"></script>
 </body>
 </html>
