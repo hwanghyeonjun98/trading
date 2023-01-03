@@ -56,6 +56,7 @@
 				</article>
 				<article>
 					<%-- 차트 들어갈 영역 --%>
+					<div id="chart3"></div>
 					<%-- 차트 들어갈 영역 --%>
 				</article>
 			</section>
