@@ -80,10 +80,8 @@
 						</div>
 					</div>
 				</article>
-				<article>
-					<%-- 차트 들어갈 영역 --%>
+				<article class="lomelo">
 					<div id="account-chart"></div>
-					<%-- 차트 들어갈 영역 --%>
 				</article>
 			</section>
 			<article class="recommend-list">

@@ -1,9 +1,6 @@
 package com.big15.tradingweb.controller;
 
-import com.big15.tradingweb.dto.AccountHistoryDto;
-import com.big15.tradingweb.dto.AiTradingDto;
-import com.big15.tradingweb.dto.InvestingDto;
-import com.big15.tradingweb.dto.MarketCapDto;
+import com.big15.tradingweb.dto.*;
 import com.big15.tradingweb.mapper.AiTradingMapper;
 import com.big15.tradingweb.mapper.IndexdataMapper;
 import com.big15.tradingweb.mapper.InvestingMapper;
@@ -45,6 +42,11 @@ public class TradingRestController {
 	@RequestMapping("/index/chart/kospi")
 	public List<InvestingDto> kospiChartList() {
 		return mapper.kospiChartList();
+	}
+
+	@RequestMapping("/index/chart/account/{account}")
+	public List<AccountDto> accountChartList(@PathVariable("account") String account) {
+		return aiTradingData.accountChartList(account);
 	}
 
 	@RequestMapping("/aiTradingData/{account}")

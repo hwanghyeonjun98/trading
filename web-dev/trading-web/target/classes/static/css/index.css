@@ -114,6 +114,11 @@ hr {
 	border: 1px solid var(--color-dark-green);
 }
 
+.lomelo{
+	padding: 15px;
+	border: 1px solid var(--color-dark-green);
+}
+
 .h_popular {
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -206,7 +211,7 @@ hr {
 /*}*/
 
 .trading-data-table-wrap {
-	height: 440px;
+	height: 520px;
 }
 
 #trading-data-table tbody tr td button[id*="_history"] {

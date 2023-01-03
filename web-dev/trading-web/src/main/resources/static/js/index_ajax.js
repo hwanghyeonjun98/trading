@@ -3,6 +3,60 @@ const histoyTableBody = $("#histoyTable tbody");
 const allHistoyTableBody = $("#allHistoyTable tbody");
 const coList = $(".history-list");
 
+// 천체 데이터 추가
+function dataAllColums(data, index) {
+	if (parseFloat(data[index].ratio) < 0) {
+		str = "<tr>" +
+		      "<td class='color-blue'>" + data[index].his_time + "</td>" +
+		      "<td class='color-blue'>" + data[index].code_name + "</td>" +
+		      "<td class='color-blue'>" + data[index].stock_code + "</td>" +
+		      "<td class='color-blue'>" + data[index].sell_num + "</td>" +
+		      "<td class='color-blue'>" + data[index].buy_num + "</td>" +
+		      "<td class='color-blue'>" + data[index].amount + "</td>" +
+		      "<td class='color-blue'>" + data[index].ratio + "</td>" +
+		      "<td class='color-blue'>" + data[index].profit + "</td>" +
+		      "</tr>";
+	} else {
+		str = "<tr>" +
+		      "<td class='color-red'>" + data[index].his_time + "</td>" +
+		      "<td class='color-red'>" + data[index].code_name + "</td>" +
+		      "<td class='color-red'>" + data[index].stock_code + "</td>" +
+		      "<td class='color-red'>" + data[index].sell_num + "</td>" +
+		      "<td class='color-red'>" + data[index].buy_num + "</td>" +
+		      "<td class='color-red'>" + data[index].amount + "</td>" +
+		      "<td class='color-red'>" + data[index].ratio + "</td>" +
+		      "<td class='color-red'>" + data[index].profit + "</td>" +
+		      "</tr>";
+	}
+
+	return str;
+}
+
+// 일부 데이터 추가
+function detaileDataColums(data, index) {
+	if (parseFloat(data[index].ratio) < 0) {
+		str = "<tr>" +
+		      "<td class='color-blue'>" + data[index].his_time + "</td>" +
+		      "<td class='color-blue'>" + data[index].sell_num + "</td>" +
+		      "<td class='color-blue'>" + data[index].buy_num + "</td>" +
+		      "<td class='color-blue'>" + data[index].amount + "</td>" +
+		      "<td class='color-blue'>" + data[index].ratio + "</td>" +
+		      "<td class='color-blue'>" + data[index].profit + "</td>" +
+		      "</tr>";
+	} else {
+		str = "<tr>" +
+		      "<td class='color-red'>" + data[index].his_time + "</td>" +
+		      "<td class='color-red'>" + data[index].sell_num + "</td>" +
+		      "<td class='color-red'>" + data[index].buy_num + "</td>" +
+		      "<td class='color-red'>" + data[index].amount + "</td>" +
+		      "<td class='color-red'>" + data[index].ratio + "</td>" +
+		      "<td class='color-red'>" + data[index].profit + "</td>" +
+		      "</tr>";
+	}
+
+	return str;
+}
+
 (function ranking() {
 	$.ajax({
 		type       : "POST",
@@ -85,25 +139,7 @@ $(document).on("click", "#trading-data-table button", function () {
 		success  : function (history) {
 			let historyList = [];
 			$.each(history, function (idx) {
-				if (parseInt(history[idx].profit) < 0) {
-					str = "<tr>" +
-					      "<td class='color-blue'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-blue'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].amount + "</td>" +
-					      "<td class='color-blue'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-blue'>" + history[idx].profit + "</td>" +
-					      "</tr>";
-				} else {
-					str = "<tr>" +
-					      "<td class='color-red'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-red'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].amount + "</td>" +
-					      "<td class='color-red'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-red'>" + history[idx].profit + "</td>" +
-					      "</tr>";
-				}
+				str = detaileDataColums(history, idx, "ratio");
 				historyList.push(str);
 			});
 			histoyTableBody.html(historyList);
@@ -138,25 +174,7 @@ $(document).on("submit", "form[name=codeSearchFrm]", function (event) {
 		success  : function (reponse) {
 			let dataList = [];
 			$.each(reponse, function (idx) {
-				if (parseInt(reponse[idx].profit) < 0) {
-					str = "<tr>" +
-					      "<td class='color-blue'>" + reponse[idx].his_time + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].sell_num + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].buy_num + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].amount + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].ratio + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].profit + "</td>" +
-					      "</tr>";
-				} else {
-					str = "<tr>" +
-					      "<td class='color-red'>" + reponse[idx].his_time + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].sell_num + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].buy_num + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].amount + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].ratio + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].profit + "</td>" +
-					      "</tr>";
-				}
+				str = detaileDataColums(reponse, idx);
 				dataList.push(str);
 			});
 			histoyTableBody.html(dataList);
@@ -172,6 +190,7 @@ $(document).on("click", "#all-history-none-btn", function () {
 	location.href = "/login";
 });
 
+
 $(document).on("click", "#all-history-btn", function () {
 	let url = "/api/data/allHistoryData/" + account;
 
@@ -182,29 +201,7 @@ $(document).on("click", "#all-history-btn", function () {
 		success  : function (history) {
 			let allHistoryList = [];
 			$.each(history, function (idx) {
-				if (parseInt(history[idx].profit) < 0) {
-					str = "<tr>" +
-					      "<td class='color-blue'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-blue'>" + history[idx].code_name + "</td>" +
-					      "<td class='color-blue'>" + history[idx].stock_code + "</td>" +
-					      "<td class='color-blue'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].amount + "</td>" +
-					      "<td class='color-blue'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-blue'>" + history[idx].profit + "</td>" +
-					      "</tr>";
-				} else {
-					str = "<tr>" +
-					      "<td class='color-red'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-red'>" + history[idx].code_name + "</td>" +
-					      "<td class='color-red'>" + history[idx].stock_code + "</td>" +
-					      "<td class='color-red'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].amount + "</td>" +
-					      "<td class='color-red'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-red'>" + history[idx].profit + "</td>" +
-					      "</tr>";
-				}
+				str = dataAllColums(history, idx);
 				allHistoryList.push(str);
 			});
 			allHistoyTableBody.html(allHistoryList);
@@ -221,7 +218,7 @@ $(document).on("click", "#all-history-btn", function () {
 		url      : "/api/data/profit/" + account,
 		dataset  : "json",
 		success  : function (rate) {
-			if (parseInt(rate[0].profit) < 0) {
+			if (parseFloat(rate[0].ratio) < 0) {
 				str = "<span class='color-blue fw-bold'>" +
 				      "수익율 : " + rate[0].ratio + "%, " +
 				      "</span>" +
@@ -274,29 +271,7 @@ $(document).on("submit", "form[name=allSearchFrm]", function (event) {
 		success  : function (reponse) {
 			let allDataList = [];
 			$.each(reponse, function (idx) {
-				if (parseInt(reponse[idx].profit) < 0) {
-					str = "<tr>" +
-					      "<td class='color-blue'>" + reponse[idx].his_time + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].code_name + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].stock_code + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].sell_num + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].buy_num + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].amount + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].ratio + "</td>" +
-					      "<td class='color-blue'>" + reponse[idx].profit + "</td>" +
-					      "</tr>";
-				} else {
-					str = "<tr>" +
-					      "<td class='color-red'>" + reponse[idx].his_time + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].code_name + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].stock_code + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].sell_num + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].buy_num + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].amount + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].ratio + "</td>" +
-					      "<td class='color-red'>" + reponse[idx].profit + "</td>" +
-					      "</tr>";
-				}
+				str = dataAllColums(reponse, idx);
 				allDataList.push(str);
 			});
 			allHistoyTableBody.html(allDataList);
@@ -357,25 +332,7 @@ $(document).on("click", ".history-list button", function () {
 		success  : function (history) {
 			let historyList = [];
 			$.each(history, function (idx) {
-				if (parseInt(history[idx].profit) < 0) {
-					str = "<tr>" +
-					      "<td class='color-blue'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-blue'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-blue'>" + history[idx].amount + "</td>" +
-					      "<td class='color-blue'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-blue'>" + history[idx].profit + "</td>" +
-					      "</tr>";
-				} else {
-					str = "<tr>" +
-					      "<td class='color-red'>" + history[idx].his_time + "</td>" +
-					      "<td class='color-red'>" + history[idx].sell_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].buy_num + "</td>" +
-					      "<td class='color-red'>" + history[idx].amount + "</td>" +
-					      "<td class='color-red'>" + history[idx].ratio + "</td>" +
-					      "<td class='color-red'>" + history[idx].profit + "</td>" +
-					      "</tr>";
-				}
+				str = detaileDataColums(history, idx);
 				historyList.push(str);
 			});
 			histoyTableBody.html(historyList);
