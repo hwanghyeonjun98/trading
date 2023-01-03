@@ -67,7 +67,7 @@ const options = {
 const options2 = {
 	series        : [],
 	title         : {
-		text : account + "장부금액"
+		text : account + " 장부금액"
 	}, chart      : {
 		zoom          : {
 			enabled : false
