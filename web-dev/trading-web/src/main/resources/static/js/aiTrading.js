@@ -1,5 +1,5 @@
 const tradingDataTableBdoy = $("#trading-data-table tbody");
-const nowMin = date.getMinutes() * 60;
+const nowMin = date.getHours() * 60;
 console.log(nowMin);
 
 // 실기간 트레이딩

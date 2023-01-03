@@ -13,7 +13,7 @@
 	<c:if test="${error_msg != null}">
 		<script>
 			alert("${error_msg}");
-			history.back();
+			location.href = "/";
 		</script>
 	</c:if>
 </head>
