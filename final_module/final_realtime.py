@@ -148,7 +148,7 @@ def ds_trade_end(buysell, code, quantity):
         print('주문요청 오류 ', quantity, ', 오류코드 : ', nRet)    
         # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 , 5: 주문수량 없음
     else:
-        print('주문 정상 접수', ', 매수 수량 : ', quantity)
+        print('주문 정상 접수', ', 매도 수량 : ', quantity)
         return True
 
     rqStatus = instCpTd0311.GetDibStatus() # Dib Server 상태 확인
@@ -431,7 +431,7 @@ def sell_trading_history(conn, account_name, code, buy_num, buy_predict):
 # 매도 조건용 매매 내역 개별 DB 삭제
 def sell_history_delete(conn, account_name, code):
     account_name = account_name.lower()
-    sql = f"DELETE FROM web_data.sell_{account_name}_history where stock_code like '%%{code}'"
+    sql = f"DELETE FROM web_data.{account_name}_sell_history where stock_code like '%%{code}'"
     
     conn.execute(sql)
     conn.close()
@@ -459,7 +459,7 @@ def stock_trading_db(code, account_name):
     return each_target_df
         
 # 실시간 매매 진행 및 조건 설정
-def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean_predict):
+def real_trading(predict_df, cost, code, each_target_df, now, account_name, predict_max, predict_min):
 
     # 이상 종목 여부 확인
     if ds_stock_status(code):
@@ -634,7 +634,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                 print('')
 
             # 현재 예측 값이 매수 예측 값의 평균보다 미달할 경우 진입
-            elif (mean_predict > predict_df['1'].values[0]) & (amount > 0) & (current_value > 2500000):
+                
+            elif (((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min) > predict_df['1'].values[0]) & (amount > 0):
                 print('')
                 print('---------------------- 예측 값 평균 이탈 매도 위치 ---------------------')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
@@ -669,7 +670,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
             elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) :
                 
                 print('')
-                print('++++++++++++++++++++++++++++ 추가 매수 위치 +++++++++++++++++++++++++++++')
+                print('++++++++++++++++++++++++++++ 추가 매수 위치 ++++++++++++++++++++++++++++')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
@@ -767,14 +768,15 @@ def realtime_trading(stock_list , account_name):
                     mean_pred_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql)
                     mean_predict_df = pd.DataFrame(mean_pred_data.fetchall())  # DB내 테이블을 DF로 변환
                     mean_predict = mean_predict_df['buy_predict'].astype('float')
-                    mean_predict = mean_predict.mean()
+                    predict_max = mean_predict.max()
+                    predict_min = mean_predict.min()
 
                 except:
                     print('SQL에 데이터가 충분하지 않음. 계좌명 : ' + str(account_name) + ' 날짜 : ' + str(today) + ' 종목코드 : ' + str(code))
                     mean_predict = 0.0
                 
                 try:
-                    sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name, mean_predict)
+                    sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name, predict_max, predict_min)
                 except:
                     print('트레이딩 에러 발생')
 
