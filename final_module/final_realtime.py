@@ -512,7 +512,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         # 현재 보유 수량이 없는 경우 진입
         if ('A' + code) not in status_df['종목코드'].values.tolist():
 
-            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) :
+            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) & (now.minute < 20) & (now.hour < 15):
                 print('')
                 print('++++++++++++++++++++++++++++ 신규 매수 위치 +++++++++++++++++++++++++++++')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
@@ -667,7 +667,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                 print('')
 
             # 추가 매수 조건 시 진입
-            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) :
+            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) & (now.minute < 20) & (now.hour < 15):
                 
                 print('')
                 print('++++++++++++++++++++++++++++ 추가 매수 위치 ++++++++++++++++++++++++++++')
