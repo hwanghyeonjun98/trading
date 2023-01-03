@@ -80,14 +80,8 @@
 						</div>
 					</div>
 				</article>
-				<article>
-					<%-- 차트 들어갈 영역 --%>
-<<<<<<< HEAD
-					<div id="chart3"></div>
-=======
+				<article class="lomelo">
 					<div id="account-chart"></div>
->>>>>>> 54040ff9ae4339d39c3137ec52189477776fba58
-					<%-- 차트 들어갈 영역 --%>
 				</article>
 			</section>
 			<article class="recommend-list">
