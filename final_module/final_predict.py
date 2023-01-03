@@ -31,12 +31,14 @@ def get_pymysql_day_stock(conn, code, yesterday, investing_df):
     code = code[-6:]
     sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={yesterday} ORDER BY 시간 DESC LIMIT 1"
     result = conn.execute(sql)
+    re = len(result.fetchall())
 
-    if len(result.fetchall()) == 0:
+    if re == 0:
         twoday = str(date.today() - BDay(2)).replace('-','').split(' ')[0]
         sql = f"SELECT 전일대비, 상장주식수, 시가총액, 외국인현보유수량, 외국인현보유비율, 기관순매수량, 기관누적순매수량, 년, 월, 일 FROM stock_info.`{code}` WHERE 날짜={twoday} ORDER BY 시간 DESC LIMIT 1"    
         result = conn.execute(sql)
 
+    
     target_df = pd.DataFrame(result.fetchall())
     target_df = pd.concat([target_df, investing_df], axis=1)
     conn.close()
