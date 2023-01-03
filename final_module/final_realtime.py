@@ -87,7 +87,7 @@ def ds_trade_stock(buysell, code, quantity, price):
     initCheck = instCpTdUtil.TradeInit(0)
     if (initCheck != 0):
         print('주문 초기화 실패, 연결 상태 확인 필요')
-        return
+        return False
 
 
     # 주식 매수 주문
@@ -110,6 +110,7 @@ def ds_trade_stock(buysell, code, quantity, price):
         # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 , 5: 주문수량 없음
     else:
         print('주문 정상 접수', ', 매수 수량 : ', quantity)
+        return True
     
     rqStatus = instCpTd0311.GetDibStatus() # Dib Server 상태 확인
     errMsg = instCpTd0311.GetDibMsg1() # 확인 메시지 출력
@@ -148,6 +149,7 @@ def ds_trade_end(buysell, code, quantity):
         # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 , 5: 주문수량 없음
     else:
         print('주문 정상 접수', ', 매수 수량 : ', quantity)
+        return True
 
     rqStatus = instCpTd0311.GetDibStatus() # Dib Server 상태 확인
     errMsg = instCpTd0311.GetDibMsg1() # 확인 메시지 출력
@@ -393,7 +395,7 @@ def trading_history(conn, account_name, code_name, code, buy_num, sell_num, amou
         cur.execute(sql_create)
 
     except:
-        print('')
+        pass
 
     sql_update = f'INSERT INTO web_data.{account_name}_history VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     cursor =  conn.cursor()
@@ -417,7 +419,7 @@ def sell_trading_history(conn, account_name, code, buy_num, buy_predict):
         cur.execute(sql_create)
 
     except:
-        print('')
+        pass
 
     sql_update = f'INSERT INTO web_data.{account_name}_sell_history VALUES (%s,%s,%s)'
     cursor =  conn.cursor()
@@ -523,18 +525,20 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                             num = 100000 // int(end_cost)
                         else:
                             num = 1
-                        ds_trade_stock('2', code, num , end_cost)
-                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                        time.sleep(0.3)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
-                        time.sleep(0.3)
-                        sell_trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, predict_df['1'].values[0])
-                        time.sleep(0.3)
+                        if ds_trade_stock('2', code, num , end_cost) == True:
+                            code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                            time.sleep(0.3)
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            time.sleep(0.3)
+                            sell_trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, predict_df['1'].values[0])
+                            time.sleep(0.3)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
+                print('')
             else:
                 print('신규 매수 조건을 만족하지 않습니다')
+                print('')
 
         # 현재 보유 수량이 있는 경우 진입
         else:
@@ -558,13 +562,13 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                         ds_order_cancel(code, order_num)
 
                     code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                    ds_trade_end('1', code, amount)
-                    time.sleep(1)
-                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
-                    time.sleep(1)
-                    sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
-                    time.sleep(1)
-                    return code
+                    if ds_trade_end('1', code, amount) == True:
+                        time.sleep(1)
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                        time.sleep(1)
+                        sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
+                        time.sleep(1)
+                        return code
                         
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
@@ -583,14 +587,15 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                     if n_conclude_num != 0:
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
-                    ds_trade_end('1', code, amount)
-                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                    time.sleep(0.3)
-                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
-                    time.sleep(0.3)
-                    sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
-                    time.sleep(0.3)
-                    return code
+                    
+                    if ds_trade_end('1', code, amount) == True:
+                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                        time.sleep(0.3)
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                        time.sleep(0.3)
+                        sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
+                        time.sleep(0.3)
+                        return code
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
@@ -614,14 +619,14 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                             order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                             ds_order_cancel(code, order_num)
                         
-                        ds_trade_end('1', code, amount)
-                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                        time.sleep(0.3)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
-                        time.sleep(0.3)
-                        sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
-                        time.sleep(0.3)
-                        return code
+                        if ds_trade_end('1', code, amount) == True:
+                            code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                            time.sleep(0.3)
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            time.sleep(0.3)
+                            sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
+                            time.sleep(0.3)
+                            return code
 
                     except:
                         print('현재 매수 매도를 할 수 없습니다.')
@@ -646,14 +651,14 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                             order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                             ds_order_cancel(code, order_num)
                         
-                        ds_trade_end('1', code, amount)
-                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                        time.sleep(0.3)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
-                        time.sleep(0.3)
-                        sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
-                        time.sleep(0.3)
-                        # return code
+                        if ds_trade_end('1', code, amount) == True:
+                            code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                            time.sleep(0.3)
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            time.sleep(0.3)
+                            sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
+                            time.sleep(0.3)
+                            # return code
 
                     except:
                         print('현재 매수 매도를 할 수 없습니다.')
@@ -676,13 +681,14 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                             num = 100000 // int(end_cost)
                         else:
                             num = 1
-                        ds_trade_stock('2', code, num , end_cost)
-                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                        time.sleep(0.3)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
-                        time.sleep(0.3)
-                        sell_trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, predict_df['1'].values[0])
-                        time.sleep(0.3)
+                        
+                        if ds_trade_stock('2', code, num , end_cost) == True:
+                            code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                            time.sleep(0.3)
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            time.sleep(0.3)
+                            sell_trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, predict_df['1'].values[0])
+                            time.sleep(0.3)
 
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
