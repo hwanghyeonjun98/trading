@@ -117,6 +117,8 @@ hr {
 .lomelo{
 	padding: 15px;
 	border: 1px solid var(--color-dark-green);
+	width: 25%!important;
+	margin-top: 69px;
 }
 
 .h_popular {
