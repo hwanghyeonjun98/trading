@@ -373,7 +373,7 @@ def trading_history(conn, account_name, code_name, code, buy_num, sell_num, amou
     account_name = account_name.lower()
     profit = str(int(pyungga) - int(jangbu))
     args = [(str(account_name), str(time_), str(code_name), 'A' + str(code), str(buy_num), str(sell_num), str(amount)
-            , str(ratio), str(profit)), str(buy_predict), str(sell_predict)]  # 계좌이름, 종목코드, 매수, 매도
+            , str(ratio), str(profit), str(buy_predict), str(sell_predict))]  # 계좌이름, 종목코드, 매수, 매도
 
     try: 
         sql_create = f'''create table web_data.{account_name}_history(
@@ -493,7 +493,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
                         code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'], predict_df['0'])
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                         time.sleep(1)
                 except:
                     print('현재 매수 매도를 할 수 없습니다.')
@@ -587,7 +587,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
             # 현재 예측 값이 매수 예측 값의 평균보다 미달할 경우 진입
             elif (mean_predict > predict_df['1'].values[0]) & (amount > 0):
                 print('')
-                print('----------------------- 예측 값 평균 이탈 매도 위치 ----------------------')
+                print('---------------------- 예측 값 평균 이탈 매도 위치 ---------------------')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
 
@@ -606,7 +606,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                         code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                         trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                         time.sleep(1)
-                        return code
+                        # return code
 
                     except:
                         print('현재 매수 매도를 할 수 없습니다.')
@@ -631,7 +631,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, mean
                             num = 1
                         ds_trade_stock('2', code, num , end_cost)
                         code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                         time.sleep(1)
 
                 except:
