@@ -1,15 +1,11 @@
 package com.big15.tradingweb.controller;
 
-import com.big15.tradingweb.dto.AccountHistoryDto;
-import com.big15.tradingweb.dto.AiTradingDto;
-import com.big15.tradingweb.dto.InvestingDto;
-import com.big15.tradingweb.dto.MarketCapDto;
+import com.big15.tradingweb.dto.*;
 import com.big15.tradingweb.mapper.AiTradingMapper;
 import com.big15.tradingweb.mapper.IndexdataMapper;
 import com.big15.tradingweb.mapper.InvestingMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +20,6 @@ public class TradingRestController {
 	private InvestingMapper mapper;
 	@Autowired
 	private AiTradingMapper aiTradingData;
-
 	@Autowired
 	private IndexdataMapper indexdataMapper;
 
@@ -33,7 +28,9 @@ public class TradingRestController {
 	}
 
 	@RequestMapping("/dateSearch/{names}/{startDate}/{endDate}")
-	public List<InvestingDto> investingDateSearchList(@PathVariable("names") String names, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
+	public List<InvestingDto> investingDateSearchList(@PathVariable("names") String names,
+	                                                  @PathVariable("startDate") String startDate,
+	                                                  @PathVariable("endDate") String endDate) {
 		return mapper.investingDateSearchList(names, startDate, endDate);
 	}
 
@@ -47,10 +44,49 @@ public class TradingRestController {
 		return mapper.kospiChartList();
 	}
 
-	@Transactional
+	@RequestMapping("/index/chart/account/{account}")
+	public List<AccountDto> accountChartList(@PathVariable("account") String account) {
+		return aiTradingData.accountChartList(account);
+	}
+
 	@RequestMapping("/aiTradingData/{account}")
 	public List<AiTradingDto> aiTradingData(@PathVariable("account") String account) {
 		return aiTradingData.aiTradingData(account);
+	}
+
+	@RequestMapping("/allHistoryData/{account}")
+	public List<AccountHistoryDto> historyData(@PathVariable("account") String account) {
+		return aiTradingData.historyData(account);
+	}
+
+	@RequestMapping("/allHistoryDataSearch/{account}/{startDate}/{endDate}/{code}")
+	public List<AccountHistoryDto> allHistoryDataSearch(@PathVariable("account") String account,
+	                                                    @PathVariable("startDate") String startDate,
+	                                                    @PathVariable("endDate") String endDate,
+	                                                    @PathVariable("code") String code
+	) {
+		log.info(account);
+		log.info(startDate);
+		log.info(endDate);
+		log.info(code);
+		return aiTradingData.allHistoryDataSearch(account, startDate, endDate, code);
+	}
+
+	@RequestMapping("/coList/{account}")
+	public List<AccountHistoryDto> coList(@PathVariable("account") String account) {
+		return aiTradingData.coList(account);
+	}
+
+	@RequestMapping("/coListSearch/{account}/{stock_code}")
+	public List<AccountHistoryDto> coListSearch(@PathVariable("account") String account,
+	                                            @PathVariable("stock_code") String stock_code) {
+		return aiTradingData.accountHistory(account, stock_code);
+	}
+
+
+	@RequestMapping("/profit/{account}")
+	public List<AccountHistoryDto> coListSearch(@PathVariable("account") String account) {
+		return aiTradingData.profit(account);
 	}
 
 	@RequestMapping("/marketCapRanking")
@@ -73,4 +109,5 @@ public class TradingRestController {
 	) {
 		return aiTradingData.accountHistorySearch(account, stock_code, start_date, end_date);
 	}
+
 }

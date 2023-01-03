@@ -19,11 +19,11 @@ public class JoinRestController {
 	JoinMapper joinMapper;
 
 	@PutMapping("/userJoin")
-	public void join(@RequestParam(value = "user_id") String user_id
-		, @RequestParam(value = "user_pw") String user_pw
-		, @RequestParam(value = "user_name") String user_name
-		, @RequestParam(value = "user_account_name") String user_account_name
-		, @RequestParam(value = "user_account") String user_account
+	public void join(@RequestParam("user_id") String user_id
+		, @RequestParam("user_pw") String user_pw
+		, @RequestParam("user_name") String user_name
+		, @RequestParam("user_account_name") String user_account_name
+		, @RequestParam("user_account") String user_account
 		, HttpServletResponse response) throws IOException {
 		int join = joinMapper.join(user_id, user_pw, user_name, user_account_name, user_account);
 

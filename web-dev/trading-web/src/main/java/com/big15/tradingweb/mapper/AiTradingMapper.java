@@ -1,5 +1,6 @@
 package com.big15.tradingweb.mapper;
 
+import com.big15.tradingweb.dto.AccountDto;
 import com.big15.tradingweb.dto.AccountHistoryDto;
 import com.big15.tradingweb.dto.AiTradingDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,5 +21,15 @@ public interface AiTradingMapper {
 	                                             @Param("start_date") String start_date,
 	                                             @Param("end_date") String end_date
 	);
+
+	List<AccountHistoryDto> historyData(@Param("account") String account);
+
+	List<AccountHistoryDto> allHistoryDataSearch(@Param("account") String account,
+	                                             @Param("start_date") String start_date,
+	                                             @Param("end_date") String end_date,
+	                                             @Param("code") String code);
+	List<AccountHistoryDto> coList(@Param("account") String account);
+	List<AccountHistoryDto> profit(@Param("account") String account);
+	List<AccountDto> accountChartList(@Param("account") String account);
 
 }

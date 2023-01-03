@@ -21,6 +21,7 @@ $(window).on("load", function () {
 		response.forEach((item) => {
 			dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
 		});
+		console.log(response);
 
 		// 차트 옵션 series 업데이트 메소드
 		chart.updateSeries([{

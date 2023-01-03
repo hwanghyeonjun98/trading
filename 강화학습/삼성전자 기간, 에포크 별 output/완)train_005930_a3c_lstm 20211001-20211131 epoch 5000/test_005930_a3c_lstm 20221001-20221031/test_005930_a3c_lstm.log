@@ -1,0 +1,11 @@
+<<<<<<< HEAD
+{"mode": "test", "ver": "v3", "name": "005930", "stock_code": ["005930"], "rl_method": "a3c", "net": "lstm", "backend": "pytorch", "start_date": "20221001", "end_date": "20221031", "lr": 0.0001, "discount_factor": 0.7, "balance": 100000000}
+[005930] RL:a3c NET:lstm LR:0.0001 DF:0.7 
+[005930][Epoch 1/1] Epsilon:0.0000 #Expl.:0/7235 #Buy:211 #Sell:130 #Hold:6894 #Stocks:1802 PV:107,446,210 Loss:0.000000 ET:30.5599
+[005930] Elapsed Time:64.7436 Max PV:107,446,210 #Win:1
+=======
+{"mode": "test", "ver": "v3", "name": "005930", "stock_code": ["005930"], "rl_method": "a3c", "net": "lstm", "backend": "pytorch", "start_date": "20221001", "end_date": "20221031", "lr": 0.0001, "discount_factor": 0.7, "balance": 100000000}
+[005930] RL:a3c NET:lstm LR:0.0001 DF:0.7 
+[005930][Epoch 1/1] Epsilon:0.0000 #Expl.:0/7235 #Buy:211 #Sell:130 #Hold:6894 #Stocks:1802 PV:107,446,210 Loss:0.000000 ET:30.5599
+[005930] Elapsed Time:64.7436 Max PV:107,446,210 #Win:1
+>>>>>>> 02d01c5458bce960eafe5baa7b3a675b16a6d745

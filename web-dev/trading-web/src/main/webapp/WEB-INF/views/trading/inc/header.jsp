@@ -14,6 +14,7 @@
 				<a href="/login" class="login-btn">로그인</a>
 			</c:if>
 			<c:if test="${userAccount != null}">
+				<span class="d-inline-block me-3">안녕하세요! <b>${userName}</b>님 </span>
 				<button type="button" class="logout-btn">로그아웃</button>
 			</c:if>
 		</div>

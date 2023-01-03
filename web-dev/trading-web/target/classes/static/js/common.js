@@ -5,6 +5,8 @@ const notLink = document.querySelectorAll("a[href='#']"); // 가상링크로 되
 const topBtn = document.querySelector(".top-to-btn"); // 상단으로 올라가는 버튼
 const logoutBtn = document.querySelector(".logout-btn"); // 로그아웃 버튼
 
+const bsesstion = window.sessionStorage; // 세션 스토리지
+
 // 가상 링크 이벤트 초기화(작동안되게)
 function EventReset(event) {
 	event.preventDefault();
@@ -86,32 +88,46 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 });
 
 // 날짜 관련
-const startDateInput = document.querySelector("#startDate");
-const endDateInput = document.querySelector("#endDate");
+const startDateInput = document.querySelectorAll("input[id*=startDate]");
+const endDateInput = document.querySelectorAll("input[id*=endDate]");
 let date = new Date(); // 날짜 object 생성
 const TIME_ZONE = 3240 * 10000; // 한국 시간대로 타임존 setting
 const nowDate = new Date(+date + TIME_ZONE).toISOString().split("T")[0]; // 한국 시간으로 불러와 T를 기준으로 split
+const nowtime = new Date(+date + TIME_ZONE).toISOString().split("T")[1];
 
-if (startDateInput !== null && endDateInput !== null) {
 // 한달전 날짜
-	date.setMonth(date.getMonth() - 1);
-	const dateCalc = date.toISOString().split("T")[0];
+date.setMonth(date.getMonth() - 1);
+const dateCalc = date.toISOString().split("T")[0];
 
-	startDateInput.value = dateCalc;
+function preMonthDateSetting(el) {
 
-// 현재 날짜
-	endDateInput.value = nowDate;
+	el.value = dateCalc;
 
-// 검색 최대 날짜
-	startDateInput.setAttribute("max", nowDate);
-	endDateInput.setAttribute("max", nowDate);
+	el.setAttribute("max", dateCalc);
 
-	if (startDateInput.getAttribute("type") === "datetime-local"
-	    && endDateInput.getAttribute("type") === "datetime-local") {
-		startDateInput.value = dateCalc + "T00:00";
-		endDateInput.value = nowDate + "T23:59";
+	if (el.getAttribute("type") === "datetime-local") {
+		el.value = dateCalc + "T" + nowtime.substring(0, 5);
 
-		startDateInput.setAttribute("max", nowDate + "T23:59");
-		endDateInput.setAttribute("max", nowDate + "T23:59");
+		el.setAttribute("max", nowDate + "T23:59");
 	}
 }
+
+function defuleDateSetting(el) {
+	el.value = nowDate;
+
+	el.setAttribute("max", nowDate);
+
+	if (el.getAttribute("type") === "datetime-local") {
+		el.value = nowDate + "T" + nowtime.substring(0, 5);
+
+		el.setAttribute("max", nowDate + "T23:59");
+	}
+}
+
+startDateInput.forEach((el) => {
+	preMonthDateSetting(el);
+});
+
+endDateInput.forEach((el) => {
+	defuleDateSetting(el);
+});

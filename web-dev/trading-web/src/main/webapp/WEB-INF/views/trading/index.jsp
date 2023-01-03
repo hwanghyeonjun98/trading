@@ -9,6 +9,7 @@
 	<title>트레이딩</title>
 	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
 	<link rel="stylesheet" href="/css/index.css">
+	<link rel="stylesheet" href="/css/color.css">
 </head>
 <body>
 	<div class="background-wrap">
@@ -23,126 +24,157 @@
 							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
 							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 						</div>
-						<table id="trading-data-table" class="table table-hover table-striped table-sort">
-							<colgroup>
-								<col style="width: 180px">
-								<col style="width: 160px">
-								<col style="width: 150px">
-								<col style="width: 220px">
-								<col style="width: 220px">
-								<col style="width: 220px">
-								<col style="width: 220px">
-							</colgroup>
-							<thead class="table-secondary">
-								<tr>
-									<th>
-										종목코드
-										<a href="#" data-bs-toggle="tooltip" data-bs-html="true" title="종목 코드를 클릭하면, <br>종목 거래 내역이 나옵니다.">
-											<i class="bi bi-info-circle-fill"></i>
-										</a>
-									</th>
-									<th>종목명</th>
-									<th>보유수량</th>
-									<th>평단가</th>
-									<th>평가금액</th>
-									<th>수익율</th>
-									<th>장부금액</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
+						<hr>
+						<div class="trading-data-table-wrap">
+							<table id="trading-data-table" class="table table-hover table-striped table-sort">
+								<colgroup>
+									<col style="width: 180px">
+									<col style="width: 160px">
+									<col style="width: 150px">
+									<col style="width: 220px">
+									<col style="width: 220px">
+									<col style="width: 220px">
+									<col style="width: 220px">
+								</colgroup>
+								<thead class="table-secondary">
+									<tr>
+										<th>
+											종목코드
+											<a href="#" data-bs-toggle="tooltip" data-bs-html="true" title="종목 코드를 클릭하면, <br>종목 거래 내역이 나옵니다.">
+												<i class="bi bi-info-circle-fill"></i>
+											</a>
+										</th>
+										<th>종목명</th>
+										<th>보유수량</th>
+										<th>평단가(원)</th>
+										<th>평가금액(원)</th>
+										<th>수익율(%)</th>
+										<th>장부금액(원)</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="history-area">
+						<h4 class="h4 w-100">과거내역 보기 <small>(<span class="historyDate"></span> 기준)</small></h4>
+						<hr class="w-100">
+						<div class="d-flex align-items-center">
+							<div class="history-btn-area">
+								<c:if test="${userAccount == null}">
+									<button type="button" id="all-history-none-btn" class="btn">
+										전체 거래내역 보기
+									</button>
+								</c:if>
+								<c:if test="${userAccount != null}">
+									<button type="button" id="all-history-btn" class="btn" data-bs-toggle='modal' data-bs-target='#allHistoyModal'>
+										전체 거래내역 보기
+									</button>
+								</c:if>
+							</div>
+							<div class="history-list-area">
+								<ul class="history-list">
+								</ul>
+							</div>
+						</div>
 					</div>
 				</article>
 				<article>
 					<%-- 차트 들어갈 영역 --%>
+<<<<<<< HEAD
 					<div id="chart3"></div>
+=======
+					<div id="account-chart"></div>
+>>>>>>> 54040ff9ae4339d39c3137ec52189477776fba58
 					<%-- 차트 들어갈 영역 --%>
 				</article>
 			</section>
-			<article class="recommend-list w-25">
-				<div class="clear-wrapper">
-				</div>
+			<article class="recommend-list">
 				<div class="recommendation-keywords-container">
-					<div class="titlecu mt-0"><h3>환율 검색 추천</h3></div>
-					<hr>
-					<div class="keywords-container-wrapper">
-						<div class="keywords-contents">
-							<a href="/dataview/data/cadkrw">
-								<div class="keyword item">CAD/KRW</div>
-							</a>
-							<a href="/dataview/data/chfkrw">
-								<div class="keyword item">CHF/KRW</div>
-							</a>
-							<a href="/dataview/data/cnykrw">
-								<div class="keyword item">CNY/KRW</div>
-							</a>
-							<a href="/dataview/data/dkkkrw">
-								<div class="keyword item">DKK/KRW</div>
-							</a>
-							<a href="/dataview/data/eurkrw">
-								<div class="keyword item">EUR/KRW</div>
-							</a>
-							<a href="/dataview/data/gbpkrw">
-								<div class="keyword item">GBP/KRWS</div>
-							</a>
-							<a href="/dataview/data/hkdkrw">
-								<div class="keyword item">HKD/KRW</div>
-							</a>
-							<a href="/dataview/data/idrkrw">
-								<div class="keyword item">IDR/KRW</div>
-							</a>
-							<a href="/dataview/data/jpykrw">
-								<div class="keyword item">JPY/KRW</div>
-							</a>
-							<a href="/dataview/data/sgdkrw">
-								<div class="keyword item">SGD/KRW</div>
-							</a>
-							<a href="/dataview/data/thbkrw">
-								<div class="keyword item">THB/KRW</div>
-							</a>
-							<a href="/dataview/data/usdkrw">
-								<div class="keyword item">USD/KRW</div>
-							</a>
+					<div>
+						<div class="titlecu mt-0"><h3>환율 검색 추천</h3></div>
+						<hr>
+						<div class="keywords-container-wrapper">
+							<div class="keywords-contents">
+								<a href="/dataview/data/cadkrw">
+									<div class="keyword item">CAD/KRW</div>
+								</a>
+								<a href="/dataview/data/chfkrw">
+									<div class="keyword item">CHF/KRW</div>
+								</a>
+								<a href="/dataview/data/cnykrw">
+									<div class="keyword item">CNY/KRW</div>
+								</a>
+								<a href="/dataview/data/dkkkrw">
+									<div class="keyword item">DKK/KRW</div>
+								</a>
+								<a href="/dataview/data/eurkrw">
+									<div class="keyword item">EUR/KRW</div>
+								</a>
+								<a href="/dataview/data/gbpkrw">
+									<div class="keyword item">GBP/KRWS</div>
+								</a>
+								<a href="/dataview/data/hkdkrw">
+									<div class="keyword item">HKD/KRW</div>
+								</a>
+								<a href="/dataview/data/idrkrw">
+									<div class="keyword item">IDR/KRW</div>
+								</a>
+								<a href="/dataview/data/jpykrw">
+									<div class="keyword item">JPY/KRW</div>
+								</a>
+								<a href="/dataview/data/sgdkrw">
+									<div class="keyword item">SGD/KRW</div>
+								</a>
+								<a href="/dataview/data/thbkrw">
+									<div class="keyword item">THB/KRW</div>
+								</a>
+								<a href="/dataview/data/usdkrw">
+									<div class="keyword item">USD/KRW</div>
+								</a>
+							</div>
 						</div>
 					</div>
-					<div class="titlecu"><h3>세계지수 검색 추천</h3></div>
-					<hr>
-					<div class="keywords-container-wrapper">
-						<div class="keywords-contents">
-							<a href="/dataview/data/캐나다sptsx">
-								<div class="keyword item">캐나다 S&P TSX</div>
-							</a>
-							<a href="/dataview/data/나스닥종합지수">
-								<div class="keyword item">나스닥종합지수</div>
-							</a>
-							<a href="/dataview/data/네덜란드aex">
-								<div class="keyword item">네덜란드 AEX</div>
-							</a>
-							<a href="/dataview/data/닛케이">
-								<div class="keyword item">닛케이</div>
-							</a>
-							<a href="/dataview/data/다우존스">
-								<div class="keyword item">다우존스</div>
-							</a>
-							<a href="/dataview/data/대만가권">
-								<div class="keyword item">대만 가권</div>
-							</a>
-							<a href="/dataview/data/러셀2000지수">
-								<div class="keyword item">러셀 2000 지수</div>
-							</a>
-							<a href="/dataview/data/러시아moexrussia">
-								<div class="keyword item">러시아 MOEX Russia</div>
-							</a>
-							<a href="/dataview/data/벨기에bel">
-								<div class="keyword item">벨기에 BEL</div>
-							</a>
-							<a href="/dataview/data/브라질보베스파">
-								<div class="keyword item">브라질 보베스파</div>
-							</a>
-							<a href="/dataview/data/사우디아라비아tadawul">
-								<div class="keyword item">사우디아라비아 Tadawul</div>
-							</a>
+					<div>
+						<div class="titlecu mt-0"><h3>세계지수 검색 추천</h3></div>
+						<hr>
+						<div class="keywords-container-wrapper">
+							<div class="keywords-contents">
+								<a href="/dataview/data/캐나다sptsx">
+									<div class="keyword item">캐나다 S&P TSX</div>
+								</a>
+								<a href="/dataview/data/나스닥종합지수">
+									<div class="keyword item">나스닥종합지수</div>
+								</a>
+								<a href="/dataview/data/네덜란드aex">
+									<div class="keyword item">네덜란드 AEX</div>
+								</a>
+								<a href="/dataview/data/닛케이">
+									<div class="keyword item">닛케이</div>
+								</a>
+								<a href="/dataview/data/다우존스">
+									<div class="keyword item">다우존스</div>
+								</a>
+								<a href="/dataview/data/대만가권">
+									<div class="keyword item">대만 가권</div>
+								</a>
+								<a href="/dataview/data/러셀2000지수">
+									<div class="keyword item">러셀 2000 지수</div>
+								</a>
+								<a href="/dataview/data/러시아moexrussia">
+									<div class="keyword item">러시아 MOEX Russia</div>
+								</a>
+								<a href="/dataview/data/벨기에bel">
+									<div class="keyword item">벨기에 BEL</div>
+								</a>
+								<a href="/dataview/data/브라질보베스파">
+									<div class="keyword item">브라질 보베스파</div>
+								</a>
+								<a href="/dataview/data/사우디아라비아tadawul">
+									<div class="keyword item">사우디아라비아 Tadawul</div>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -269,7 +301,7 @@
 					</div>
 					<div class="modal-body p-0">
 						<div class="m-3 mt-0">
-							<form name="dateSearchFrm" id="dateSearchFrm" class="mb-3" method="post">
+							<form name="codeSearchFrm" id="dateSearchFrm" class="dateSearchFrm mb-3" method="post">
 								<div>
 									날짜 검색 :
 								</div>
@@ -291,12 +323,73 @@
 								<thead class="table-secondary">
 									<tr>
 										<th>거래시간</th>
-										<th>종목코드</th>
 										<th>매도량</th>
 										<th>매수량</th>
+										<th>보유수량</th>
+										<th>수익율(%)</th>
+										<th>이익(원)</th>
 									</tr>
 								</thead>
 								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-sm modal-close" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" tabindex="-1" id="allHistoyModal">
+			<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header mb-3">
+						<h5 class="modal-title">
+							${userAccount} 전체 내역
+						</h5>
+						<button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body p-0">
+						<div class="m-3 mt-0">
+							<form name="allSearchFrm" id="allDateSearchFrm" class="dateSearchFrm mb-3" method="post">
+								<div>
+									<label for="code" class="visually-hidden">종목명</label>
+									<input type="text" name="code" id="code" class="form-control" placeholder="종목명을 입력하세요.">
+								</div>
+								<div class="col-sm-4">
+									<label for="startDate2" class="visually-hidden">시작 날짜</label>
+									<input type="datetime-local" name="startDate" id="startDate2" class="form-control" min="2020-01-01T00:00">
+								</div>
+								<div class="col-sm-4">
+									<label for="endDate2" class="visually-hidden">끝 날짜</label>
+									<input type="datetime-local" name="endDate" id="endDate2" class="form-control" max="" value="">
+								</div>
+								<button type="submit" class="btn btn-outline-success btn-sm"><i class="bi bi-search"></i>
+								</button>
+							</form>
+							<div class="profit-area">
+								<p>
+
+								</p>
+							</div>
+							<table id="allHistoyTable" class="table table-hover table-striped table-sort">
+								<colgroup>
+									<col style="width: 180px;">
+								</colgroup>
+								<thead class="table-secondary">
+									<tr>
+										<th>거래시간</th>
+										<th>종목명</th>
+										<th>종목코드</th>
+										<th>매도량</th>
+										<th>매수량</th>
+										<th>보유수량</th>
+										<th>수익율(%)</th>
+										<th>이익(원)</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -315,8 +408,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="/js/common.js"></script>
-	<script src="/js/index_chart.js"></script>
 	<script src="/js/index_ajax.js"></script>
+	<script src="/js/index_chart.js"></script>
 	<script src="/js/aiTrading.js"></script>
 </body>
 </html>

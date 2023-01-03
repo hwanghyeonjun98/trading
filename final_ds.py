@@ -1,5 +1,5 @@
-from final_investing_update import investing_update
-from final_db_update import db_list_update
+from final_module.final_investing_update import investing_update
+from final_module.final_db_update import db_list_update
 
 # DB의 데이터를 업데이트
 db_list_update(krx=r'D:\systrader-dev\trading\download\krx')    # 각자 컴퓨터의 맞게 변경   # 32bit

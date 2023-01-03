@@ -77,7 +77,8 @@ table thead tr th {
 }
 
 /* 데이터 날짜 검색 */
-#dateSearchFrm {
+#dateSearchFrm,
+.dateSearchFrm {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;

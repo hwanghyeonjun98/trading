@@ -1,5 +1,5 @@
-from final_target import get_target_list_db
-from final_model import LstmNetwork
+from final_module.final_target import get_target_list_db
+from final_module.final_model import LstmNetwork
 from datetime import date
 
 import pandas as pd
