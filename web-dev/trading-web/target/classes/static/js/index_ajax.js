@@ -95,7 +95,6 @@ let rollingBanner = setInterval(function () {
 	}, 1000);
 }, 5000);
 rolling.addEventListener("mouseenter", () => {
-	console.log("마우스 올림");
 	clearInterval(rollingBanner);
 });
 
@@ -237,7 +236,7 @@ $(document).on("click", "#all-history-btn", function () {
 				      "</span>" +
 				      "<span class='fw-bold'>(" +
 				      nowDate +
-				      "</span>)";
+				      "</span> 1일 기준)";
 			}
 
 			$(".profit-area p").html(str);

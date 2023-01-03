@@ -46,10 +46,10 @@ const options = {
 			show   : true,
 			format : "MM/dd",
 		}, custom : function ({seriesIndex, dataPointIndex, w}) {
-			const o = w.globals.seriesCandleO[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-			const h = w.globals.seriesCandleH[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-			const l = w.globals.seriesCandleL[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-			const c = w.globals.seriesCandleC[seriesIndex][dataPointIndex].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			let o = w.globals.seriesCandleO[seriesIndex][dataPointIndex].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			let h = w.globals.seriesCandleH[seriesIndex][dataPointIndex].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			let l = w.globals.seriesCandleL[seriesIndex][dataPointIndex].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			let c = w.globals.seriesCandleC[seriesIndex][dataPointIndex].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			return (
 				"<div class=\"apexcharts-tooltip-box apexcharts-tooltip-candlestick\">" +
 				"<div>시가: <span class=\"value\">" +
