@@ -3,7 +3,7 @@ const histoyTableBody = $("#histoyTable tbody");
 const allHistoyTableBody = $("#allHistoyTable tbody");
 const coList = $(".history-list");
 
-// 천체 데이터 추가
+// 전체 데이터 추가
 function dataAllColums(data, index) {
 	if (parseFloat(data[index].ratio) < 0) {
 		str = "<tr>" +
