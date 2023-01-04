@@ -474,15 +474,17 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         code_name = ' 보유하지 않은 종목'
         
     try:
+        end_cost = int(each_target_df['종가'].values[0])   # 종가
+        high_cost = int(each_target_df['고가'].values[0])   # 고가
         print('')
         print('========================================================================')
         print('대상 종목 코드 : ' + str(code) + ' 종목명 : ' + str(code_name))
         print('========================================================================')
         print('초기자금 : ' + str(cost) + ' 매도 확률 : ' + str(predict_df['0'].values[0]) + ' 매수 확률 : ' + str(predict_df['1'].values[0]))
         print('========================================================================')
+        print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost))
+        print('========================================================================')
                 
-        end_cost = int(each_target_df['종가'].values[0])   # 종가
-        high_cost = int(each_target_df['고가'].values[0])   # 고가
 
         status_db_df = status_df.copy()
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
@@ -517,7 +519,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                  
                 print('')
                 print('++++++++++++++++++++++++++++ 신규 매수 위치 +++++++++++++++++++++++++++++')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
+                print('목표 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 try:
                     if n_conclude_num == 0:
@@ -556,7 +558,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                 
                 print('')
                 print('**************************** 장 마감 전 매도 **************************')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print(' 매도 가능 수량 : ' + str(amount))
                 print('**********************************************************************')
                 
                 try:
@@ -585,7 +587,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
                 print('')
                 print('----------------------- 수익율 10% 초과 매도 위치 ------------------------')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print(' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
                 try:
                     if n_conclude_num != 0:
@@ -610,12 +612,12 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
             elif (predict_df['0'].values[0] > predict_df['1'].values[0]) & (amount > 0):
                 print('')
                 print('------------------------- 예측 값 변동 매도 위치 -------------------------')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print(' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
 
                 ratio = round(float(status_df[status_df['종목코드'] == 'A' + code]['수익율'].values[0]), 4)
 
-                if (float(ratio) < 1.0) & (float(ratio) > -2.0):
+                if (float(ratio) < 1.0) & (float(ratio) > -1.0):
                     print(f'현재 수익율 {ratio}로 매도를 진행하지 않습니다.')
                 
                 else:
@@ -644,13 +646,12 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
             elif (((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min) > predict_df['1'].values[0]) & (amount > 0):
                 print('')
                 print('---------------------- 예측 값 평균 이탈 매도 위치 ---------------------')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
-                print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)))
+                print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)) + ' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
 
                 ratio = round(float(status_df[status_df['종목코드'] == 'A' + code]['수익율'].values[0]), 4)
 
-                if (float(ratio) < 2.0) & (float(ratio) > -3.0):
+                if (float(ratio) < 1.0) & (float(ratio) > -1.0):
                     print(f'현재 수익율 {ratio}로 매도를 진행하지 않습니다.')
                 
                 else:
@@ -682,7 +683,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                 
                 print('')
                 print('++++++++++++++++++++++++++++ 추가 매수 위치 ++++++++++++++++++++++++++++')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
+                print('목표 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
                 try:
