@@ -103,21 +103,22 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                 except:
                     print('trading_df 추출 에러')
                     
-                try:
-                    try:
-                        # 학습 시 사용한 스케일러 호출
-                        min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
-                        X_pred_sc = min_abs_scaler.transform(each_target_df)
-                        # 학습 데이터와 차원 맞추기
-                        X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
-                        predict = model.predict(X_pred)
-                    except:
-                        min_abs_scaler = load(open(f'./download/scaler/{temp_day}_scaler', 'rb'))
-                        X_pred_sc = min_abs_scaler.transform(each_target_df)
-                        X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
-                        predict = model.predict(X_pred)
-                except:
-                    print('scaler 에러')
+                # try:
+                # try:
+                # 학습 시 사용한 스케일러 호출
+                print(yesterday)
+                min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
+                X_pred_sc = min_abs_scaler.transform(each_target_df)
+                # 학습 데이터와 차원 맞추기
+                X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
+                predict = model.predict(X_pred)
+                # except:
+                #     min_abs_scaler = load(open(f'./download/scaler/{temp_day}_scaler', 'rb'))
+                #     X_pred_sc = min_abs_scaler.transform(each_target_df)
+                #     X_pred = X_pred_sc.reshape(X_pred_sc.shape[0], model.input.shape[1], 1)
+                #     predict = model.predict(X_pred)
+                # except:
+                #     print('scaler 에러')
                 try:
                     predict_df = pd.DataFrame(predict)
                     predict_df['비교'] = (predict_df[0] - predict_df[1]) # 비율 확인
