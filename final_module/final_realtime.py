@@ -472,7 +472,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
     except:
         status_df = ds_account_stock_check()
         code_name = ' 보유하지 않은 종목'
-    
+        
     try:
         print('')
         print('========================================================================')
@@ -480,7 +480,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         print('========================================================================')
         print('초기자금 : ' + str(cost) + ' 매도 확률 : ' + str(predict_df['0'].values[0]) + ' 매수 확률 : ' + str(predict_df['1'].values[0]))
         print('========================================================================')
-        
+                
         end_cost = int(each_target_df['종가'].values[0])   # 종가
         high_cost = int(each_target_df['고가'].values[0])   # 고가
 
@@ -512,7 +512,9 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         # 현재 보유 수량이 없는 경우 진입
         if ('A' + code) not in status_df['종목코드'].values.tolist():
 
-            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) & (now.minute < 20) & (now.hour < 15):
+            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
+                 & (int(now.strftime('%H%M')) < 1520) & (status_df['장부금액'].sum() < 45000000):
+                 
                 print('')
                 print('++++++++++++++++++++++++++++ 신규 매수 위치 +++++++++++++++++++++++++++++')
                 print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
@@ -659,7 +661,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                             time.sleep(0.3)
                             sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
                             time.sleep(0.3)
-                            # return code
+                            return code
 
                     except:
                         print('현재 매수 매도를 할 수 없습니다.')
@@ -667,7 +669,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                 print('')
 
             # 추가 매수 조건 시 진입
-            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) & (now.minute < 20) & (now.hour < 15):
+            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0) \
+                & (int(now.strftime('%H%M')) < 1520) & (status_df['장부금액'].sum() < 45000000):
                 
                 print('')
                 print('++++++++++++++++++++++++++++ 추가 매수 위치 ++++++++++++++++++++++++++++')
@@ -678,8 +681,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                     if n_conclude_num == 0:
                         # if float(predict_df['비교'].values[0]) < -0.4:
                             # num = 500000 // end_cost
-                        if int(end_cost) <= 100000:
-                            num = 100000 // int(end_cost)
+                        if int(end_cost) <= 200000:
+                            num = 200000 // int(end_cost)
                         else:
                             num = 1
                         
@@ -721,8 +724,7 @@ def get_pymysql_predict_table_check(code, conn,account_name):
 ###########################################################################################################################################################################
 
 # 실시간 매매 실행
-def realtime_trading(stock_list , account_name):
-    _, account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())  # 주문 가능 예수 금액
+def realtime_trading(stock_list , account_name, account_value):
     time_cnt = 0
     while True:
         now = datetime.now()
@@ -745,7 +747,7 @@ def realtime_trading(stock_list , account_name):
                 time.sleep(10)
 
             for code in stock_list:
-                first_cost = account_value // 10 # 500만원
+                first_cost = account_value // 5 # 1000만원
                 each_target_df = stock_trading_db(code, account_name)
                 try:
                     get_pymysql_predict_table_check(code, DBConnection_trading().get_pymysql_connection(), account_name)
@@ -774,6 +776,8 @@ def realtime_trading(stock_list , account_name):
                 except:
                     print('SQL에 데이터가 충분하지 않음. 계좌명 : ' + str(account_name) + ' 날짜 : ' + str(today) + ' 종목코드 : ' + str(code))
                     mean_predict = 0.0
+                    predict_max = 0.0
+                    predict_min = 0.0
                 
                 try:
                     sell_code = real_trading(predict_df, first_cost, code, each_target_df, now, account_name, predict_max, predict_min)
