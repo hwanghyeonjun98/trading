@@ -84,7 +84,7 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
 
                 try:
                     # DB 내 존재하는 실시간 데이터 추출
-                    sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량, 년, 월, 일 FROM trading_data.`{account_name}_{today}_{code}` ORDER BY 시간 DESC LIMIT 1"
+                    sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량 FROM trading_data.`{account_name}_{today}_{code}` ORDER BY 시간 DESC LIMIT 1"
                     table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 except:
                     print('SQL 조회 에러 발생')
@@ -92,13 +92,14 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                 try:
                     # 데이터 프레임으로 생성
                     table_df = pd.DataFrame(table_data.fetchall())  # DB내 테이블을 DF로 변환
+                    
                     # 실시간 데이터와 전일 데이터를 concat
                     table_df = pd.concat([table_df, day_stock_investing_df], axis=1 )
                     table_df = table_df.apply(pd.to_numeric)
-                    
                     # 상관계수가 높은 컬럼만 추출
                     c_list = list(col_list.index)
                     each_target_df = table_df[c_list]
+                  
 
                 except:
                     print('trading_df 추출 에러')
