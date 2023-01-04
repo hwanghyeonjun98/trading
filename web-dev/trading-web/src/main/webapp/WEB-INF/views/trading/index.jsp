@@ -61,7 +61,7 @@
 						<h4 class="h4 w-100">과거내역 보기 <small>(<span class="historyDate"></span> 기준)</small></h4>
 						<hr class="w-100">
 						<div class="d-flex align-items-center">
-							<div class="history-btn-area">
+							<div class="history-btn-area pb-3">
 								<c:if test="${userAccount == null}">
 									<button type="button" id="all-history-none-btn" class="btn">
 										전체 거래내역 보기
@@ -73,7 +73,7 @@
 									</button>
 								</c:if>
 							</div>
-							<div class="history-list-area">
+							<div class="history-list-area pb-3">
 								<ul class="history-list">
 								</ul>
 							</div>

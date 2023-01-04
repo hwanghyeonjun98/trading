@@ -19,9 +19,12 @@ $(window).on("load", function () {
 
 		// 차트 리스트 만들기
 		response.forEach((item) => {
-			dataList.push([item.dates, item.opens, item.highs, item.lows, item.closes]);
+			dataList.push([item.dates,
+			               parseFloat(item.opens),
+			               parseFloat(item.highs),
+			               parseFloat(item.lows),
+			               parseFloat(item.closes)]);
 		});
-		console.log(response);
 
 		// 차트 옵션 series 업데이트 메소드
 		chart.updateSeries([{
@@ -31,7 +34,9 @@ $(window).on("load", function () {
 });
 
 // 날짜 검색 관련
-$(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼전송 코드
+$(document).on("submit", "form[name=dateSearchFrm]", function (event) {
+	// 폼전송 코드
+
 	// 폼 전송 이벤트 초기화(새로고침 안되게)
 	event.preventDefault();
 
@@ -52,8 +57,21 @@ $(document).on("submit", "form[name=dateSearchFrm]", function (event) { // 폼�
 		success  : function (reponse) { // 통신 성공시 진행하는 코드
 			const dataList = [];
 			$.each(reponse, function (i) {
-				str
-					= "<tr><td>" + reponse[i].dates + "</td><td>" + reponse[i].closes + "</td><td>" + reponse[i].opens + "</td><td>" + reponse[i].highs + "</td><td>" + reponse[i].lows + "</td><td>" + reponse[i].volumes + "</td><td>" + reponse[i].changes + "%</td></tr>";
+				str = "<tr><td>" +
+					    reponse[i].dates +
+					    "</td><td>" +
+					    reponse[i].closes +
+					    "</td><td>" +
+					    reponse[i].opens +
+					    "</td><td>" +
+					    reponse[i].highs +
+					    "</td><td>" +
+					    reponse[i].lows +
+					    "</td><td>" +
+					    reponse[i].volumes +
+					    "</td><td>" +
+					    reponse[i].changes +
+					    "%</td></tr>";
 				dataList.push(str);
 
 			});

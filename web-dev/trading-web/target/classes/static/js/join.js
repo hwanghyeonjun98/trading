@@ -7,8 +7,6 @@ const pwCheckLi = $(".pw-check-li");
 let idCheck = false;
 let pwCheck = false;
 
-const bsesstion = window.sessionStorage;
-
 // 아이디 정규식
 const idRegx = /^[a-zA-Z\d]+$/;
 const pwRegx = /^[a-zA-Z\d@$!%*#?&]+$/;

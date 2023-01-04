@@ -33,3 +33,13 @@ main * {
 .img-warp .skill-img {
 	width: 90%;
 }
+
+.team {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+.team li:first-child{
+	font-weight: 500;
+	font-size: 1.2em;
+}

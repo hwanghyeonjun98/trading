@@ -67,7 +67,14 @@ const options = {
 const options2 = {
 	series        : [],
 	title         : {
-		text : account + " 장부금액"
+		text : account + " 장부금액",
+		// margin: ,
+		offsetY: 18,
+		style : {
+			fontSize : "1.4rem",
+			margin: "0",
+			borderBottom: "1px solid #000"
+		}
 	}, chart      : {
 		zoom          : {
 			enabled : false
@@ -129,7 +136,8 @@ const options2 = {
 		align         : "center",
 		verticalAlign : "middle",
 		style         : {
-			fontSize : "2.4rem"
+			fontSize : "1.8 rem",
+			textAlign: "center"
 		}
 	}, dataLabels : {
 		enabled : false
