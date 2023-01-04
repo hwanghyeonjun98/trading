@@ -34,7 +34,11 @@ download/krx/
 download/scaler/
 download/target/
 download/investing_df/
-
+kospi/download/
+kospi/cmd/
+kospi/error/
+kospi/model/
+kospi/pickle/
 # module/__pycache__ 디렉토리 무시
 module/__pycache__/
 __pycache__/
