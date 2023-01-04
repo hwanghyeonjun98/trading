@@ -435,7 +435,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
         print('========================================================================')
         print('매도 확률 : ' + str(predict_df['0'].values[0]) + ', 매수 확률 : ' + str(predict_df['1'].values[0]) + ', 비교값 : ' + str(predict_df['비교'].values[0]))
         print('========================================================================')
-        print(' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost))
+        print('종가 : ' + str(end_cost) + ', 고가 : ' + str(high_cost))
         print('========================================================================')
         print('전량 매도 종목 리스트 = ' + str(sell_code_list))
         print('========================================================================')
@@ -464,7 +464,12 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
         
 
         if ('A' + code) not in status_df['종목코드'].values.tolist():
-            if (float(predict_df['1'].values[0]) > 0.5) & (end_cost < high_cost) & (buy_num > 0) :
+            if (now.minute >= 20) & (now.hour >= 15):
+                print('')
+                print('장이 종료되어 종목을 삭제합니다.')
+                return code
+                
+            elif (float(predict_df['1'].values[0]) > 0.5) & (end_cost < high_cost) & (buy_num > 0) :
                 print('')
                 print('++++++++++++++++++++++++++++ 신규 매수 위치 +++++++++++++++++++++++++++++')
                 print(' 매수 가능 수량 : ' + str(buy_num))
@@ -524,11 +529,11 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
                     if (n_conclude_num != amount) & (n_conclude_num != 0):
                         order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
                         ds_order_cancel(code, order_num)
-
+                    
                     code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                     ds_trade_end('1', code, amount)
                     trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu)
-                    time.sleep(2)
+                    time.sleep(4)
                     return code
                 except:
                     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
