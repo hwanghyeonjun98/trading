@@ -514,7 +514,12 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         # 현재 보유 수량이 없는 경우 진입
         if ('A' + code) not in status_df['종목코드'].values.tolist():
 
-            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
+            if (now.minute >= 20) & (now.hour >= 15):
+                print('장이 종료되어 리스트에서 종목을 제거합니다')
+                print('')
+                return code
+
+            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
                  & (int(now.strftime('%H%M')) < 1520) & (status_df['장부금액'].sum() < 45000000):
                  
                 print('')
