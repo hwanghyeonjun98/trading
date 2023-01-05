@@ -103,11 +103,15 @@ def ds_trade_stock(buysell, code, quantity, price):
 
     # 매수 주문 요청
     nRet = instCpTd0311.BlockRequest()
+
+    code_name = instCpTd0311.GetHeaderValue(10)
+    
     if (nRet != 0) :
         print('주문요청 오류 ', quantity, ', 오류코드 : ', nRet)    
         # 0: 정상,  1: 통신요청 실패, 2: 주문확인창에서 취소, 3: 그외의 내부 오류, 4: 주문요청제한 개수 초과 , 5: 주문수량 없음
     else:
         print('주문 정상 접수', ', 매수 수량 : ', quantity)
+        return code_name
 
     rqStatus = instCpTd0311.GetDibStatus() # Dib Server 상태 확인
     errMsg = instCpTd0311.GetDibMsg1() # 확인 메시지 출력
@@ -478,24 +482,37 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
                     code_check = True
                     if code in sell_code_list:
                         code_check = False
-                        if float(predict_df['1'].values[0]) > 0.5:   ################################ return 확인 후 수정
+                        if float(predict_df['1'].values[0]) > 0.6:   
                             code_check = True
                             return code
                     if code_check == False:
                         print('전량 매도 처리한 기록이 있으므로 매수를 진행하지 않습니다.')
                     elif (n_conclude_num == 0):
                         if int(buy_num) < 6:
+                            code_name = ds_trade_stock('2', code, int(buy_num) , end_cost)
+                            print('')
                             print('구매한 종목명 : ' + str(code_name))
-                            ds_trade_stock('2', code, int(buy_num) , end_cost)
                             code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                             trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, buy_num, 0, total_num, ratio, pyungga, jangbu)
                         else:
                             num = int(abs(buy_num*float(predict_df['비교'].values[0])))
                             if num == 0:
-                                print('매수 조건이 성립하지 않습니다.')
-                            else:
+                                code_name = ds_trade_stock('2', code, 1 , end_cost)
+                                print('')
                                 print('구매한 종목명 : ' + str(code_name))
-                                ds_trade_stock('2', code, num , end_cost)
+                                code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 1, 0, total_num, ratio, pyungga, jangbu)
+                            elif (buy_num // 10) > num:
+                                num = num * 5
+                                code_name = ds_trade_stock('2', code, num , end_cost)
+                                print('')
+                                print('구매한 종목명 : ' + str(code_name))
+                                code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
+                            else:
+                                code_name = ds_trade_stock('2', code, num , end_cost)
+                                print('')
+                                print('구매한 종목명 : ' + str(code_name))
                                 code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                                 trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
                 except:
@@ -518,7 +535,7 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
 
             buy_num = ((cost-current_value) // int(end_cost)) - int(n_conclude_num)
 
-            if (amount >= 0) & (now.minute >= 20) & (now.hour >= 15):
+            if (amount >= 0) & (int(now.strftime('%H%M')) >= 1520):
                 print('')
                 print('**************************** 장 마감 전 매도 **************************')
                 print('매도 가능 수량 : ' + str(amount))
@@ -531,9 +548,11 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
                         ds_order_cancel(code, order_num)
                     
                     code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                    time.sleep(2)
                     ds_trade_end('1', code, amount)
+                    time.sleep(2)
                     trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu)
-                    time.sleep(4)
+                    time.sleep(2)
                     return code
                 except:
                     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
@@ -566,86 +585,103 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
     
             elif (float(predict_df['0'].values[0]) > 0.4) & (amount > 0):
                 print('')
-                print('----------------------------- 비율 매도 위치 ----------------------------')
-                print(' 매도 가능 수량 : ' + str(amount))
-                print('------------------------------------------------------------------------')
+                print('++++++++++++++++++++++++++++ 추가 매수 위치 +++++++++++++++++++++++++++++')
+                print(' 매수 가능 수량 : ' + str(buy_num))
+                print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+                
                 try:
                     check = False
                     ratio = round(status_df[status_df['종목코드'] == 'A' + str(code)]['수익율'].values[0],4) 
-                    if (float(ratio) < 1) & (float(ratio) > -0.5):
-                        print('')
-                        print('수익율이 ' + str(ratio) + '이므로 매도를 진행하지 않습니다.')
-                    else:
-                        check = True
-                        print('')
-                        print('수익율이 ' + str(ratio) + '이므로 매도를 진행합니다.')
-                        print('')
-                        if n_conclude_num != 0:
-                            order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
-                            ds_order_cancel(code, order_num)
-
-                        if abs(float(predict_df['비교'].values[0])) > 0.4:
-                            amount = amount   
-                            code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                            ds_trade_end('1', code, amount)
-                            trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, amount, 0, ratio, pyungga, jangbu)  
-                        else:
-                            amount = int(amount*float(predict_df['비교'].values[0]))
-                            if amount <= 0:
-                                ds_trade_end('1', code, 1)
+                    if (float(predict_df['1'].values[0]) > 0.52) & (end_cost < high_cost) & (buy_num > 0):
+                        if n_conclude_num == 0:
+                            check = True
+                            if int(buy_num) < 4:
+                                ds_trade_stock('2', code, int(buy_num) , end_cost)
                                 code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                                trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, amount, total_num, ratio, pyungga, jangbu)
+                                trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, buy_num, 0, total_num, ratio, pyungga, jangbu)
                             else:
-                                ds_trade_end('1', code, amount)
-                                code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                                trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, amount, total_num, ratio, pyungga, jangbu)
-                    
-                        status_df = ds_account_stock_check()
-                        n_conclude_df = ds_n_conclude_check()
-                        result_amount = status_df[status_df['종목코드'] == 'A' + code]['보유수량'].values[0]
-                        n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0] # 미체결 수량만 추출
-                    
-                        if (int(result_amount) - int(n_conclude_num)) == 0:
-                            time.sleep(2)
-                            return code            
+                                num = int(abs(buy_num*float(predict_df['비교'].values[0])))
+                                if num == 0:
+                                    ds_trade_stock('2', code, 1, end_cost)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 1, 0, total_num, ratio, pyungga, jangbu)
+                                elif (buy_num // 5) > num:
+                                    num = num * 3
+                                    ds_trade_stock('2', code, num , end_cost)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
+                                else:
+                                    ds_trade_stock('2', code, num , end_cost)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
+                        print('')
+                        print('미체결 수량이 있어 매수를 진행하지 않습니다.')
+                    else:
+                        print('')
+                        print('매수 조건이 성립하지 않아 매수 진행을 하지 않습니다.')          
                 except:
                     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-                    print('현재 매도를 할 수 없습니다.')
+                    print('현재 매수를 할 수 없습니다.')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
                 try:
                     if check == True:
                         print('')
-                        print('매도를 진행했으므로 매수 진행을 하지 않습니다.')
+                        print('매수를 진행했으므로 매도 진행을 하지 않습니다.')
                     else:
-                        if (float(predict_df['1'].values[0]) > 0.55) & (end_cost < high_cost) & (buy_num > 0):
+                        print('')
+                        print('----------------------------- 비율 매도 위치 ----------------------------')
+                        print(' 매도 가능 수량 : ' + str(amount))
+                        print('------------------------------------------------------------------------')
+                        if (float(ratio) < 0.5) & (float(ratio) > -0.5):
                             print('')
-                            print('++++++++++++++++++++++++++++ 추가 매수 위치 +++++++++++++++++++++++++++++')
-                            print(' 매수 가능 수량 : ' + str(buy_num))
-                            print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-                            if n_conclude_num == 0:
-                                if int(buy_num) < 4:
-                                    ds_trade_stock('2', code, int(buy_num) , end_cost)
-                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, buy_num, 0, total_num, ratio, pyungga, jangbu)
-                                else:
-                                    num = int(abs(buy_num*float(predict_df['비교'].values[0])))
-                                    if num == 0:
-                                        ds_trade_stock('2', code, 1, end_cost)
-                                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
-                                    else:
-                                        ds_trade_stock('2', code, num , end_cost)
-                                        code_name, total_num, ratio, pyungga, jangbu = status_history(code)
-                                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu)
-                            print('')
-                            print('미체결 수량이 있어 매수를 진행하지 않습니다.')
+                            print('수익율이 ' + str(ratio) + '이므로 매도를 진행하지 않습니다.')
                         else:
+                            
                             print('')
-                            print('매수 조건이 성립하지 않아 매수 진행을 하지 않습니다.')
+                            print('수익율이 ' + str(ratio) + '이므로 매도를 진행합니다.')
+                            print('')
+                            if n_conclude_num != 0:
+                                order_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['주문번호'].values[0]
+                                ds_order_cancel(code, order_num)
+
+                            if abs(float(predict_df['비교'].values[0])) > 0.25:
+                                sell_num = amount   
+                                code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                ds_trade_end('1', code, sell_num)
+                                trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, sell_num, 0, ratio, pyungga, jangbu)  
+                            else:
+                                sell_num = int(amount*float(predict_df['비교'].values[0]))
+                                if sell_num <= 0:
+                                    ds_trade_end('1', code, 1)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, 1, total_num, ratio, pyungga, jangbu)
+                                elif (amount // 5) > sell_num:
+                                    sell_num = sell_num * 3
+                                    ds_trade_end('1', code, sell_num)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, v, total_num, ratio, pyungga, jangbu)
+                                elif (amount // 3) > sell_num:
+                                    sell_num = sell_num * 2
+                                    ds_trade_end('1', code, sell_num)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, v, total_num, ratio, pyungga, jangbu)
+                                else:
+                                    ds_trade_end('1', code, sell_num)
+                                    code_name, total_num, ratio, pyungga, jangbu = status_history(code)
+                                    trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, v, total_num, ratio, pyungga, jangbu)
+                        
+                            status_df = ds_account_stock_check()
+                            n_conclude_df = ds_n_conclude_check()
+                            result_amount = status_df[status_df['종목코드'] == 'A' + code]['보유수량'].values[0]
+                            n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0] # 미체결 수량만 추출
+                        
+                            if (int(result_amount) - int(n_conclude_num)) == 0:
+                                time.sleep(2)
+                                return code            
                 except:
                     print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
                     print('실전 / 모의투자 또는 개장 시간을 확인하세요.')
-                    print('현재 매수를 할 수 없습니다.')
+                    print('현재 매도를 할 수 없습니다.')
                 print('')
                 
             else:
@@ -678,7 +714,7 @@ def realtime_trading(stock_list , account_name, account_value):
     sell_code_list = []
     while True:
         now = datetime.now()
-        if (now.minute == 40) & (now.hour == 15):
+        if int(now.strftime('%H%M')) > 1540:
             account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)
             _, final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
@@ -717,7 +753,7 @@ def realtime_trading(stock_list , account_name, account_value):
                 except:
                     print('트레이딩 에러 발생')      
                 try:
-                    if (now.minute >= 20) & (now.hour >= 15):
+                    if int(now.strftime('%H%M')) >= 1520:
                         stock_list.remove(sell_code)
                     elif sell_code == 0:
                         print('')
