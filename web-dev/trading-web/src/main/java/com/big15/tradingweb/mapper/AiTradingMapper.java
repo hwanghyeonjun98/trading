@@ -30,6 +30,7 @@ public interface AiTradingMapper {
 	                                             @Param("code") String code);
 	List<AccountHistoryDto> coList(@Param("account") String account);
 	List<AccountHistoryDto> profit(@Param("account") String account);
+	List<AccountDto> ratioChartList(@Param("account") String account);
 	List<AccountDto> accountChartList(@Param("account") String account);
 
 }

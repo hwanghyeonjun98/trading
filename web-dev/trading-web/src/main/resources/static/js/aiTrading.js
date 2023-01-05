@@ -1,5 +1,5 @@
 const tradingDataTableBdoy = $("#trading-data-table tbody");
-date = new Date(); // 사간 초기화
+date = new Date(); // 시간 초기화
 const nowMin = date.getHours() * 60;
 
 // 실기간 트레이딩

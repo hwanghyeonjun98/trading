@@ -81,7 +81,11 @@
 					</div>
 				</article>
 				<article class="lomelo">
-					<div id="account-chart"></div>
+					<button type="button" class="account-chart-view-btn btn btn-sm btn-outline-secondary">장부금액 보기</button>
+					<div id="ratio-chart"></div>
+					<div class="account-chart-area">
+						<div id="account-chart"></div>
+					</div>
 				</article>
 			</section>
 			<section>
@@ -352,11 +356,11 @@
 									<label for="code" class="visually-hidden">종목명</label>
 									<input type="text" name="code" id="code" class="form-control" placeholder="종목명을 입력하세요.">
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<label for="startDate2" class="visually-hidden">시작 날짜</label>
 									<input type="datetime-local" name="startDate" id="startDate2" class="form-control" min="2020-01-01T00:00">
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<label for="endDate2" class="visually-hidden">끝 날짜</label>
 									<input type="datetime-local" name="endDate" id="endDate2" class="form-control" max="" value="">
 								</div>

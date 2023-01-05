@@ -7,7 +7,7 @@
 				 , format(amount, 0)       as amount
 				 , format(buyprice, 2)     as buyprice
 				 , format(evalValue, 0)    as evalValue
-				 , format(ratio, 4)        as ratio
+				 , format(ratio, 2)        as ratio
 				 , format(currentValue, 0) as currentValue
 		FROM web_data.${account}_account_status
 		order by code asc
@@ -21,7 +21,7 @@
 				 , format(buy_num, 0) as buy_num
 				 , format(sell_num, 0) as sell_num
 				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
+				 , format(ratio, 2) as ratio
 				 , format(profit, 0) as profit
 		from ${account}_history
 			where account_name = #{account}
@@ -37,7 +37,7 @@
 				 , format(buy_num, 0) as buy_num
 				 , format(sell_num, 0) as sell_num
 				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
+				 , format(ratio, 2) as ratio
 				 , format(profit, 0) as profit
 		from ${account}_history
 		where account_name = #{account}
@@ -54,7 +54,7 @@
 				 , format(buy_num, 0) as buy_num
 				 , format(sell_num, 0) as sell_num
 				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
+				 , format(ratio, 2) as ratio
 				 , format(profit, 0) as profit
 		from ${account}_history
 		where account_name = #{account}
@@ -69,7 +69,7 @@
 				 , format(buy_num, 0) as buy_num
 				 , format(sell_num, 0) as sell_num
 				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
+				 , format(ratio, 2) as ratio
 				 , format(profit, 0) as profit
 		from ${account}_history
 		where account_name = #{account}
@@ -90,16 +90,17 @@
 	</select>
 
 	<select id="profit" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
-		select DATE_FORMAT(his_time, '%Y-%m-%d') as date
-				 , format(sum(ratio), 4)             as ratio
+		select date_format(his_time, '%Y-%m-%d') as date
 				 , format(sum(profit), 0)            as profit
 		from ${account}_history
-		where DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
-		group by date
-		order by code_name asc;
+		where account_name = '01big15'
+			and sell_num > 0
+			and amount = 0
+			and DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+		order by date desc
 	</select>
 
-	<select id="accountChartList" resultType="com.big15.tradingweb.dto.AccountDto">
+	<select id="ratioChartList" resultType="com.big15.tradingweb.dto.AccountDto">
 		select date_format(account.date, '%Y-%m-%d') as date
 				 , account.acc_value
 				 , kospi.changes                          as kospi_changes
@@ -110,6 +111,14 @@
 		where account.acc_name = #{account}
 			and date_format(account.date, '%Y-%m-%d') = date_format(kospi.dates, '%Y-%m-%d')
 			and date_format(account.date, '%Y-%m-%d') = date_format(kosdaq.dates, '%Y-%m-%d')
+	</select>
+
+	<select id="accountChartList" resultType="com.big15.tradingweb.dto.AccountDto">
+		select date_format(date, '%Y-%m-%d') as date
+				 , acc_value
+				 , acc_value
+			from account
+			where acc_name = #{account}
 	</select>
 </mapper>
 
