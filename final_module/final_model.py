@@ -193,7 +193,7 @@ class DataFrameCreate(DBNetwork):
             cor_list.remove(i)
         
         # 필수 컬럼이 빠진 경우 추가
-        essential_list = ['날짜','시간','시가','고가', '저가', '종가'] 
+        essential_list = ['날짜','시간','시가','고가','저가','종가','거래량','거래대금','누적체결매도수량','누적체결매수수량','년','월','일']
         for e in tqdm(essential_list):
             if e not in cor_list: 
                 cor_list.append(e)
@@ -206,8 +206,10 @@ class DataFrameCreate(DBNetwork):
         # 날짜 년, 월, 일 별도로 추출하므로 drop
         new_corr= new_corr.drop('날짜')
         complete_corr = new_corr[(new_corr.values>self.corr) | (new_corr.values<-self.corr) |
-                        (new_corr.index == '고가') | (new_corr.index == '시가') | 
-                        (new_corr.index == '종가') | (new_corr.index == '저가')  ]
+                        (new_corr.index == '시간') | (new_corr.index == '시가') | (new_corr.index == '고가') | (new_corr.index == '저가') | 
+                        (new_corr.index == '종가') | (new_corr.index == '거래량') | (new_corr.index == '거래대금') | 
+                        (new_corr.index == '누적체결매도수량') | (new_corr.index == '누적체결매수수량') | 
+                        (new_corr.index == '년') | (new_corr.index == '월') | (new_corr.index == '일')]
         complete_corr = complete_corr.drop('pct_label')
         complete_corr.to_pickle(f'./pickle/pickle_corr_complete/{self.stock_type}_{self.today}_{self.period}_10개_{self.corr}.pkl')
         self.complete_corr = complete_corr

@@ -269,13 +269,13 @@ def ds_account_stock_check():
 
     cnt = instCpTd6033.GetHeaderValue(7)
 
-    code_list = []
-    name_list = []
-    amount_list = []
-    buyPrice_list = []
-    evalValue_list = []
-    evalPerc_list = []
-    current_value = []
+    code_list = [0]
+    name_list = [0]
+    amount_list = [0]
+    buyPrice_list = [0]
+    evalValue_list = [0]
+    evalPerc_list = [0]
+    current_value = [0]
 
     for i in range(cnt):
         code = instCpTd6033.GetDataValue(12, i)  # 종목코드
@@ -474,15 +474,17 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         code_name = ' 보유하지 않은 종목'
         
     try:
+        end_cost = int(each_target_df['종가'].values[0])   # 종가
+        high_cost = int(each_target_df['고가'].values[0])   # 고가
         print('')
         print('========================================================================')
         print('대상 종목 코드 : ' + str(code) + ' 종목명 : ' + str(code_name))
         print('========================================================================')
         print('초기자금 : ' + str(cost) + ' 매도 확률 : ' + str(predict_df['0'].values[0]) + ' 매수 확률 : ' + str(predict_df['1'].values[0]))
         print('========================================================================')
+        print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost))
+        print('========================================================================')
                 
-        end_cost = int(each_target_df['종가'].values[0])   # 종가
-        high_cost = int(each_target_df['고가'].values[0])   # 고가
 
         status_db_df = status_df.copy()
         status_db_df.rename(columns={'종목코드': 'code', '종목명' : 'name', '보유수량' : 'amount', '평단가' : 'buyprice'
@@ -512,12 +514,17 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         # 현재 보유 수량이 없는 경우 진입
         if ('A' + code) not in status_df['종목코드'].values.tolist():
 
-            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
+            if (now.minute >= 20) & (now.hour >= 15):
+                print('장이 종료되어 리스트에서 종목을 제거합니다')
+                print('')
+                return code
+
+            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
                  & (int(now.strftime('%H%M')) < 1520) & (status_df['장부금액'].sum() < 45000000):
                  
                 print('')
                 print('++++++++++++++++++++++++++++ 신규 매수 위치 +++++++++++++++++++++++++++++')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
+                print('목표 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                 try:
                     if n_conclude_num == 0:
@@ -530,7 +537,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                         if ds_trade_stock('2', code, num , end_cost) == True:
                             code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                             time.sleep(0.3)
-                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0
+                                            , total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                             time.sleep(0.3)
                             sell_trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, predict_df['1'].values[0])
                             time.sleep(0.3)
@@ -555,7 +563,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                 
                 print('')
                 print('**************************** 장 마감 전 매도 **************************')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print(' 매도 가능 수량 : ' + str(amount))
                 print('**********************************************************************')
                 
                 try:
@@ -566,7 +574,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                     code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                     if ds_trade_end('1', code, amount) == True:
                         time.sleep(1)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount
+                                        , 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                         time.sleep(1)
                         sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
                         time.sleep(1)
@@ -583,7 +592,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
                 print('')
                 print('----------------------- 수익율 10% 초과 매도 위치 ------------------------')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print(' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
                 try:
                     if n_conclude_num != 0:
@@ -593,7 +602,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                     if ds_trade_end('1', code, amount) == True:
                         code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                         time.sleep(0.3)
-                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                        trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount
+                                        , 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                         time.sleep(0.3)
                         sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
                         time.sleep(0.3)
@@ -607,12 +617,12 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
             elif (predict_df['0'].values[0] > predict_df['1'].values[0]) & (amount > 0):
                 print('')
                 print('------------------------- 예측 값 변동 매도 위치 -------------------------')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print(' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
 
                 ratio = round(float(status_df[status_df['종목코드'] == 'A' + code]['수익율'].values[0]), 4)
 
-                if (float(ratio) < 1.0) & (float(ratio) > -2.0):
+                if (float(ratio) < 1.0) & (float(ratio) > -1.0):
                     print(f'현재 수익율 {ratio}로 매도를 진행하지 않습니다.')
                 
                 else:
@@ -624,7 +634,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                         if ds_trade_end('1', code, amount) == True:
                             code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                             time.sleep(0.3)
-                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount
+                                            , 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                             time.sleep(0.3)
                             sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
                             time.sleep(0.3)
@@ -640,12 +651,12 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
             elif (((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min) > predict_df['1'].values[0]) & (amount > 0):
                 print('')
                 print('---------------------- 예측 값 평균 이탈 매도 위치 ---------------------')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매도 수량 : ' + str(amount))
+                print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)) + ' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
 
                 ratio = round(float(status_df[status_df['종목코드'] == 'A' + code]['수익율'].values[0]), 4)
 
-                if (float(ratio) < 2.0) & (float(ratio) > -3.0):
+                if (float(ratio) < 1.0) & (float(ratio) > -1.0):
                     print(f'현재 수익율 {ratio}로 매도를 진행하지 않습니다.')
                 
                 else:
@@ -657,11 +668,14 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                         if ds_trade_end('1', code, amount) == True:
                             code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                             time.sleep(0.3)
-                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount, 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, 0, amount
+                                            , 0, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                             time.sleep(0.3)
                             sell_history_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name, code)
                             time.sleep(0.3)
-                            return code
+
+                            if int(jangbu) > 2500000:
+                                return code
 
                     except:
                         print('현재 매수 매도를 할 수 없습니다.')
@@ -674,7 +688,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                 
                 print('')
                 print('++++++++++++++++++++++++++++ 추가 매수 위치 ++++++++++++++++++++++++++++')
-                print('종목별 매수 금액 : ' + str(cost) + ' 종가 : ' + str(end_cost) + ' 고가 : ' + str(high_cost) + ' 매수 수량 : ' + str(buy_num))
+                print('목표 매수 수량 : ' + str(buy_num))
                 print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
                 try:
@@ -689,7 +703,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                         if ds_trade_stock('2', code, num , end_cost) == True:
                             code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                             time.sleep(0.3)
-                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0, total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
+                            trading_history(DBConnection_present().get_pymysql_connection(), account_name, code_name, code, num, 0
+                                            , total_num, ratio, pyungga, jangbu, predict_df['1'].values[0], predict_df['0'].values[0])
                             time.sleep(0.3)
                             sell_trading_history(DBConnection_present().get_pymysql_connection(), account_name, code, num, predict_df['1'].values[0])
                             time.sleep(0.3)

@@ -96,7 +96,7 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                 
                 try:
                     # DB 내 실시간 데이터 추출
-                    sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량, 년, 월, 일 FROM trading_data.`{account_name}_{today}_{code}` ORDER BY 시간 DESC LIMIT 1"
+                    sql = f"SELECT 시간, 시가, 고가, 저가, 종가, 거래량, 거래대금, 누적체결매도수량, 누적체결매수수량 FROM trading_data.`{account_name}_{today}_{code}` ORDER BY 시간 DESC LIMIT 1"
                     table_data = DBConnection_trading().get_sqlalchemy_connect_ip().execute(sql) 
                 except:
                     print('SQL 조회 에러 발생')

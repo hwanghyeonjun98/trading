@@ -13,7 +13,6 @@ tf.config.experimental.set_memory_growth(gpus[0], True)
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 today = str(date.today()).replace('-','')
-investing_df =  pd.read_csv(f'./download/investing_df/investing_{today}.csv', encoding='utf-8-sig', index_col=0) # 각자 컴퓨터의 맞게 변경
 kospi_list, kosdaq_list = get_target_list_db()
 # C:\big15\project-dev\trading\download\target
 # D:\systrader-dev\trading\download\target
