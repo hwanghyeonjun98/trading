@@ -40,9 +40,9 @@ const options = {
 		type   : "datetime",
 		labels : {
 			datetimeFormatter : {
-				year  : "yyyy년",
-				month : "MM월 dd일",
-				day   : "MM월 dd일"
+				year  : "yyyy",
+				month : "MM/dd",
+				day   : "MM/dd"
 			}
 		}
 	}, yaxis      : {
@@ -114,15 +114,15 @@ const options2 = {
 		enabled : true,
 		x       : {
 			show   : true,
-			format : "MM/dd",
+			format : "yyyy/MM/dd",
 		}
 	}, xaxis      : {
 		type   : "datetime",
 		labels : {
 			datetimeFormatter : {
-				year  : "yyyy년",
+				year  : "yyyy",
 				month : "MM/dd",
-				day   : "MM/dd/"
+				day   : "MM/dd"
 			}
 		}
 	}, yaxis      : {
@@ -202,15 +202,15 @@ const options3 = {
 		enabled : true,
 		x       : {
 			show   : true,
-			format : "MM/dd",
+			format : "yyyy/MM/dd",
 		}
 	}, xaxis      : {
 		type   : "datetime",
 		labels : {
 			datetimeFormatter : {
-				year  : "yyyy년",
-				month : "MM월 dd일",
-				day   : "MM월 dd일"
+				year  : "yyyy/",
+				month : "MM/dd",
+				day   : "MM/dd"
 			}
 		}
 	}, yaxis      : {
@@ -245,32 +245,31 @@ const options3 = {
 	}
 };
 
-const chart = new ApexCharts(document.querySelector("#chart-area"), options);
-chart.render();
+const kospiChart = new ApexCharts(document.querySelector("#chart-area"), options);
+kospiChart.render();
 
-let chartUrl = "/api/data/index/chart/kospi";
+let kospiChartUrl = "/api/data/index/chart/kospi";
 
-$.getJSON(chartUrl, function (response) {
+$.getJSON(kospiChartUrl, function (response) {
 	let dataList = [];
 
 	response.forEach((item) => {
 		dataList.push([item.dates, item.closes]);
 	});
 
-	chart.updateSeries([{
+	kospiChart.updateSeries([{
 		name : "KOSPI",
 		data : dataList
 	}]);
 });
 
 
-const chart2 = new ApexCharts(document.querySelector("#ratio-chart"), options2);
-chart2.render();
+const ratioChart = new ApexCharts(document.querySelector("#ratio-chart"), options2);
+ratioChart.render();
 
+let ratioChartUrl = "/api/data/index/chart/account/ratio/" + account;
 
-let chartUrl2 = "/api/data/index/chart/account/ratio/" + account;
-
-$.getJSON(chartUrl2, function (response) {
+$.getJSON(ratioChartUrl, function (response) {
 	let ratioDateList = [];
 	let accValueList = [];
 	let ratioList = [];
@@ -302,7 +301,7 @@ $.getJSON(chartUrl2, function (response) {
 	kospiList[0][1] = "0";
 	kosdaqList[0][1] = "0";
 
-	chart2.updateSeries([{
+	ratioChart.updateSeries([{
 		name : "내 계좌",
 		data : ratioSeries
 	}, {
@@ -314,18 +313,18 @@ $.getJSON(chartUrl2, function (response) {
 	}]);
 });
 
-const chart3 = new ApexCharts(document.querySelector("#account-chart"), options3);
-chart3.render();
+const accountChart = new ApexCharts(document.querySelector("#account-chart"), options3);
+accountChart.render();
 
-let chartUrl3 = "/api/data/index/chart/account/" + account;
+let accountChartUrl = "/api/data/index/chart/account/" + account;
 
-$.getJSON(chartUrl3, function (response) {
+$.getJSON(accountChartUrl, function (response) {
 	let accountList = [];
 	response.forEach((item) => {
 		accountList.push([item.date, item.acc_value / 1000000]);
 	});
 
-	chart3.updateSeries([{
+	accountChart.updateSeries([{
 		name : account,
 		data : accountList
 	}]);
@@ -335,7 +334,7 @@ const accViewBtn = document.querySelector(".account-chart-view-btn");
 const accViewArea = document.querySelector(".account-chart-area");
 accViewBtn.addEventListener("click", () => {
 	accViewArea.classList.toggle("active");
-	if(accViewArea.classList.contains("active")) {
+	if (accViewArea.classList.contains("active")) {
 		accViewBtn.innerText = "닫기";
 	} else {
 		accViewBtn.innerText = "장부금액 보기";

@@ -6,7 +6,7 @@ const nowMin = date.getHours() * 60;
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
 
-	if (nowMin < 570 || nowMin > 932) {
+	if (nowMin < 570 || nowMin > 931) {
 		tradingDataTableBdoy.html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
 	} else {
 	(function poll() {
