@@ -19,14 +19,26 @@
 	</select>
 
 	<select id="dataDefultList" resultType="com.big15.tradingweb.dto.InvestingDto">
-		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, format(closes, 2) as closes, format(opens,2) as opens, format(highs,2) as highs, format(lows, 2) as lows, format(volumes, 0) as volumes, changes
+		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates,
+		       format(closes, 2)              as closes,
+		       format(opens, 2)               as opens,
+		       format(highs, 2)               as highs,
+		       format(lows, 2)                as lows,
+		       format(volumes, 0)             as volumes,
+		       changes
 		FROM web_data.aedkrw내역
 		WHERE dates between DATE_FORMAT(CURRENT_DATE() - interval 1 month, '%Y%m%d') AND DATE_FORMAT(CURDATE(), '%Y%m%d')
 		ORDER BY dates desc
 	</select>
 
 	<select id="dataList" resultType="com.big15.tradingweb.dto.InvestingDto">
-		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, format(closes, 2) as closes, format(opens,2) as opens, format(highs,2) as highs, format(lows, 2) as lows, format(volumes, 0) as volumes, changes
+		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates,
+		       format(closes, 2)              as closes,
+		       format(opens, 2)               as opens,
+		       format(highs, 2)               as highs,
+		       format(lows, 2)                as lows,
+		       format(volumes, 0)             as volumes,
+		       changes
 		FROM web_data.${names}내역
 		WHERE dates between DATE_FORMAT(CURRENT_DATE() - interval 1 month, '%Y%m%d') AND DATE_FORMAT(CURDATE(), '%Y%m%d')
 		ORDER BY dates desc

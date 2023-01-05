@@ -181,12 +181,17 @@ hr {
 }
 
 .news-link:hover .llong,
-.news-link:hover .hove {
+.news-link:hover .hove,
+.news-link:hover .hove small {
 	color: var(--color-red);
 }
 
 .news-link:hover .hove {
 	text-decoration: underline;
+}
+
+.news-link h5.hove small {
+	color: var(--color-deep-dark-gray);
 }
 
 .llong {

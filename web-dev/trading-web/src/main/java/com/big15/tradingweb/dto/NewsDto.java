@@ -7,4 +7,5 @@ public class NewsDto {
     private String newsName;
     private String newsLink;
     private String news;
+    private String newsDate;
 }

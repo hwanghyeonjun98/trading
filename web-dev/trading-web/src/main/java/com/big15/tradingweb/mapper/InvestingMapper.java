@@ -10,7 +10,9 @@ import java.util.List;
 public interface InvestingMapper {
 	List<InvestingDto> chartList(@Param("names") String names);
 
-	List<InvestingDto> investingDateSearchList(@Param("names") String names, @Param("startDate") String startDate, @Param("endDate") String endDate);
+	List<InvestingDto> investingDateSearchList(@Param("names") String names,
+	                                           @Param("startDate") String startDate,
+	                                           @Param("endDate") String endDate);
 
 	List<InvestingDto> dataDefultList();
 
