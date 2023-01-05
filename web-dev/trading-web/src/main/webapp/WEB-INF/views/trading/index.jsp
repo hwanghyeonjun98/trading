@@ -246,9 +246,9 @@
 						<div>
 							<h3 class="mb-0 mt-4">추천 뉴스</h3>
 							<hr>
-							<ul class="ps-3">
+							<ul class="p-0 new-list">
 								<c:forEach items="${nnews}" var="nnews">
-									<li>
+									<li class="px-3">
 										<a href="${nnews.newsLink}" class="news-link">
 											<h5 class="hove">${nnews.newsName} <small>${nnews.newsDate}</small></h5>
 											<p class="llong">${nnews.news}</p>

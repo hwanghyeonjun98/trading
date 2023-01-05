@@ -72,7 +72,6 @@ const options2 = {
 	series        : [],
 	title         : {
 		text : account + " 수익률 비교",
-		// margin: ,
 		offsetY : 18,
 		style   : {
 			fontSize     : "1.4rem",
@@ -146,8 +145,7 @@ const options2 = {
 		}
 	}, dataLabels : {
 		enabled : false
-	}
-	, stroke      : {
+	}, stroke     : {
 		width : 2
 	}, markers    : {
 		size  : [6, 6],
