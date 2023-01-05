@@ -552,11 +552,16 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
         # 현재 보유 수량이 있는 경우 진입
         else:
+
             amount = status_df[status_df['종목코드'] == 'A' + str(code)]['보유수량'].values[0]
             end = status_df[status_df['종목코드'] == 'A' + str(code)]['평단가'].values[0]
 
             current_value = status_df[status_df['종목코드'] == 'A' + str(code)]['장부금액'].values[0]
             buy_num = ((cost-current_value) // int(end_cost)) - int(n_conclude_num)
+            print('========================================================================')
+            print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min))\
+                 + ' 차이값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)) - predict_df['1'].values[0])
+            print('========================================================================')
 
             # 장 마감 전 보유 종목 전체 매도
             if (amount > 0) & (now.minute >= 20) & (now.hour >= 15):
@@ -789,6 +794,7 @@ def realtime_trading(stock_list , account_name, account_value):
                     predict_min = mean_predict.min()
 
                 except:
+                    print('')
                     print('SQL에 데이터가 충분하지 않음. 계좌명 : ' + str(account_name) + ' 날짜 : ' + str(today) + ' 종목코드 : ' + str(code))
                     mean_predict = 0.0
                     predict_max = 0.0
