@@ -100,10 +100,16 @@
 	</select>
 
 	<select id="accountChartList" resultType="com.big15.tradingweb.dto.AccountDto">
-		select date_format(date, '%Y-%m-%d') as date
-				 , acc_name
-				 , acc_value
-		from web_data.account
-		where acc_name = #{account}
+		select date_format(account.date, '%Y-%m-%d') as date
+				 , account.acc_value
+				 , kospi.changes                          as kospi_changes
+				 , kosdaq.changes                         as kosdaq_changes
+		from web_data.account as account
+			 , web_data.코스피지수내역 as kospi
+			 , web_data.코스닥내역 as kosdaq
+		where account.acc_name = #{account}
+			and date_format(account.date, '%Y-%m-%d') = date_format(kospi.dates, '%Y-%m-%d')
+			and date_format(account.date, '%Y-%m-%d') = date_format(kosdaq.dates, '%Y-%m-%d')
 	</select>
 </mapper>
+

@@ -180,13 +180,23 @@ hr {
 	padding: 1px;
 }
 
+.new-list li {
+	padding-top: 1rem;
+	border-bottom: 1px solid var(--color-gray);
+}
+
 .news-link:hover .llong,
-.news-link:hover .hove {
+.news-link:hover .hove,
+.news-link:hover .hove small {
 	color: var(--color-red);
 }
 
 .news-link:hover .hove {
 	text-decoration: underline;
+}
+
+.news-link h5.hove small {
+	color: var(--color-deep-dark-gray);
 }
 
 .llong {

@@ -3,7 +3,7 @@ const histoyTableBody = $("#histoyTable tbody");
 const allHistoyTableBody = $("#allHistoyTable tbody");
 const coList = $(".history-list");
 
-// 천체 데이터 추가
+// 전체 데이터 추가
 function dataAllColums(data, index) {
 	if (parseFloat(data[index].ratio) < 0) {
 		str = "<tr>" +
@@ -289,7 +289,7 @@ $(window).on("load", function () {
 
 	$(".historyDate").text(today);
 
-	let errorMsg = "<li>거래된 회사가 없습니다.</li>";
+	let errorMsg = "<li>금일 거래된 회사가 없습니다.</li>";
 	if (account !== "") {
 		$.ajax({
 			type     : "POST",

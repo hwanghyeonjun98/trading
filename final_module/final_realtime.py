@@ -514,7 +514,12 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         # 현재 보유 수량이 없는 경우 진입
         if ('A' + code) not in status_df['종목코드'].values.tolist():
 
-            if (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
+            if (int(now.strftime('%H%M')) >= 1520):
+                print('장이 종료되어 리스트에서 종목을 제거합니다')
+                print('')
+                return code
+
+            elif (predict_df['1'].values[0] > predict_df['0'].values[0]) & (end_cost < high_cost) & (buy_num > 0)\
                  & (int(now.strftime('%H%M')) < 1520) & (status_df['장부금액'].sum() < 45000000):
                  
                 print('')
@@ -547,14 +552,19 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
         # 현재 보유 수량이 있는 경우 진입
         else:
+
             amount = status_df[status_df['종목코드'] == 'A' + str(code)]['보유수량'].values[0]
             end = status_df[status_df['종목코드'] == 'A' + str(code)]['평단가'].values[0]
 
             current_value = status_df[status_df['종목코드'] == 'A' + str(code)]['장부금액'].values[0]
             buy_num = ((cost-current_value) // int(end_cost)) - int(n_conclude_num)
+            print('========================================================================')
+            print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min))\
+                 + ' 차이값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)) - predict_df['1'].values[0])
+            print('========================================================================')
 
             # 장 마감 전 보유 종목 전체 매도
-            if (amount > 0) & (now.minute >= 20) & (now.hour >= 15):
+            if (amount > 0) & (int(now.strftime('%H%M')) >= 1520):
                 
                 print('')
                 print('**************************** 장 마감 전 매도 **************************')
@@ -738,7 +748,7 @@ def realtime_trading(stock_list , account_name, account_value):
     time_cnt = 0
     while True:
         now = datetime.now()
-        if (now.minute == 40) & (now.hour == 15):
+        if int(now.strftime('%H%M')) > 1540:
             account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)
             _, final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
@@ -784,6 +794,7 @@ def realtime_trading(stock_list , account_name, account_value):
                     predict_min = mean_predict.min()
 
                 except:
+                    print('')
                     print('SQL에 데이터가 충분하지 않음. 계좌명 : ' + str(account_name) + ' 날짜 : ' + str(today) + ' 종목코드 : ' + str(code))
                     mean_predict = 0.0
                     predict_max = 0.0

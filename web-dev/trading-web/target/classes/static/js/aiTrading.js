@@ -1,6 +1,6 @@
 const tradingDataTableBdoy = $("#trading-data-table tbody");
+date = new Date(); // 사간 초기화
 const nowMin = date.getHours() * 60;
-console.log(nowMin);
 
 // 실기간 트레이딩
 if (account !== "") {
@@ -42,7 +42,10 @@ if (account !== "") {
 					       "</tr>";
 
 					str = str1 + str2 + str3;
-					list.push(str);
+
+					if(trading[index].code !== "0") {
+						list.push(str);
+					}
 				});
 				if (list.length === 0) {
 					tradingDataTableBdoy.html("<tr><td colspan='7'>거래중입니다. 잠시만 기다려주세요.</td></tr>");
@@ -63,5 +66,3 @@ if (account !== "") {
 } else {
 	tradingDataTableBdoy.html("<tr><td colspan='7'>로그인 시 활성화 됩니다.<br>로그인해주세요.</td></tr>");
 }
-
-
