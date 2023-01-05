@@ -514,7 +514,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
         # 현재 보유 수량이 없는 경우 진입
         if ('A' + code) not in status_df['종목코드'].values.tolist():
 
-            if (now.minute >= 20) & (now.hour >= 15):
+            if (int(now.strftime('%H%M')) >= 1520):
                 print('장이 종료되어 리스트에서 종목을 제거합니다')
                 print('')
                 return code
@@ -564,7 +564,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
             print('========================================================================')
 
             # 장 마감 전 보유 종목 전체 매도
-            if (amount > 0) & (now.minute >= 20) & (now.hour >= 15):
+            if (amount > 0) & (int(now.strftime('%H%M')) >= 1520):
                 
                 print('')
                 print('**************************** 장 마감 전 매도 **************************')
@@ -748,7 +748,7 @@ def realtime_trading(stock_list , account_name, account_value):
     time_cnt = 0
     while True:
         now = datetime.now()
-        if (now.minute == 40) & (now.hour == 15):
+        if int(now.strftime('%H%M')) > 1540:
             account_status_delete(DBConnection_present().get_sqlalchemy_connect_ip(), account_name)
             _, final_account_value = ds_account_db_update(DBConnection_trading().get_sqlalchemy_connect_ip())
             print("!!!!!!매매 종료!!!!!!!!  -- 최종 예수 금액 : " + str(final_account_value))
