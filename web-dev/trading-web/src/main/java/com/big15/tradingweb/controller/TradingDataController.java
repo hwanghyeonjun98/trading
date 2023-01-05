@@ -23,7 +23,7 @@ public class TradingDataController {
 	@GetMapping("/data")
 	public String dataDefultList(HttpSession session, Model model) {
 		if (session.getAttribute("userName") == null) {
-			model.addAttribute("error_msg", "멤버 전용 페이지 입니다.로그인해주세요!");
+			model.addAttribute("error_msg", "멤버 전용 페이지 입니다. 로그인해주세요!");
 		}
 
 		List<InvestingDto> defaultData = mapper.dataDefultList();

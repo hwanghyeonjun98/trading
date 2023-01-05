@@ -6,5 +6,8 @@ import lombok.Data;
 public class AccountDto {
 	private String date;
 	private String acc_name;
-	private String acc_value;
+	private int acc_value;
+	private String ratio;
+	private String kospi_changes;
+	private String kosdaq_changes;
 }

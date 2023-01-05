@@ -65,10 +65,6 @@ public class TradingRestController {
 	                                                    @PathVariable("endDate") String endDate,
 	                                                    @PathVariable("code") String code
 	) {
-		log.info(account);
-		log.info(startDate);
-		log.info(endDate);
-		log.info(code);
 		return aiTradingData.allHistoryDataSearch(account, startDate, endDate, code);
 	}
 

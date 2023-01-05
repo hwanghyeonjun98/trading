@@ -64,22 +64,28 @@ const options = {
 	}
 };
 
+// 어제 날짜 지정
+date.setDate(date.getDate() - 1);
+const yesterday = new Intl.DateTimeFormat("ko", {dateStyle : "long"}).format(date);
+
 const options2 = {
 	series        : [],
 	title         : {
-		text : account + " 장부금액",
+		text : account + " 수익률 비교",
 		// margin: ,
-		offsetY: 18,
-		style : {
-			fontSize : "1.4rem",
-			margin: "0",
-			borderBottom: "1px solid #000"
+		offsetY : 18,
+		style   : {
+			fontSize     : "1.4rem",
+			margin       : "0",
+			borderBottom : "1px solid #000"
 		}
+	}, subtitle   : {
+		text : yesterday + " 기준",
 	}, chart      : {
 		zoom          : {
 			enabled : false
 		},
-		type          : "area",
+		type          : "line",
 		height        : 350,
 		locales       : [{
 			"name"    : "ko",
@@ -97,7 +103,6 @@ const options2 = {
 					"pan"           : "이동",
 					"reset"         : "초기화"
 				}
-
 			}
 		}],
 		defaultLocale : "ko",
@@ -121,29 +126,35 @@ const options2 = {
 			}
 		}
 	}, yaxis      : {
-		tooltip : {
+		tooltip   : {
 			enabled : true,
 		}, labels : {
-		formatter : function (val) {
-			if(typeof val === "number") {
-				return val.toFixed(0).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			formatter : function (val) {
+				if (typeof val === "number") {
+					return val.toFixed(4).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+				}
+				return val;
 			}
-			return val;
 		}
-	}
 	}, noData     : {
 		text          : "데이터가 없습니다.",
 		align         : "center",
 		verticalAlign : "middle",
 		style         : {
-			fontSize : "1.8 rem",
-			textAlign: "center"
+			fontSize  : "1.8 rem",
+			textAlign : "center"
 		}
 	}, dataLabels : {
 		enabled : false
 	}
 	, stroke      : {
-		width : 1
+		width : 2
+	}, markers    : {
+		size  : [6, 6],
+		hover : {
+			size       : 7,
+			sizeOffset : 3
+		}
 	}
 };
 
@@ -173,15 +184,46 @@ chart2.render();
 let chartUrl2 = "/api/data/index/chart/account/" + account;
 
 $.getJSON(chartUrl2, function (response) {
-	let dataList = [];
+	let ratioDateList = [];
+	let accValueList = [];
+	let ratioList = [];
+	let kospiList = [];
+	let kosdaqList = [];
 
 	response.forEach((item) => {
-		dataList.push([item.date, item.acc_value]);
+		ratioDateList.push(item.date);
+		accValueList.push(item.acc_value);
+		kospiList.push([item.date, item.kospi_changes]);
+		kosdaqList.push([item.date, item.kosdaq_changes]);
 	});
 
+	for (let i = 0; i < accValueList.length; i++) {
+		let num1 = accValueList[i];
+		let num2 = accValueList[i + 1];
+		let num = (num2 - num1) / num1 * 100;
+		ratioList.push(num);
+	}
+
+	ratioList.unshift(0);
+
+	let ratioSeries = [];
+
+	for (let i = 0; i < accValueList.length; i++) {
+		ratioSeries.push([ratioDateList[i], ratioList[i]]);
+	}
+
+	kospiList[0][1] = "0";
+	kosdaqList[0][1] = "0";
+
 	chart2.updateSeries([{
-		name : account,
-		data : dataList
+		name : "내 계좌",
+		data : ratioSeries
+	}, {
+		name : "KOSPI",
+		data : kospiList
+	}, {
+		name : "KOSDAQ",
+		data : kosdaqList
 	}]);
 });
 

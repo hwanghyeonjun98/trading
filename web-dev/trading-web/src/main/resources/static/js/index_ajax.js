@@ -289,7 +289,7 @@ $(window).on("load", function () {
 
 	$(".historyDate").text(today);
 
-	let errorMsg = "<li>거래된 회사가 없습니다.</li>";
+	let errorMsg = "<li>금일 거래된 회사가 없습니다.</li>";
 	if (account !== "") {
 		$.ajax({
 			type     : "POST",
