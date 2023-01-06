@@ -44,6 +44,10 @@ public class TradingRestController {
 		return mapper.kospiChartList();
 	}
 
+	@RequestMapping("/index/chart/account/ratio/{account}")
+	public List<AccountDto> ratioChartList(@PathVariable("account") String account) {
+		return aiTradingData.ratioChartList(account);
+	}
 	@RequestMapping("/index/chart/account/{account}")
 	public List<AccountDto> accountChartList(@PathVariable("account") String account) {
 		return aiTradingData.accountChartList(account);

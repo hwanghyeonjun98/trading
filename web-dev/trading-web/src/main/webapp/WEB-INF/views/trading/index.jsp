@@ -19,11 +19,21 @@
 				<article class="w-75">
 					<div id="ai-trading-area" class="pe-4">
 						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
-						<div class="table-title">
-							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
-							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
-							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
-						</div>
+						<c:if test="${userAccount != null}">
+							<div class="table-title">
+								<h3 class="h3 pe-2">AI 실시간 트레이딩 <span class="badge live-badge">live</span></h3>
+								<small>트레이딩 시간 : 9:00 ~ 15:30 (5초 주기로 갱신)</small>
+								<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
+							</div>
+						</c:if>
+						<c:if test="${userAccount == null}">
+							<div class="table-title">
+								<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
+								<small>트레이딩 시간 : 9:00 ~ 15:30</small>
+								<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
+							</div>
+						</c:if>
+
 						<hr>
 						<div class="trading-data-table-wrap">
 							<table id="trading-data-table" class="table table-hover table-striped table-sort">
@@ -81,7 +91,11 @@
 					</div>
 				</article>
 				<article class="lomelo">
-					<div id="account-chart"></div>
+					<button type="button" class="account-chart-view-btn btn btn-sm btn-outline-secondary">장부금액 보기</button>
+					<div id="ratio-chart"></div>
+					<div class="account-chart-area">
+						<div id="account-chart"></div>
+					</div>
 				</article>
 			</section>
 			<section>
@@ -352,11 +366,11 @@
 									<label for="code" class="visually-hidden">종목명</label>
 									<input type="text" name="code" id="code" class="form-control" placeholder="종목명을 입력하세요.">
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<label for="startDate2" class="visually-hidden">시작 날짜</label>
 									<input type="datetime-local" name="startDate" id="startDate2" class="form-control" min="2020-01-01T00:00">
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<label for="endDate2" class="visually-hidden">끝 날짜</label>
 									<input type="datetime-local" name="endDate" id="endDate2" class="form-control" max="" value="">
 								</div>
