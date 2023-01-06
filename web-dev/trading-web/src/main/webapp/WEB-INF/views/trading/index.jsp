@@ -19,11 +19,21 @@
 				<article class="w-75">
 					<div id="ai-trading-area" class="pe-4">
 						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
-						<div class="table-title">
-							<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
-							<small>트레이딩 시간 : 9:00 ~ 15:30</small>
-							<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
-						</div>
+						<c:if test="${userAccount != null}">
+							<div class="table-title">
+								<h3 class="h3 pe-2">AI 실시간 트레이딩 <span class="badge live-badge">live</span></h3>
+								<small>트레이딩 시간 : 9:00 ~ 15:30 (5초 주기로 갱신)</small>
+								<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
+							</div>
+						</c:if>
+						<c:if test="${userAccount == null}">
+							<div class="table-title">
+								<h3 class="h3 pe-2">AI 실시간 트레이딩</h3>
+								<small>트레이딩 시간 : 9:00 ~ 15:30</small>
+								<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
+							</div>
+						</c:if>
+
 						<hr>
 						<div class="trading-data-table-wrap">
 							<table id="trading-data-table" class="table table-hover table-striped table-sort">

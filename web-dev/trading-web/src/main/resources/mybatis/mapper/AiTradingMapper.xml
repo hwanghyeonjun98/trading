@@ -90,10 +90,10 @@
 	</select>
 
 	<select id="profit" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
-		select date_format(his_time, '%Y-%m-%d') as date
-				 , format(sum(profit), 0)            as profit
+		select date_format(his_time, '%Y-%m-%d')                  as date
+				 , if(sum(profit) is null, 0, format(sum(profit), 0)) as profit
 		from ${account}_history
-		where account_name = '01big15'
+		where account_name = #{account}
 			and sell_num > 0
 			and amount = 0
 			and DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')

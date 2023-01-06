@@ -224,6 +224,13 @@ $(document).on("click", "#all-history-btn", function () {
 				      "<span class='fw-bold'>(" +
 				      nowDate +
 				      "</span> 1일 기준)";
+			} else if (parseFloat(rate[0].profit) === 0) {
+				str = "<span>" +
+				      "금액 : " + rate[0].profit + "원 " +
+				      "</span>" +
+				      "<span class='fw-bold'>(" +
+				      nowDate +
+				      "</span> 1일 기준)";
 			} else {
 				str = "<span class='color-red fw-bold'>" +
 				      "금액 : " + rate[0].profit + "원 " +

@@ -28,7 +28,6 @@ const options = {
 		defaultLocale : "ko",
 		toolbar       : {
 			show : false
-
 		}
 	}, tooltip    : {
 		enabled : true,
@@ -80,10 +79,10 @@ const options2 = {
 			borderBottom : "1px solid #000"
 		}
 	}, subtitle   : {
-		text : yesterday + " 기준",
+		text : yesterday + " 기준 (단위 : %)",
 	}, chart      : {
 		zoom          : {
-			enabled : false
+			enabled : true
 		},
 		type          : "line",
 		height        : 350,
@@ -107,8 +106,22 @@ const options2 = {
 		}],
 		defaultLocale : "ko",
 		toolbar       : {
-			show : false
-
+			show    : true,
+			offsetY : 26,
+			export  : {
+				csv : {
+					filename : nowDate + "_" + account + "_수익률비교",
+					dateFormatter(timestamp) {
+						return timestamp;
+					}
+				},
+				png : {
+					filename : nowDate + "_" + account + "_수익률비교",
+				},
+				svg : {
+					filename : nowDate + "_" + account + "_수익률비교",
+				}
+			}
 		}
 	}, tooltip    : {
 		enabled : true,
@@ -171,7 +184,7 @@ const options3 = {
 		text : "(단위 : 백만원)",
 	}, chart      : {
 		zoom          : {
-			enabled : false
+			enabled : true
 		},
 		type          : "line",
 		height        : 350,
@@ -195,8 +208,22 @@ const options3 = {
 		}],
 		defaultLocale : "ko",
 		toolbar       : {
-			show : false
-
+			show    : true,
+			offsetY : 26,
+			export  : {
+				csv : {
+					filename : nowDate + "_" + account + "_장부금액",
+					dateFormatter(timestamp) {
+						return timestamp;
+					}
+				},
+				png : {
+					filename : nowDate + "_" + account + "_장부금액",
+				},
+				svg : {
+					filename : nowDate + "_" + account + "_장부금액",
+				}
+			}
 		}
 	}, tooltip    : {
 		enabled : true,

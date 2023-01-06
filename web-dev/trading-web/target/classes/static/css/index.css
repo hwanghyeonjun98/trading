@@ -26,6 +26,22 @@ hr {
 	align-items: center;
 }
 
+.table-title h3 {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: .5rem;
+}
+
+.badge {
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.badge.live-badge {
+	background-color: var(--color-red);
+}
+
 .recommendation-keywords-container {
 	display: flex;
 	justify-content: space-between;
@@ -39,7 +55,7 @@ hr {
 }
 
 .keywords-contents a {
-	width: calc(100% / 4);
+	flex: 1 1 calc(100% / 4);
 	text-align: center;
 }
 
@@ -98,13 +114,11 @@ hr {
 }
 
 .change-rate_neg {
-
 	margin-bottom: 8px;
 	color: var(--color-blue);
 }
 
 .change-rate_pos {
-
 	margin-bottom: 8px;
 	color: var(--color-red);
 }
@@ -136,6 +150,7 @@ hr {
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity .1s;
+	z-index: 20;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -177,8 +192,6 @@ hr {
 	line-height: 1.7em;
 	padding-left: 0em;
 	font-weight: bold;
-
-
 }
 
 .snap {

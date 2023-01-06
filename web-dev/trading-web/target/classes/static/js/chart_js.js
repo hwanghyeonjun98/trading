@@ -44,7 +44,7 @@ const options = {
 		enabled   : true,
 		x         : {
 			show   : true,
-			format : "MM/dd",
+			format : "yyyy/MM/dd",
 		}, custom : function ({seriesIndex, dataPointIndex, w}) {
 			let o = w.globals.seriesCandleO[seriesIndex][dataPointIndex].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			let h = w.globals.seriesCandleH[seriesIndex][dataPointIndex].toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
