@@ -106,40 +106,40 @@
 							<hr>
 							<div class="keywords-container-wrapper">
 								<div class="keywords-contents">
-									<a href="/dataview/data/cadkrw">
+									<a href="/dataview/data/cadkrw" title="CAD/KRW">
 										<div class="keyword item">CAD/KRW</div>
 									</a>
-									<a href="/dataview/data/chfkrw">
+									<a href="/dataview/data/chfkrw" title="CHF/KRW">
 										<div class="keyword item">CHF/KRW</div>
 									</a>
-									<a href="/dataview/data/cnykrw">
+									<a href="/dataview/data/cnykrw" title="CNY/KRW">
 										<div class="keyword item">CNY/KRW</div>
 									</a>
-									<a href="/dataview/data/dkkkrw">
+									<a href="/dataview/data/dkkkrw" title="DKK/KRW">
 										<div class="keyword item">DKK/KRW</div>
 									</a>
-									<a href="/dataview/data/eurkrw">
+									<a href="/dataview/data/eurkrw" title="EUR/KRW">
 										<div class="keyword item">EUR/KRW</div>
 									</a>
-									<a href="/dataview/data/gbpkrw">
-										<div class="keyword item">GBP/KRWS</div>
+									<a href="/dataview/data/gbpkrw" title="GBP/KRW">
+										<div class="keyword item">GBP/KRW</div>
 									</a>
-									<a href="/dataview/data/hkdkrw">
+									<a href="/dataview/data/hkdkrw" title="HKD/KRW">
 										<div class="keyword item">HKD/KRW</div>
 									</a>
-									<a href="/dataview/data/idrkrw">
+									<a href="/dataview/data/idrkrw" title="IDR/KRW">
 										<div class="keyword item">IDR/KRW</div>
 									</a>
-									<a href="/dataview/data/jpykrw">
+									<a href="/dataview/data/jpykrw" title="JPY/KRW">
 										<div class="keyword item">JPY/KRW</div>
 									</a>
-									<a href="/dataview/data/sgdkrw">
+									<a href="/dataview/data/sgdkrw" title="SGD/KRW">
 										<div class="keyword item">SGD/KRW</div>
 									</a>
-									<a href="/dataview/data/thbkrw">
+									<a href="/dataview/data/thbkrw" title="THB/KRW">
 										<div class="keyword item">THB/KRW</div>
 									</a>
-									<a href="/dataview/data/usdkrw">
+									<a href="/dataview/data/usdkrw" title="USD/KRW">
 										<div class="keyword item">USD/KRW</div>
 									</a>
 								</div>
@@ -150,37 +150,37 @@
 							<hr>
 							<div class="keywords-container-wrapper">
 								<div class="keywords-contents">
-									<a href="/dataview/data/캐나다sptsx">
+									<a href="/dataview/data/캐나다sptsx" title="캐나다 sptsx 내역">
 										<div class="keyword item">캐나다 S&P TSX</div>
 									</a>
-									<a href="/dataview/data/나스닥종합지수">
+									<a href="/dataview/data/나스닥종합지수" title="나스닥 종합 지수 내역">
 										<div class="keyword item">나스닥종합지수</div>
 									</a>
-									<a href="/dataview/data/네덜란드aex">
+									<a href="/dataview/data/네덜란드aex" title="네덜란드 aex 내역">
 										<div class="keyword item">네덜란드 AEX</div>
 									</a>
-									<a href="/dataview/data/닛케이">
+									<a href="/dataview/data/닛케이" title="닛케이 내역">
 										<div class="keyword item">닛케이</div>
 									</a>
-									<a href="/dataview/data/다우존스">
+									<a href="/dataview/data/다우존스" title="다우존스 내역">
 										<div class="keyword item">다우존스</div>
 									</a>
-									<a href="/dataview/data/대만가권">
+									<a href="/dataview/data/대만가권" title="대만가권 내역">
 										<div class="keyword item">대만 가권</div>
 									</a>
-									<a href="/dataview/data/러셀2000지수">
+									<a href="/dataview/data/러셀2000지수" title="러셀2000지수 내역">
 										<div class="keyword item">러셀 2000 지수</div>
 									</a>
-									<a href="/dataview/data/러시아moexrussia">
+									<a href="/dataview/data/러시아moexrussia" title="러시아 moexrussia 내역">
 										<div class="keyword item">러시아 MOEX Russia</div>
 									</a>
-									<a href="/dataview/data/벨기에bel">
+									<a href="/dataview/data/벨기에bel" title="벨기에 bel">
 										<div class="keyword item">벨기에 BEL</div>
 									</a>
-									<a href="/dataview/data/브라질보베스파">
+									<a href="/dataview/data/브라질보베스파" title="브라질 보베스파 내역">
 										<div class="keyword item">브라질 보베스파</div>
 									</a>
-									<a href="/dataview/data/사우디아라비아tadawul">
+									<a href="/dataview/data/사우디아라비아tadawul" title="사우디아라비아 tadawul 내역">
 										<div class="keyword item">사우디아라비아 Tadawul</div>
 									</a>
 								</div>
