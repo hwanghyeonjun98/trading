@@ -107,7 +107,6 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
                 try:
                     try:
                         # 학습 시 사용한 스케일러 호출
-                        print(yesterday)
                         min_abs_scaler = load(open(f'./download/scaler/{yesterday}_scaler', 'rb'))
                         X_pred_sc = min_abs_scaler.transform(each_target_df)
                         # 학습 데이터와 차원 맞추기
