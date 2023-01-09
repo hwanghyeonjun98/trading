@@ -217,11 +217,15 @@ $(document).on("click", "#all-history-btn", function () {
 		url      : "/api/data/profit/" + account,
 		dataset  : "json",
 		success  : function (rate) {
-			if (parseFloat(rate[0].ratio) < 0) {
+			if (parseFloat(rate[0].profit) < 0) {
 				str = "<span class='color-blue fw-bold'>" +
-				      "수익율 : " + rate[0].ratio + "%, " +
+				      "금액 : " + rate[0].profit + "원 " +
 				      "</span>" +
-				      "<span class='color-blue fw-bold'>" +
+				      "<span class='fw-bold'>(" +
+				      nowDate +
+				      "</span> 1일 기준)";
+			} else if (parseFloat(rate[0].profit) === 0) {
+				str = "<span>" +
 				      "금액 : " + rate[0].profit + "원 " +
 				      "</span>" +
 				      "<span class='fw-bold'>(" +
@@ -229,9 +233,6 @@ $(document).on("click", "#all-history-btn", function () {
 				      "</span> 1일 기준)";
 			} else {
 				str = "<span class='color-red fw-bold'>" +
-				      "수익율 : " + rate[0].ratio + "%, " +
-				      "</span>" +
-				      "<span class='color-red fw-bold'>" +
 				      "금액 : " + rate[0].profit + "원 " +
 				      "</span>" +
 				      "<span class='fw-bold'>(" +

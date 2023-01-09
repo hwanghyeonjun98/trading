@@ -7,7 +7,7 @@
 				 , format(amount, 0)       as amount
 				 , format(buyprice, 2)     as buyprice
 				 , format(evalValue, 0)    as evalValue
-				 , format(ratio, 4)        as ratio
+				 , format(ratio, 2)        as ratio
 				 , format(currentValue, 0) as currentValue
 		FROM web_data.${account}_account_status
 		order by code asc
@@ -18,13 +18,13 @@
 				 , account_name
 				 , code_name
 				 , stock_code
-				 , format(buy_num, 0) as buy_num
-				 , format(sell_num, 0) as sell_num
-				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
-				 , format(profit, 0) as profit
+				 , format(buy_num, 0)                      as buy_num
+				 , format(sell_num, 0)                     as sell_num
+				 , format(amount, 0)                       as amount
+				 , format(ratio, 2)                        as ratio
+				 , format(profit, 0)                       as profit
 		from ${account}_history
-			where account_name = #{account}
+		where account_name = #{account}
 			and stock_code = #{stock_code}
 		order by his_time desc
 	</select>
@@ -34,11 +34,11 @@
 				 , account_name
 				 , code_name
 				 , stock_code
-				 , format(buy_num, 0) as buy_num
-				 , format(sell_num, 0) as sell_num
-				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
-				 , format(profit, 0) as profit
+				 , format(buy_num, 0)                      as buy_num
+				 , format(sell_num, 0)                     as sell_num
+				 , format(amount, 0)                       as amount
+				 , format(ratio, 2)                        as ratio
+				 , format(profit, 0)                       as profit
 		from ${account}_history
 		where account_name = #{account}
 			and stock_code = #{stock_code}
@@ -51,11 +51,11 @@
 				 , account_name
 				 , code_name
 				 , stock_code
-				 , format(buy_num, 0) as buy_num
-				 , format(sell_num, 0) as sell_num
-				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
-				 , format(profit, 0) as profit
+				 , format(buy_num, 0)                      as buy_num
+				 , format(sell_num, 0)                     as sell_num
+				 , format(amount, 0)                       as amount
+				 , format(ratio, 2)                        as ratio
+				 , format(profit, 0)                       as profit
 		from ${account}_history
 		where account_name = #{account}
 		order by his_time desc
@@ -63,20 +63,20 @@
 
 	<select id="allHistoryDataSearch" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
 		select DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') as his_time
-				 , account_name
-				 , code_name
-				 , stock_code
-				 , format(buy_num, 0) as buy_num
-				 , format(sell_num, 0) as sell_num
-				 , format(amount, 0) as amount
-				 , format(ratio, 4) as ratio
-				 , format(profit, 0) as profit
+		, account_name
+		, code_name
+		, stock_code
+		, format(buy_num, 0) as buy_num
+		, format(sell_num, 0) as sell_num
+		, format(amount, 0) as amount
+		, format(ratio, 2) as ratio
+		, format(profit, 0) as profit
 		from ${account}_history
 		where account_name = #{account}
-		  <if test="!code.equals('null')">
-				and code_name like CONCAT('%', #{code}, '%')
-		  </if>
-			and DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') between '${start_date}' and '${end_date}'
+		<if test="!code.equals('null')">
+			and code_name like CONCAT('%', #{code}, '%')
+		</if>
+		and DATE_FORMAT(his_time, '%Y-%m-%d %H:%i') between '${start_date}' and '${end_date}'
 		order by his_time desc
 	</select>
 
@@ -90,26 +90,35 @@
 	</select>
 
 	<select id="profit" resultType="com.big15.tradingweb.dto.AccountHistoryDto">
-		select DATE_FORMAT(his_time, '%Y-%m-%d') as date
-				 , format(sum(ratio), 4)             as ratio
-				 , format(sum(profit), 0)            as profit
+		select date_format(his_time, '%Y-%m-%d')                  as date
+				 , if(sum(profit) is null, 0, format(sum(profit), 0)) as profit
 		from ${account}_history
-		where DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
-		group by date
-		order by code_name asc;
+		where account_name = #{account}
+			and sell_num > 0
+			and amount = 0
+			and DATE_FORMAT(his_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+		order by date desc
 	</select>
 
-	<select id="accountChartList" resultType="com.big15.tradingweb.dto.AccountDto">
+	<select id="ratioChartList" resultType="com.big15.tradingweb.dto.AccountDto">
 		select date_format(account.date, '%Y-%m-%d') as date
 				 , account.acc_value
-				 , kospi.changes                          as kospi_changes
-				 , kosdaq.changes                         as kosdaq_changes
+				 , kospi.changes                         as kospi_changes
+				 , kosdaq.changes                        as kosdaq_changes
 		from web_data.account as account
 			 , web_data.코스피지수내역 as kospi
 			 , web_data.코스닥내역 as kosdaq
 		where account.acc_name = #{account}
 			and date_format(account.date, '%Y-%m-%d') = date_format(kospi.dates, '%Y-%m-%d')
 			and date_format(account.date, '%Y-%m-%d') = date_format(kosdaq.dates, '%Y-%m-%d')
+	</select>
+
+	<select id="accountChartList" resultType="com.big15.tradingweb.dto.AccountDto">
+		select date_format(date, '%Y-%m-%d') as date
+				 , acc_value
+				 , acc_value
+		from account
+		where acc_name = #{account}
 	</select>
 </mapper>
 

@@ -11,19 +11,26 @@ hr {
 	flex-wrap: wrap;
 }
 
-/* .main-list .w-75{
-	flex: 1 1 80% ; 
-
-}
-.main-list .w-{
-	flex: 1 1 20%;
-} */
-
-
 .table-title {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.table-title h3 {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: .5rem;
+}
+
+.badge {
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.badge.live-badge {
+	background-color: var(--color-red);
 }
 
 .recommendation-keywords-container {
@@ -39,7 +46,7 @@ hr {
 }
 
 .keywords-contents a {
-	width: calc(100% / 4);
+	width: calc(100% / 5.5);
 	text-align: center;
 }
 
@@ -48,6 +55,9 @@ hr {
 	background: var(--color-gray);
 	border-radius: 4px;
 	padding: 8px 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .keywords-contents a:hover .keyword.item,
@@ -78,7 +88,6 @@ hr {
 	border: 2px solid var(--color-gray);;
 	padding: 35px;
 	width: 320px;
-
 }
 
 .main-value {
@@ -98,13 +107,11 @@ hr {
 }
 
 .change-rate_neg {
-
 	margin-bottom: 8px;
 	color: var(--color-blue);
 }
 
 .change-rate_pos {
-
 	margin-bottom: 8px;
 	color: var(--color-red);
 }
@@ -119,6 +126,34 @@ hr {
 	border: 1px solid var(--color-dark-green);
 	width: 25% !important;
 	margin-top: 69px;
+	position: relative;
+}
+
+.lomelo .account-chart-view-btn {
+	z-index: 100;
+	position: absolute;
+	top: .4rem;
+	right: .4rem;
+	transition: all .5s ease-in-out;
+}
+
+.lomelo .account-chart-area {
+	padding: 15px;
+	background-color: var(--color-white);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity .1s;
+	z-index: 20;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.lomelo .account-chart-area.active {
+	opacity: 1;
+	visibility: visible;
 }
 
 .h_popular {
@@ -150,8 +185,6 @@ hr {
 	line-height: 1.7em;
 	padding-left: 0em;
 	font-weight: bold;
-
-
 }
 
 .snap {
@@ -257,6 +290,7 @@ hr {
 	left: 0;
 }
 
+
 .history-area {
 	margin-bottom: 1.4rem;
 }
@@ -295,7 +329,6 @@ hr {
 	padding: 0;
 	margin: 0;
 }
-
 
 .history-area .history-list-area .history-list li {
 	flex: 0 0 auto;
