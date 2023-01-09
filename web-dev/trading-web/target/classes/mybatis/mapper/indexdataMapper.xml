@@ -9,10 +9,11 @@
 	<select id="newsdata" resultType="com.big15.tradingweb.dto.NewsDto">
 		SELECT *
 		FROM web_data.news_data
-		order by newsDate desc limit 10
+		order by newsDate desc
+		limit 10
 	</select>
 	<select id="marketCapRanking" resultType="com.big15.tradingweb.dto.MarketCapDto">
-		SELECT no, stock_name, format(market_cap,0) as market_cap
+		SELECT no, stock_name, format(market_cap, 0) as market_cap
 		FROM web_data.market_cap_data
 		order by no
 		limit 10

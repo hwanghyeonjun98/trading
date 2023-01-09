@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.big15.tradingweb.mapper.InvestingMapper">
 	<select id="investingDateSearchList" resultType="com.big15.tradingweb.dto.InvestingDto">
-		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates, format(closes, 2) as closes, format(opens,2) as opens, format(highs,2) as highs, format(lows, 2) as lows, format(volumes, 0) as volumes, changes
+		SELECT DATE_FORMAT(dates, '%Y-%m-%d') as dates,
+		       format(closes, 2)              as closes,
+		       format(opens, 2)               as opens,
+		       format(highs, 2)               as highs,
+		       format(lows, 2)                as lows,
+		       format(volumes, 0)             as volumes,
+		       changes
 		FROM web_data.${names}
 		WHERE dates between #{startDate} AND #{endDate}
 		ORDER BY dates desc
