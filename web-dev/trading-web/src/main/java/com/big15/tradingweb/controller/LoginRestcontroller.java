@@ -4,7 +4,6 @@ import com.big15.tradingweb.dto.UserInfoDto;
 import com.big15.tradingweb.mapper.LoginMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,10 @@ public class LoginRestcontroller {
 	private LoginMapper loginMapper;
 
 	@RequestMapping("/login/userLogin")
-	public void login(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public void login(@RequestParam("user_id") String user_id,
+	                  @RequestParam("user_pw") String user_pw,
+	                  HttpServletRequest request,
+	                  HttpServletResponse response) {
 		try {
 			HttpSession session = request.getSession(true);
 
@@ -32,14 +34,10 @@ public class LoginRestcontroller {
 				session.setAttribute("userName", user.getUser_name());
 				session.setAttribute("userAccount", user.getUser_account());
 				response.getWriter().print(true);
-
-				model.addAttribute("info", user.getUser_name() + "님 안녕하세요!");
 			} else {
 				response.getWriter().print(false);
-				model.addAttribute("error", "로그인 정보를 확인해주세요.");
 			}
-		} catch (NullPointerException ignored) {
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			throw new RuntimeException(e);
 		}
 	}

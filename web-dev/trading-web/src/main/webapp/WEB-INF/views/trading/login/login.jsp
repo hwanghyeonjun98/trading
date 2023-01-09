@@ -9,6 +9,13 @@
 	<title>트레이딩 | 로그인</title>
 	<%@ include file="/WEB-INF/views/trading/inc/defualt_css.jsp" %>
 	<link rel="stylesheet" href="/css/login.css">
+	<c:if test="${loginCheckedMsg != null}">
+		<script>
+			msg = "${loginCheckedMsg}";
+			alert(msg);
+			location.href = "/"
+		</script>
+	</c:if>
 </head>
 <body>
 	<div class="background-wrap">

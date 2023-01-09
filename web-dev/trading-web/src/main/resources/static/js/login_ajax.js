@@ -1,8 +1,7 @@
-function login(key, value) {
+function login() {
 	const userId = $("#user_id").val();
 	const userPw = $("#user_pw").val();
 	if (userId === "" || userPw === "") {
-		// event.preventDefault();
 		alert("로그인 정보를 입력하세요.");
 
 		$("#user_id").focus();
@@ -16,7 +15,6 @@ function login(key, value) {
 				if (data === "true") {
 					location.href = "/";
 				} else {
-					// event.preventDefault();
 					alert("아이디 또는 비밀번호가 잘못 되었습니다.\n로그인 정보를 확인하세요.");
 				}
 			},
@@ -41,7 +39,7 @@ $("input").on("change", function () {
 	}
 });
 
-$("#login-btn").on("click", event => login());
+$("#login-btn").on("click", (event) => login);
 $(window).on("keyup", event => loginButtonKeyPress(event));
 
 
