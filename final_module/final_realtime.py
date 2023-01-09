@@ -16,8 +16,14 @@ import time
 today = str(date.today()).replace('-','')
 yesterday=str(date.today() - BDay(1)).replace('-','').split(' ')[0]
 
-# 실시간 데이트 수집
+# 실시간 데이터 수집
 def get_realtime_stock_info(code, today):
+
+    if instCpCybos.GetLimitRemainCount(0) < 2:
+        while True:
+            if instCpCybos.GetLimitRemainCount(0) > 2:
+                break
+            time.sleep(0.1)
     
     instStockChart.SetInputValue(0, 'A'+ code) # 종목명
     instStockChart.SetInputValue(1, ord('2')) # 1 : 기간으로 요청, 2: 개수로 요청
@@ -53,9 +59,9 @@ def get_realtime_stock_info(code, today):
             # 1,2,3,4,5,6,7,8,9, 10
             stock_info.iloc[num, col] = str(instStockChart.GetDataValue(col,num))
 
-    if instCpCybos.GetLimitRemainCount(1) < 3:
+    if instCpCybos.GetLimitRemainCount(1) < 6:
         while True:
-            if instCpCybos.GetLimitRemainCount(1) > 3:
+            if instCpCybos.GetLimitRemainCount(1) > 6:
                 break
             time.sleep(0.1)
 
@@ -82,6 +88,12 @@ def sqlalchemy_trading_insert(update_df, code, type, conn, account_name):
 # buysell => str, code => str, quantity => int, price => int
 # ex) ds_trade_stock('2', 'A005930', 1, 64000)
 def ds_trade_stock(buysell, code, quantity, price):
+
+    if instCpCybos.GetLimitRemainCount(0) < 2:
+        while True:
+            if instCpCybos.GetLimitRemainCount(0) > 2:
+                break
+            time.sleep(0.1)
 
     # 주문 초기화
     initCheck = instCpTdUtil.TradeInit(0)
@@ -122,6 +134,12 @@ def ds_trade_stock(buysell, code, quantity, price):
 # 시장가 매도 함수
 def ds_trade_end(buysell, code, quantity):
 
+    if instCpCybos.GetLimitRemainCount(0) < 2:
+        while True:
+            if instCpCybos.GetLimitRemainCount(0) > 2:
+                break
+            time.sleep(0.1)
+
     # 주문 초기화
     initCheck = instCpTdUtil.TradeInit(0)
     if (initCheck != 0):
@@ -158,6 +176,13 @@ def ds_trade_end(buysell, code, quantity):
 
 # 이상 종목 확인
 def ds_stock_status(code):
+
+    if instCpCybos.GetLimitRemainCount(1) < 6:
+        while True:
+            if instCpCybos.GetLimitRemainCount(1) > 6:
+                break
+            time.sleep(0.1)
+
     inStockMst.SetInputValue(0, 'A' + code)
     inStockMst.BlockRequest()
     sign1 = chr(inStockMst.GetHeaderValue(66)) # 관리종목 여부
@@ -173,6 +198,12 @@ def ds_stock_status(code):
 
 # 미체결 잔량 확인
 def ds_n_conclude_check():
+
+    if instCpCybos.GetLimitRemainCount(0) < 2:
+        while True:
+            if instCpCybos.GetLimitRemainCount(0) > 2:
+                break
+            time.sleep(0.1)
     
     initCheck = instCpTdUtil.TradeInit(0)
     if (initCheck != 0):
@@ -219,6 +250,12 @@ def ds_n_conclude_check():
 # 미체결 잔량 취소 함수
 def ds_order_cancel(code, ordernum):
 
+    if instCpCybos.GetLimitRemainCount(0) < 2:
+        while True:
+            if instCpCybos.GetLimitRemainCount(0) > 2:
+                break
+            time.sleep(0.1)
+
     # 주문 초기화
     initCheck = instCpTdUtil.TradeInit(0)
     if (initCheck != 0):
@@ -245,6 +282,12 @@ def ds_order_cancel(code, ordernum):
 
 # 보유 잔고 조회
 def ds_account_stock_check():
+
+    if instCpCybos.GetLimitRemainCount(1) < 6:
+        while True:
+            if instCpCybos.GetLimitRemainCount(1) > 6:
+                break
+            time.sleep(0.1)
     
     # 주문 초기화
     initCheck = instCpTdUtil.TradeInit(0)
@@ -309,6 +352,12 @@ def ds_account_stock_check():
 
 # 계좌 정보 DB 업데이트
 def ds_account_db_update(conn):
+
+    if instCpCybos.GetLimitRemainCount(1) < 6:
+        while True:
+            if instCpCybos.GetLimitRemainCount(1) > 6:
+                break
+            time.sleep(0.1)
 
     initCheck = instCpTdUtil.TradeInit(0)
     if (initCheck != 0):
@@ -558,9 +607,14 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
             current_value = status_df[status_df['종목코드'] == 'A' + str(code)]['장부금액'].values[0]
             buy_num = ((cost-current_value) // int(end_cost)) - int(n_conclude_num)
+
+            if cost > current_value:
+                predict_position = ((predict_max - predict_min) * ((cost - current_value) / cost)) + predict_min
+            else:
+                predict_position = predict_max
+
             print('========================================================================')
-            print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min))\
-                 + ' 차이값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)) - predict_df['1'].values[0])
+            print('현재 예측 위치값 : ' + str(predict_position) + ' 차이값 : ' + str(round(predict_position - predict_df['1'].values[0],3)))
             print('========================================================================')
 
             # 장 마감 전 보유 종목 전체 매도
@@ -653,10 +707,10 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
             # 현재 예측 값이 매수 예측 값의 평균보다 미달할 경우 진입
                 
-            elif (((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min) > predict_df['1'].values[0]) & (amount > 0):
+            elif (predict_position > predict_df['1'].values[0]) & (amount > 0):
                 print('')
                 print('---------------------- 예측 값 평균 이탈 매도 위치 ---------------------')
-                print('현재 예측 위치값 : ' + str(((predict_max - predict_min) * ((cost - current_value) / cost) + predict_min)) + ' 매도 가능 수량 : ' + str(amount))
+                print('현재 예측 위치값 : ' + str(predict_position) + ' 매도 가능 수량 : ' + str(amount))
                 print('------------------------------------------------------------------------')
 
                 ratio = round(float(status_df[status_df['종목코드'] == 'A' + code]['수익율'].values[0]), 4)
@@ -726,7 +780,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
     except:
         print('매매를 시도하였으나 에러가 발생하였습니다 종목명 : ' + str(code_name))
 
-    time.sleep(2.5)
+    time.sleep(0.6)
     return 0
 
 
