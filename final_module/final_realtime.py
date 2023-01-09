@@ -707,7 +707,7 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
 
             # 현재 예측 값이 매수 예측 값의 평균보다 미달할 경우 진입
                 
-            elif (predict_position > predict_df['1'].values[0]) & (amount > 0):
+            elif (predict_position - predict_df['1'].values[0] > 0.01 ) & (amount > 0):
                 print('')
                 print('---------------------- 예측 값 평균 이탈 매도 위치 ---------------------')
                 print('현재 예측 위치값 : ' + str(predict_position) + ' 매도 가능 수량 : ' + str(amount))
@@ -754,8 +754,8 @@ def real_trading(predict_df, cost, code, each_target_df, now, account_name, pred
                     if n_conclude_num == 0:
                         # if float(predict_df['비교'].values[0]) < -0.4:
                             # num = 500000 // end_cost
-                        if int(end_cost) <= 200000:
-                            num = 200000 // int(end_cost)
+                        if int(end_cost) <= 500000:
+                            num = 500000 // int(end_cost)
                         else:
                             num = 1
                         
