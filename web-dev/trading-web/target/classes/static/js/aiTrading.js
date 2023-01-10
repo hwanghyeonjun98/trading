@@ -51,6 +51,7 @@ if (account !== "") {
 							list.push(str);
 						}
 					});
+
 					if (list.length === 0) {
 						tradingDataTableBdoy.html("<tr><td colspan='7'>거래중입니다. 잠시만 기다려주세요.</td></tr>");
 					} else {
