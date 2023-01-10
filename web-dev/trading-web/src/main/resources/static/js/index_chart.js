@@ -281,6 +281,17 @@ ratioChart.render();
 const accountChart = new ApexCharts(document.querySelector("#account-chart"), options3);
 accountChart.render();
 
+const accViewBtn = document.querySelector(".account-chart-view-btn");
+const accViewArea = document.querySelector(".account-chart-area");
+accViewBtn.addEventListener("click", () => {
+	accViewArea.classList.toggle("active");
+	if (accViewArea.classList.contains("active")) {
+		accViewBtn.innerText = "닫기";
+	} else {
+		accViewBtn.innerText = "장부금액 보기";
+	}
+});
+
 /* 코스피 차트 */
 let kospiChartUrl = "/api/data/index/chart/kospi";
 
@@ -358,17 +369,6 @@ if (account !== "") {
 			name : account,
 			data : accountList
 		}]);
-	});
-
-	const accViewBtn = document.querySelector(".account-chart-view-btn");
-	const accViewArea = document.querySelector(".account-chart-area");
-	accViewBtn.addEventListener("click", () => {
-		accViewArea.classList.toggle("active");
-		if (accViewArea.classList.contains("active")) {
-			accViewBtn.innerText = "닫기";
-		} else {
-			accViewBtn.innerText = "장부금액 보기";
-		}
 	});
 }
 
