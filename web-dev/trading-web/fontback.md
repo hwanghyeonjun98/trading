@@ -1,11 +1,14 @@
 # Font End & Back End
-디렉토리 구조
-
----
-
 ## 디렉토리 구조
 
-### Back 단
+---
+**!!!! 스프링 부트 최초 실행 및 처음 클론 시 nodejs 설치하고**<br>
+**<code>/trading/web-dev/trading-web/src/main/resources/static</code> 디렉토리 접근 후**<br>
+**터미널에서 <code>npm install</code> 후 스프링 실행**
+
+### 디렉토리 구조
+
+#### Back 단
 
 <pre>
 📦java
@@ -51,7 +54,7 @@
  ┃ ┗ 📜LoginMapper.xml // 로그인 SQL
 </pre>
 
-### Front 단
+#### Front 단
 
 <pre>
 📦views
