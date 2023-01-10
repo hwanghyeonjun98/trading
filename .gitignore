@@ -54,3 +54,6 @@ web-dev/trading-web/HELP.md
 
 # 크롤링 테스트 이미지
 데이터 수집 노트북/image.png
+
+# node js 모듈 파일
+trading/web-dev/trading-web/src/main/resources/static/node_modules
