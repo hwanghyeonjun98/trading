@@ -21,7 +21,7 @@
 						<input type="hidden" value="${userAccount}" id="account" style="display: none;">
 						<c:if test="${userAccount != null}">
 							<div class="table-title">
-								<h3 class="h3 pe-2">AI 실시간 트레이딩 <span class="badge live-badge">live</span></h3>
+								<h3 class="h3 pe-2">AI 실시간 트레이딩 <span class="badge"></span></h3>
 								<small>트레이딩 시간 : 9:00 ~ 15:30 (5초 주기로 갱신)</small>
 								<div class="snap ms-auto">TIME : <span id="current" class="display"></span></div>
 							</div>
@@ -106,40 +106,40 @@
 							<hr>
 							<div class="keywords-container-wrapper">
 								<div class="keywords-contents">
-									<a href="/dataview/data/cadkrw">
+									<a href="/dataview/data/cadkrw" title="CAD/KRW">
 										<div class="keyword item">CAD/KRW</div>
 									</a>
-									<a href="/dataview/data/chfkrw">
+									<a href="/dataview/data/chfkrw" title="CHF/KRW">
 										<div class="keyword item">CHF/KRW</div>
 									</a>
-									<a href="/dataview/data/cnykrw">
+									<a href="/dataview/data/cnykrw" title="CNY/KRW">
 										<div class="keyword item">CNY/KRW</div>
 									</a>
-									<a href="/dataview/data/dkkkrw">
+									<a href="/dataview/data/dkkkrw" title="DKK/KRW">
 										<div class="keyword item">DKK/KRW</div>
 									</a>
-									<a href="/dataview/data/eurkrw">
+									<a href="/dataview/data/eurkrw" title="EUR/KRW">
 										<div class="keyword item">EUR/KRW</div>
 									</a>
-									<a href="/dataview/data/gbpkrw">
-										<div class="keyword item">GBP/KRWS</div>
+									<a href="/dataview/data/gbpkrw" title="GBP/KRW">
+										<div class="keyword item">GBP/KRW</div>
 									</a>
-									<a href="/dataview/data/hkdkrw">
+									<a href="/dataview/data/hkdkrw" title="HKD/KRW">
 										<div class="keyword item">HKD/KRW</div>
 									</a>
-									<a href="/dataview/data/idrkrw">
+									<a href="/dataview/data/idrkrw" title="IDR/KRW">
 										<div class="keyword item">IDR/KRW</div>
 									</a>
-									<a href="/dataview/data/jpykrw">
+									<a href="/dataview/data/jpykrw" title="JPY/KRW">
 										<div class="keyword item">JPY/KRW</div>
 									</a>
-									<a href="/dataview/data/sgdkrw">
+									<a href="/dataview/data/sgdkrw" title="SGD/KRW">
 										<div class="keyword item">SGD/KRW</div>
 									</a>
-									<a href="/dataview/data/thbkrw">
+									<a href="/dataview/data/thbkrw" title="THB/KRW">
 										<div class="keyword item">THB/KRW</div>
 									</a>
-									<a href="/dataview/data/usdkrw">
+									<a href="/dataview/data/usdkrw" title="USD/KRW">
 										<div class="keyword item">USD/KRW</div>
 									</a>
 								</div>
@@ -150,37 +150,37 @@
 							<hr>
 							<div class="keywords-container-wrapper">
 								<div class="keywords-contents">
-									<a href="/dataview/data/캐나다sptsx">
+									<a href="/dataview/data/캐나다sptsx" title="캐나다 sptsx 내역">
 										<div class="keyword item">캐나다 S&P TSX</div>
 									</a>
-									<a href="/dataview/data/나스닥종합지수">
+									<a href="/dataview/data/나스닥종합지수" title="나스닥 종합 지수 내역">
 										<div class="keyword item">나스닥종합지수</div>
 									</a>
-									<a href="/dataview/data/네덜란드aex">
+									<a href="/dataview/data/네덜란드aex" title="네덜란드 aex 내역">
 										<div class="keyword item">네덜란드 AEX</div>
 									</a>
-									<a href="/dataview/data/닛케이">
+									<a href="/dataview/data/닛케이" title="닛케이 내역">
 										<div class="keyword item">닛케이</div>
 									</a>
-									<a href="/dataview/data/다우존스">
+									<a href="/dataview/data/다우존스" title="다우존스 내역">
 										<div class="keyword item">다우존스</div>
 									</a>
-									<a href="/dataview/data/대만가권">
+									<a href="/dataview/data/대만가권" title="대만가권 내역">
 										<div class="keyword item">대만 가권</div>
 									</a>
-									<a href="/dataview/data/러셀2000지수">
+									<a href="/dataview/data/러셀2000지수" title="러셀2000지수 내역">
 										<div class="keyword item">러셀 2000 지수</div>
 									</a>
-									<a href="/dataview/data/러시아moexrussia">
+									<a href="/dataview/data/러시아moexrussia" title="러시아 moexrussia 내역">
 										<div class="keyword item">러시아 MOEX Russia</div>
 									</a>
-									<a href="/dataview/data/벨기에bel">
+									<a href="/dataview/data/벨기에bel" title="벨기에 bel">
 										<div class="keyword item">벨기에 BEL</div>
 									</a>
-									<a href="/dataview/data/브라질보베스파">
+									<a href="/dataview/data/브라질보베스파" title="브라질 보베스파 내역">
 										<div class="keyword item">브라질 보베스파</div>
 									</a>
-									<a href="/dataview/data/사우디아라비아tadawul">
+									<a href="/dataview/data/사우디아라비아tadawul" title="사우디아라비아 tadawul 내역">
 										<div class="keyword item">사우디아라비아 Tadawul</div>
 									</a>
 								</div>
@@ -199,7 +199,7 @@
 								<div id="root">
 								</div>
 								<div class="indicator-name">
-									<img src="https://imgnews.pstatic.net/image/018/2022/12/16/0005388149_003_20221216095701914.jpg?type=w540" width="255" height="285">
+									<img src="https://imgnews.pstatic.net/image/018/2022/12/16/0005388149_003_20221216095701914.jpg?type=w540" width="255" height="285" alt="">
 									<hr class='hr-solid'>
 									<span>국내 이슈</span>
 								</div>
@@ -209,14 +209,14 @@
 								</div>
 								<div class="date-info">
 									<hr class='hr-solid'>
-									<button class="btn btn-success" onClick="location.href='https://finance.naver.com/item/news_read.naver?article_id=0005388149&office_id=018&code=015760&sm=title_entity_id.basic'">
+									<a class="btn btn-success" target="_blank" href="https://finance.naver.com/item/news_read.naver?article_id=0005388149&office_id=018&code=015760&sm=title_entity_id.basic">
 										링크로 이동
-									</button>
+									</a>
 								</div>
 							</div>
 							<div class="economic-indicator">
 								<div class="indicator-name">
-									<img src="https://imgnews.pstatic.net/image/008/2022/12/16/0004829736_001_20221216072901029.jpg?type=w540" width="255" height="285">
+									<img src="https://imgnews.pstatic.net/image/008/2022/12/16/0004829736_001_20221216072901029.jpg?type=w540" width="255" height="285" alt="">
 									<hr class='hr-solid'>
 									<span>해외 이슈</span>
 								</div>
@@ -225,36 +225,36 @@
 								</div>
 								<div class="date-info">
 									<hr class='hr-solid'>
-									<button class="btn btn-success" onClick="location.href='https://finance.naver.com/news/news_read.naver?article_id=0004829736&office_id=008&mode=mainnews&type=&date=2022-12-16&page=1'">
+									<a class="btn btn-success" target="_blank" href="https://finance.naver.com/news/news_read.naver?article_id=0004829736&office_id=008&mode=mainnews&type=&date=2022-12-16&page=1">
 										링크로 이동
-									</button>
+									</a>
 								</div>
 							</div>
 							<div class="economic-indicator">
 								<div class="indicator-name">
-									<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F016%2F2022%2F09%2F23%2F20220923000346_0_20220923111203283.jpg&type=l340_165" width="255" height="285">
+									<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F016%2F2022%2F09%2F23%2F20220923000346_0_20220923111203283.jpg&type=l340_165" width="255" height="285" alt="">
 									<hr class='hr-solid'>
 									<span>환율 관련</span>
 								</div>
 								<div class="main-value">주제 :<span class="change-rate_neg">환율</span></div>
 								<div class="sub-value">기사 제목 :<span class="change-rate_neg">코스피 하락, 환율 상승 출발</span></div>
 								<hr class='hr-solid'>
-								<button class="btn btn-success" onClick="location.href='https://newsis.com/view/?id=NISI20221216_0019595479'">
+								<a class="btn btn-success" target="_blank" href="https://newsis.com/view/?id=NISI20221216_0019595479">
 									링크로 이동
-								</button>
+								</a>
 							</div>
 							<div class="economic-indicator">
 								<div class="indicator-name">
-									<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTJfMTAw%2FMDAxNjY4MjE4MzIxMTAw.uN064CZvfnaj08SWljDs-jm4--M_pjT_9Sk3lP25XpEg.rx2QFgxITz7Kj4joJg5LZkwNq6nH1vVcDvv-WZJ3aZwg.JPEG.p9573198%2F0006452791%25A3%25DF002%25A3%25DF20221112052801742.jpg&type=a340" width="255" height="285">
+									<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTJfMTAw%2FMDAxNjY4MjE4MzIxMTAw.uN064CZvfnaj08SWljDs-jm4--M_pjT_9Sk3lP25XpEg.rx2QFgxITz7Kj4joJg5LZkwNq6nH1vVcDvv-WZJ3aZwg.JPEG.p9573198%2F0006452791%25A3%25DF002%25A3%25DF20221112052801742.jpg&type=a340" width="255" height="285" alt="">
 									<hr class='hr-solid'>
 									<span>비트코인 관련</span>
 								</div>
 								<div class="main-value">주제 :<span class="change-rate_neg">FTX 사태</span></div>
 								<div class="sub-value">기사 제목 :<span class="change-rate_neg">뱅크런은 어떻게 시작됐나…FTX 사태 주요 일지</span></div>
 								<hr class='hr-solid'>
-								<button class="btn btn-success " onClick="location.href='http://www.coindeskkorea.com/news/articleView.html?idxno=82076'">
+								<a class="btn btn-success" target="_blank" href="http://www.coindeskkorea.com/news/articleView.html?idxno=82076">
 									링크로 이동
-								</button>
+								</a>
 							</div>
 						</div>
 						<div>
@@ -263,7 +263,7 @@
 							<ul class="p-0 new-list">
 								<c:forEach items="${nnews}" var="nnews">
 									<li class="px-3">
-										<a href="${nnews.newsLink}" class="news-link">
+										<a href="${nnews.newsLink}" class="news-link" target="_blank">
 											<h5 class="hove">${nnews.newsName} <small>${nnews.newsDate}</small></h5>
 											<p class="llong">${nnews.news}</p>
 										</a>

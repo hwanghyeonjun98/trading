@@ -4,8 +4,8 @@ import com.big15.tradingweb.dto.*;
 import com.big15.tradingweb.mapper.AiTradingMapper;
 import com.big15.tradingweb.mapper.IndexdataMapper;
 import com.big15.tradingweb.mapper.InvestingMapper;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,18 +14,12 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/data")
 public class TradingRestController {
-	@Autowired
 	private InvestingMapper mapper;
-	@Autowired
 	private AiTradingMapper aiTradingData;
-	@Autowired
 	private IndexdataMapper indexdataMapper;
-
-	public TradingRestController(InvestingMapper mapper) {
-		this.mapper = mapper;
-	}
 
 	@RequestMapping("/dateSearch/{names}/{startDate}/{endDate}")
 	public List<InvestingDto> investingDateSearchList(@PathVariable("names") String names,
