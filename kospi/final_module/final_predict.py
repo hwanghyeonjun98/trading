@@ -55,16 +55,15 @@ def stock_predict(stock_list, investing_df, col_list,  model, account_name):
         if (now.minute == 30) & (now.hour == 15):
             break
 
-        elif (now.hour < 9) | (now.hour > 16):
+        elif (now.hour < 9) | (now.hour >= 16):
             time_cnt += 1
-            if time_cnt == 10:
+            if time_cnt == 1:
                 print('박대기중~~~~~~~')
                 time_cnt = 0
             time.sleep(1)
 
         else:
             for code in stock_list: # 대형주 : kospi_list,  소형주 : kosdaq_list
-            
                 cnt = 0
                 count = 0
                 while True:
