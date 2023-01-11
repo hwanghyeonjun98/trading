@@ -6,7 +6,6 @@ const nowMin = date.getHours() * 60;
 // 실기간 트레이딩
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
-
 	if (nowMin < 570 || nowMin > 931) {
 		badge.attr("class", "badge bg-secondary");
 		badge.text("closed");
@@ -52,10 +51,17 @@ if (account !== "") {
 							list.push(str);
 						}
 					});
+
 					if (list.length === 0) {
 						tradingDataTableBdoy.html("<tr><td colspan='7'>거래중입니다. 잠시만 기다려주세요.</td></tr>");
 					} else {
 						tradingDataTableBdoy.html(list);
+					}
+
+					if (nowMin < 570 || nowMin > 931) {
+						badge.attr("class", "badge bg-secondary");
+						badge.text("closed");
+						tradingDataTableBdoy.html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
 					}
 				}, timeout : 10000,
 				complete   : setTimeout(function () {

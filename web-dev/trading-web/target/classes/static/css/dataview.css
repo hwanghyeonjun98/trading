@@ -26,12 +26,14 @@
 }
 
 .data-menu .menu-title + .menu-content {
+	display: none;
 	max-height: 0;
 	overflow-Y: scroll;
 	transition: max-height .4s ease-in-out;
 }
 
 .data-menu .menu-title.active + .menu-content {
+	display: block;
 	max-height: 120px;
 }
 

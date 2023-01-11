@@ -414,8 +414,8 @@
 	<button type="button" class="top-to-btn">
 		<i class="bi bi-arrow-up-circle-fill"></i>
 	</button>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+	<script src="/node_modules/jquery/dist/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="/js/common.js"></script>
 	<script src="/js/index_ajax.js"></script>
