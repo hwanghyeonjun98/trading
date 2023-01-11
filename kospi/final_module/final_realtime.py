@@ -718,17 +718,18 @@ def real_trading(predict_df,cost, code, each_target_df, now, account_name, sell_
                                         ds_trade_end('1', code, sell_num)
                                         code_name, total_num, ratio, pyungga, jangbu = status_history(code)
                                         trading_history(DBConnection_present().get_pymysql_connection(), account_name,code_name, code, 0, sell_num, total_num, ratio, pyungga, jangbu)
+                                status_df = ds_account_stock_check()
+                                n_conclude_df = ds_n_conclude_check()
+                                result_amount = status_df[status_df['종목코드'] == 'A' + code]['보유수량'].values[0]
+                                n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0] # 미체결 수량만 추출
+                            
+                                if (int(result_amount) - int(n_conclude_num)) == 0:
+                                    time.sleep(2)
+                                    return code
+                                    
                                 time.sleep(2)
                                 return {code : end_cost}
                             
-                            status_df = ds_account_stock_check()
-                            n_conclude_df = ds_n_conclude_check()
-                            result_amount = status_df[status_df['종목코드'] == 'A' + code]['보유수량'].values[0]
-                            n_conclude_num = n_conclude_df[n_conclude_df['종목코드'] == 'A' + str(code)]['미체결수량'].values[0] # 미체결 수량만 추출
-                        
-                            if (int(result_amount) - int(n_conclude_num)) == 0:
-                                time.sleep(2)
-                                return code
                     else:
                         print('')
                         print('매도 조건이 만족하지 않아 매도를 진행하지 않습니다.')       
