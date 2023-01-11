@@ -89,9 +89,8 @@
 						</div>
 						<%--	재무재표 검색	--%>
 						<div class="fs-data-search d-flex justify-content-start align-items-center">
-							<h6 class="m-0 pe-1">재무재표 검색 : </h6>
-							<label for="fsData" class="visually-hidden">종목명 또는 종목코드</label>
-							<input type="text" name="fsData" id="fsData" class="form-control w-25" list="fs-data-list" placeholder="종목 코드 또는 종목명을 입력하세요." autocomplete="off">
+							<label for="fsData" class="m-0 pe-1">재무재표 검색 : </label>
+							<input type="text" name="fsData" id="fsData" class="form-control w-25 me-2" list="fs-data-list" placeholder="종목 코드 또는 종목명을 입력하세요." autocomplete="off">
 							<datalist id="fs-data-list">
 								<option value=""></option>
 							</datalist>
