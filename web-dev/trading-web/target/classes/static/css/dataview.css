@@ -93,6 +93,11 @@ table#data-table > tbody > tr > td:not(:first-child) {
 	text-align: right;
 }
 
+table#fsTable {
+	width: 100%;
+	table-layout: fixed;
+}
+
 @media screen and (max-width: 680px) {
 	.table-wrap {
 		overflow-X: auto;

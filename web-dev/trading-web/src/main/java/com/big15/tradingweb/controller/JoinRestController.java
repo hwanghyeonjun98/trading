@@ -1,7 +1,7 @@
 package com.big15.tradingweb.controller;
 
 import com.big15.tradingweb.dto.UserInfoDto;
-import com.big15.tradingweb.mapper.JoinMapper;
+import com.big15.tradingweb.mapper.webData.JoinMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

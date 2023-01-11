@@ -87,6 +87,18 @@
 								</ul>
 							</div>
 						</div>
+						<%--	재무재표 검색	--%>
+						<div>
+							<h6>재무재표 검색 : </h6>
+							<label for="fsData" class="visually-hidden">종목명 또는 종목코드</label>
+							<input type="text" name="fsData" id="fsData" class="form-control" list="fs-data-list" placeholder="종목 코드 또는 종목명을 입력하세요.">
+							<datalist id="fs-data-list">
+								<option value=""></option>
+							</datalist>
+
+							<button type="button" class="btn" id="fsModalBtn" data-bs-toggle="modal" data-bs-target="#fsmodal">검색</button>
+						</div>
+						<%--	재무재표 검색	--%>
 					</nav>
 					<%-- 메뉴 영역 --%>
 					<h4 class="data-title h3 mt-4 mb-3 p-2 px-4">
@@ -177,6 +189,63 @@
 				</article>
 			</section>
 		</main>
+
+			<div class="modal fade" tabindex="-1" id="fsmodal">
+				<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" >
+					<div class="modal-content">
+						<div class="modal-header mb-3">
+							<h5 class="modal-title">
+								재무제표
+							</h5>
+							<button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body p-0">
+							<div class="m-3 mt-0">
+								<table id="fsTable" class="table table-hover table-striped table-sort">
+									<thead class="table-secondary">
+										<tr>
+											<th>날짜</th>
+											<th>재무제표 유동자산</th>
+											<th>재무제표 비유동자산</th>
+											<th>재무제표 자산총계</th>
+											<th>재무제표 유동부채</th>
+											<th>재무제표 비유동부채</th>
+											<th>재무제표 부채총계</th>
+											<th>재무제표 자본금</th>
+											<th>재무제표 이익잉여금</th>
+											<th>재무제표 자본총계</th>
+											<th>재무제표 매출액</th>
+											<th>재무제표 영업이익</th>
+											<th>재무제표 법인세차감전 순이익</th>
+											<th>재무제표 당기순이익</th>
+
+											<th>연결재무제표 유동자산</th>
+											<th>연결재무제표 비유동자산</th>
+											<th>연결재무제표 자산총계</th>
+											<th>연결재무제표 유동부채</th>
+											<th>연결재무제표 비유동부채</th>
+											<th>연결재무제표 부채총계</th>
+
+											<th>연결재무제표 자본금</th>
+											<th>연결재무제표 이익잉여금</th>
+											<th>연결재무제표 자본총계</th>
+											<th>연결재무제표 매출액</th>
+											<th>연결재무제표 영업이익</th>
+											<th>연결재무제표 법인세차감전 순이익</th>
+											<th>연결재무제표 당기순이익</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary btn-sm modal-close" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		<%-- footer include--%>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
 		<%-- footer include--%>
@@ -191,6 +260,7 @@
 	<script src="/js/data_list.js"></script>
 	<script src="/js/chart_js.js"></script>
 	<script src="/js/data_ajax.js"></script>
+	<script src="/js/stock_search.js"></script>
 	<script src="/js/table-sort.js"></script>
 </body>
 </html>

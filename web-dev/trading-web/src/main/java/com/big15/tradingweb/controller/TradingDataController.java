@@ -1,7 +1,7 @@
 package com.big15.tradingweb.controller;
 
 import com.big15.tradingweb.dto.InvestingDto;
-import com.big15.tradingweb.mapper.InvestingMapper;
+import com.big15.tradingweb.mapper.webData.InvestingMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

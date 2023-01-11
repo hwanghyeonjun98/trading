@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.big15.tradingweb.mapper.fsData.fsDataMapper">
+	<select id="fsInfoList" resultType="com.big15.tradingweb.dto.FsDto">
+		select CASE
+			       when (date_format(날짜, '%m') between 1 and 3) then concat(date_format(날짜, '%Y'), '년 1분기')
+			       when (date_format(날짜, '%m') between 4 and 6) then concat(date_format(날짜, '%Y'), '년 2분기')
+			       when (date_format(날짜, '%m') between 1 and 3) then concat(date_format(날짜, '%Y'), '년 3분기')
+			       else concat(date_format(날짜, '%Y'), '년 4분기')
+			end                                       as 날짜
+				 , format(재무제표_재무상태표_유동자산, 0)           as 재무제표_재무상태표_유동자산
+				 , format(재무제표_재무상태표_비유동자산, 0)          as 재무제표_재무상태표_비유동자산
+				 , format(재무제표_재무상태표_자산총계, 0)           as 재무제표_재무상태표_자산총계
+				 , format(재무제표_재무상태표_유동부채, 0)           as 재무제표_재무상태표_유동부채
+				 , format(재무제표_재무상태표_비유동부채, 0)          as 재무제표_재무상태표_비유동부채
+				 , format(재무제표_재무상태표_부채총계, 0)           as 재무제표_재무상태표_부채총계
+				 , format(재무제표_재무상태표_자본금, 0)            as 재무제표_재무상태표_자본금
+				 , format(재무제표_재무상태표_이익잉여금, 0)          as 재무제표_재무상태표_이익잉여금
+				 , format(재무제표_재무상태표_자본총계, 0)           as 재무제표_재무상태표_자본총계
+				 , format(재무제표_손익계산서_매출액, 0)            as 재무제표_손익계산서_매출액
+				 , format(재무제표_손익계산서_영업이익, 0)           as 재무제표_손익계산서_영업이익
+				 , format(`재무제표_손익계산서_법인세차감전 순이익`, 0)   as 재무제표_손익계산서_법인세차감전_순이익
+				 , format(재무제표_손익계산서_당기순이익, 0)          as 재무제표_손익계산서_당기순이익
+				 , format(연결재무제표_재무상태표_유동자산, 0)         as 연결재무제표_재무상태표_유동자산
+				 , format(연결재무제표_재무상태표_비유동자산, 0)        as 연결재무제표_재무상태표_비유동자산
+				 , format(연결재무제표_재무상태표_자산총계, 0)         as 연결재무제표_재무상태표_자산총계
+				 , format(연결재무제표_재무상태표_유동부채, 0)         as 연결재무제표_재무상태표_유동부채
+				 , format(연결재무제표_재무상태표_비유동부채, 0)        as 연결재무제표_재무상태표_비유동부채
+				 , format(연결재무제표_재무상태표_부채총계, 0)         as 연결재무제표_재무상태표_부채총계
+				 , format(연결재무제표_재무상태표_자본금, 0)          as 연결재무제표_재무상태표_자본금
+				 , format(연결재무제표_재무상태표_이익잉여금, 0)        as 연결재무제표_재무상태표_이익잉여금
+				 , format(연결재무제표_재무상태표_자본총계, 0)         as 연결재무제표_재무상태표_자본총계
+				 , format(연결재무제표_손익계산서_매출액, 0)          as 연결재무제표_손익계산서_매출액
+				 , format(연결재무제표_손익계산서_영업이익, 0)         as 연결재무제표_손익계산서_영업이익
+				 , format(`연결재무제표_손익계산서_법인세차감전 순이익`, 0) as 연결재무제표_손익계산서_법인세차감전_순이익
+				 , format(연결재무제표_손익계산서_당기순이익, 0)        as 연결재무제표_손익계산서_당기순이익
+		from fs_data.${fsData}
+		group by 재무제표_재무상태표_유동자산
+		order by `날짜`
+	</select>
+</mapper>
+
+
+
