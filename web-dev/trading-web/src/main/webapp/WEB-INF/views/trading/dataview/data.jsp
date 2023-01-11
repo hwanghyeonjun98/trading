@@ -88,15 +88,15 @@
 							</div>
 						</div>
 						<%--	재무재표 검색	--%>
-						<div>
-							<h6>재무재표 검색 : </h6>
+						<div class="fs-data-search d-flex justify-content-start align-items-center">
+							<h6 class="m-0 pe-1">재무재표 검색 : </h6>
 							<label for="fsData" class="visually-hidden">종목명 또는 종목코드</label>
-							<input type="text" name="fsData" id="fsData" class="form-control" list="fs-data-list" placeholder="종목 코드 또는 종목명을 입력하세요.">
+							<input type="text" name="fsData" id="fsData" class="form-control w-25" list="fs-data-list" placeholder="종목 코드 또는 종목명을 입력하세요." autocomplete="off">
 							<datalist id="fs-data-list">
 								<option value=""></option>
 							</datalist>
 
-							<button type="button" class="btn" id="fsModalBtn" data-bs-toggle="modal" data-bs-target="#fsmodal">검색</button>
+							<button type="button" class="btn btn-outline-success" id="fsModalBtn" data-bs-toggle="modal" data-bs-target="#fsmodal">검색</button>
 						</div>
 						<%--	재무재표 검색	--%>
 					</nav>
@@ -201,38 +201,44 @@
 						</div>
 						<div class="modal-body p-0">
 							<div class="m-3 mt-0">
-								<table id="fsTable" class="table table-hover table-striped table-sort">
+								<div class="loading-div">
+									<div class="d-flex justify-content-center align-items-center flex-column">
+										<div class="spinner-border" role="status">
+											<span class="visually-hidden">Loading...</span>
+										</div>
+										<p>불러오는 중</p>
+									</div>
+								</div>
+								<table id="fsTable" class="table table-hover table-striped">
 									<thead class="table-secondary">
 										<tr>
 											<th>날짜</th>
-											<th>재무제표 유동자산</th>
-											<th>재무제표 비유동자산</th>
-											<th>재무제표 자산총계</th>
-											<th>재무제표 유동부채</th>
-											<th>재무제표 비유동부채</th>
-											<th>재무제표 부채총계</th>
-											<th>재무제표 자본금</th>
-											<th>재무제표 이익잉여금</th>
-											<th>재무제표 자본총계</th>
-											<th>재무제표 매출액</th>
-											<th>재무제표 영업이익</th>
-											<th>재무제표 법인세차감전 순이익</th>
-											<th>재무제표 당기순이익</th>
-
-											<th>연결재무제표 유동자산</th>
-											<th>연결재무제표 비유동자산</th>
-											<th>연결재무제표 자산총계</th>
-											<th>연결재무제표 유동부채</th>
-											<th>연결재무제표 비유동부채</th>
-											<th>연결재무제표 부채총계</th>
-
-											<th>연결재무제표 자본금</th>
-											<th>연결재무제표 이익잉여금</th>
-											<th>연결재무제표 자본총계</th>
-											<th>연결재무제표 매출액</th>
-											<th>연결재무제표 영업이익</th>
-											<th>연결재무제표 법인세차감전 순이익</th>
-											<th>연결재무제표 당기순이익</th>
+											<th>재무제표<br>유동자산</th>
+											<th>재무제표<br>비유동자산</th>
+											<th>재무제표<br>자산총계</th>
+											<th>재무제표<br>유동부채</th>
+											<th>재무제표<br>비유동부채</th>
+											<th>재무제표<br>부채총계</th>
+											<th>재무제표<br>자본금</th>
+											<th>재무제표<br>이익잉여금</th>
+											<th>재무제표<br>자본총계</th>
+											<th>재무제표<br>매출액</th>
+											<th>재무제표<br>영업이익</th>
+											<th>재무제표<br>법인세차감전 순이익</th>
+											<th>재무제표<br>당기순이익</th>
+											<th>연결재무제표<br>유동자산</th>
+											<th>연결재무제표<br>비유동자산</th>
+											<th>연결재무제표<br>자산총계</th>
+											<th>연결재무제표<br>유동부채</th>
+											<th>연결재무제표<br>비유동부채</th>
+											<th>연결재무제표<br>부채총계</th>
+											<th>연결재무제표<br>자본금</th>
+											<th>연결재무제표<br>이익잉여금</th>
+											<th>연결재무제표<br>자본총계</th>
+											<th>연결재무제표<br>매출액</th>
+											<th>연결재무제표<br>영업이익</th>
+											<th>연결재무제표<br>법인세차감전 순이익</th>
+											<th>연결재무제표<br>당기순이익</th>
 										</tr>
 									</thead>
 									<tbody>

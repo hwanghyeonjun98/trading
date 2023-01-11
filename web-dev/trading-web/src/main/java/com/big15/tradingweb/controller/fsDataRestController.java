@@ -7,7 +7,9 @@ import com.big15.tradingweb.mapper.fsData.fsDataMapper;
 import com.big15.tradingweb.mapper.webData.FsDataListMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -30,8 +32,4 @@ public class fsDataRestController {
 		return fsDataListMapper.stockList();
 	}
 
-	@PostMapping("/fsList/search")
-	public List<FsListDto> stockSearchList(@RequestParam("fsData") String fsData) {
-		return fsDataListMapper.stockSearchList(fsData);
-	}
 }

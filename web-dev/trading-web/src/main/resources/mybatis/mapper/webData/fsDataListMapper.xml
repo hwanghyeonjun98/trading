@@ -4,17 +4,8 @@
 	<select id="stockList" resultType="com.big15.tradingweb.dto.FsListDto">
 		select *
 		from fslist
-	</select>
-	<select id="stockSearchList" resultType="com.big15.tradingweb.dto.FsListDto">
-		select *
-		from fslist
-		where stockCode like CONCAT('%', #{code}, '%')
-			 or korName like CONCAT('%', #{code}, '%')
-			 or korAbbrvName like CONCAT('%', #{code}, '%')
-			 or engName like CONCAT('%', #{code}, '%')
-			 or mrkCls like CONCAT('%', #{code}, '%')
-			 or scrCls like CONCAT('%', #{code}, '%')
-			 or stockType like CONCAT('%', #{code}, '%')
+		where stockType = '보통주'
+		order by stockCode asc
 	</select>
 </mapper>
 

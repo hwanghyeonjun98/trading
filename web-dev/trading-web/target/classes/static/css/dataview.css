@@ -94,8 +94,56 @@ table#data-table > tbody > tr > td:not(:first-child) {
 }
 
 table#fsTable {
+	width: 4000px;
+}
+
+table#fsTable > thead {
+	top: 0;
+	vertical-align: middle;
+}
+
+table#fsTable > tbody td {
+	text-align: center;
+}
+
+.loading-div {
 	width: 100%;
-	table-layout: fixed;
+	height: 100%;
+	background-color: #fff;
+	z-index: 1100;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 1;
+	visibility: visible;
+	transition: all .5s ease-in-out;
+}
+
+.loading-div.active {
+	opacity: 0;
+	visibility: hidden;
+}
+
+.fs-data-searc {
+	position: relative;
+}
+
+datalist {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+datalist option {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	gap: 10px;
+	cursor: pointer;
+}
+
+datalist option span {
+	display: inline-block;
 }
 
 @media screen and (max-width: 680px) {
