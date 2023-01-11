@@ -31,3 +31,6 @@
 
 ### VS Code ###
 .vscode/
+
+# node js 모듈 파일
+/src/main/resources/static/node_modules/

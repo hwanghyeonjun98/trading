@@ -275,6 +275,24 @@ const options3 = {
 const kospiChart = new ApexCharts(document.querySelector("#chart-area"), options);
 kospiChart.render();
 
+const ratioChart = new ApexCharts(document.querySelector("#ratio-chart"), options2);
+ratioChart.render();
+
+const accountChart = new ApexCharts(document.querySelector("#account-chart"), options3);
+accountChart.render();
+
+const accViewBtn = document.querySelector(".account-chart-view-btn");
+const accViewArea = document.querySelector(".account-chart-area");
+accViewBtn.addEventListener("click", () => {
+	accViewArea.classList.toggle("active");
+	if (accViewArea.classList.contains("active")) {
+		accViewBtn.innerText = "닫기";
+	} else {
+		accViewBtn.innerText = "장부금액 보기";
+	}
+});
+
+/* 코스피 차트 */
 let kospiChartUrl = "/api/data/index/chart/kospi";
 
 $.getJSON(kospiChartUrl, function (response) {
@@ -290,82 +308,68 @@ $.getJSON(kospiChartUrl, function (response) {
 	}]);
 });
 
+if (account !== "") {
+	/* 비율 비교 차트 */
+	let ratioChartUrl = "/api/data/index/chart/account/ratio/" + account;
 
-const ratioChart = new ApexCharts(document.querySelector("#ratio-chart"), options2);
-ratioChart.render();
+	$.getJSON(ratioChartUrl, function (response) {
+		let ratioDateList = [];
+		let accValueList = [];
+		let ratioList = [];
+		let kospiList = [];
+		let kosdaqList = [];
 
-let ratioChartUrl = "/api/data/index/chart/account/ratio/" + account;
+		response.forEach((item) => {
+			ratioDateList.push(item.date);
+			accValueList.push(item.acc_value);
+			kospiList.push([item.date, item.kospi_changes]);
+			kosdaqList.push([item.date, item.kosdaq_changes]);
+		});
 
-$.getJSON(ratioChartUrl, function (response) {
-	let ratioDateList = [];
-	let accValueList = [];
-	let ratioList = [];
-	let kospiList = [];
-	let kosdaqList = [];
+		for (let i = 0; i < accValueList.length; i++) {
+			let num1 = accValueList[i];
+			let num2 = accValueList[i + 1];
+			let num = (num2 - num1) / num1 * 100;
+			ratioList.push(num);
+		}
 
-	response.forEach((item) => {
-		ratioDateList.push(item.date);
-		accValueList.push(item.acc_value);
-		kospiList.push([item.date, item.kospi_changes]);
-		kosdaqList.push([item.date, item.kosdaq_changes]);
+		ratioList.unshift(0);
+
+		let ratioSeries = [];
+
+		for (let i = 0; i < accValueList.length; i++) {
+			ratioSeries.push([ratioDateList[i], ratioList[i]]);
+		}
+
+		kospiList[0][1] = "0";
+		kosdaqList[0][1] = "0";
+
+		ratioChart.updateSeries([{
+			name : "내 계좌",
+			data : ratioSeries
+		}, {
+			name : "KOSPI",
+			data : kospiList
+		}, {
+			name : "KOSDAQ",
+			data : kosdaqList
+		}]);
 	});
 
-	for (let i = 0; i < accValueList.length; i++) {
-		let num1 = accValueList[i];
-		let num2 = accValueList[i + 1];
-		let num = (num2 - num1) / num1 * 100;
-		ratioList.push(num);
-	}
+	/* 장부금액 차트 */
+	let accountChartUrl = "/api/data/index/chart/account/" + account;
 
-	ratioList.unshift(0);
+	$.getJSON(accountChartUrl, function (response) {
+		let accountList = [];
+		response.forEach((item) => {
+			accountList.push([item.date, item.acc_value / 1000000]);
+		});
 
-	let ratioSeries = [];
-
-	for (let i = 0; i < accValueList.length; i++) {
-		ratioSeries.push([ratioDateList[i], ratioList[i]]);
-	}
-
-	kospiList[0][1] = "0";
-	kosdaqList[0][1] = "0";
-
-	ratioChart.updateSeries([{
-		name : "내 계좌",
-		data : ratioSeries
-	}, {
-		name : "KOSPI",
-		data : kospiList
-	}, {
-		name : "KOSDAQ",
-		data : kosdaqList
-	}]);
-});
-
-const accountChart = new ApexCharts(document.querySelector("#account-chart"), options3);
-accountChart.render();
-
-let accountChartUrl = "/api/data/index/chart/account/" + account;
-
-$.getJSON(accountChartUrl, function (response) {
-	let accountList = [];
-	response.forEach((item) => {
-		accountList.push([item.date, item.acc_value / 1000000]);
+		accountChart.updateSeries([{
+			name : account,
+			data : accountList
+		}]);
 	});
-
-	accountChart.updateSeries([{
-		name : account,
-		data : accountList
-	}]);
-});
-
-const accViewBtn = document.querySelector(".account-chart-view-btn");
-const accViewArea = document.querySelector(".account-chart-area");
-accViewBtn.addEventListener("click", () => {
-	accViewArea.classList.toggle("active");
-	if (accViewArea.classList.contains("active")) {
-		accViewBtn.innerText = "닫기";
-	} else {
-		accViewBtn.innerText = "장부금액 보기";
-	}
-});
+}
 
 

@@ -60,10 +60,13 @@ function menuList(list, listName) {
 		tempA.setAttribute("type", "button");
 		if (aText === "독일 3개월 채권 수익율") {
 			tempA.setAttribute("href", "/dataview/data/germany3month채권수익율");
+			tempA.setAttribute("title", "독일 3개월 채권 수익율");
 			tempA.dataset.table = "germany3month채권수익율";
 		} else {
 			tempA.setAttribute(
 				"href", `/dataview/data/${aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase()}`);
+			tempA.setAttribute(
+				"title", `${aText} 내역`);
 			tempA.dataset.table = aText.replaceAll("/", "").replaceAll(" ", "").replaceAll("&", "").toLowerCase();
 		}
 		tempA.innerText = aText;
@@ -126,16 +129,26 @@ function menuContentHeight(idx) {
 	menuContent[idx].style.maxHeight = `${menuHeight}px`;
 }
 
+function menuActionActive(event, idx) {
+	if (!event.currentTarget.classList.contains("active")) {
+		event.currentTarget.classList.add("active");
+		menuContentHeight(idx);
+		menuIcon[idx].className = "bi bi-arrow-bar-up";
+	} else {
+		event.currentTarget.classList.remove("active");
+		menuContent[idx].style.maxHeight = `0`;
+		menuIcon[idx].className = "bi bi-arrow-bar-down";
+	}
+}
+
 menuTitle.forEach((el, idx) => {
 	el.addEventListener("click", (event) => {
-		if (!event.currentTarget.classList.contains("active")) {
-			event.currentTarget.classList.add("active");
-			menuContentHeight(idx);
-			menuIcon[idx].className = "bi bi-arrow-bar-up";
-		} else {
-			event.currentTarget.classList.remove("active");
-			menuContent[idx].style.maxHeight = `0`;
-			menuIcon[idx].className = "bi bi-arrow-bar-down";
+		menuActionActive(event, idx);
+	});
+	// 키보드 엔터키
+	el.addEventListener("keyup", (event) => {
+		if (event.keyCode === 13) {
+			menuActionActive(event, idx);
 		}
 	});
 });
