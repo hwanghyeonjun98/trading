@@ -94,7 +94,7 @@ table#data-table > tbody > tr > td:not(:first-child) {
 }
 
 table#fsTable {
-	width: 4000px;
+	width: 4500px;
 }
 
 table#fsTable > thead {
@@ -124,26 +124,8 @@ table#fsTable > tbody td {
 	visibility: hidden;
 }
 
-.fs-data-searc {
-	position: relative;
-}
-
-datalist {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-datalist option {
-	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
-	gap: 10px;
-	cursor: pointer;
-}
-
-datalist option span {
-	display: inline-block;
+.loading-area {
+	height: 100%;
 }
 
 @media screen and (max-width: 680px) {

@@ -201,7 +201,7 @@
 						<div class="modal-body p-0">
 							<div class="m-3 mt-0">
 								<div class="loading-div">
-									<div class="d-flex justify-content-center align-items-center flex-column">
+									<div class="loading-area d-flex justify-content-center align-items-center flex-column">
 										<div class="spinner-border" role="status">
 											<span class="visually-hidden">Loading...</span>
 										</div>

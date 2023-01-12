@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class FsDto {
-	private String 날짜;
+	private String _date;
 	private String 재무제표_재무상태표_유동자산;
 	private String 재무제표_재무상태표_비유동자산;
 	private String 재무제표_재무상태표_자산총계;
