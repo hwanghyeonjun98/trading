@@ -95,7 +95,9 @@
 								<option value=""></option>
 							</datalist>
 
-							<button type="button" class="btn btn-outline-success" id="fsModalBtn" data-bs-toggle="modal" data-bs-target="#fsmodal">검색</button>
+							<button type="button" class="btn btn-outline-success" id="fsModalBtn" data-bs-toggle="modal" data-bs-target="#fsmodal">
+								검색
+							</button>
 						</div>
 						<%--	재무재표 검색	--%>
 					</nav>
@@ -188,69 +190,68 @@
 				</article>
 			</section>
 		</main>
-
-			<div class="modal fade" tabindex="-1" id="fsmodal">
-				<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" >
-					<div class="modal-content">
-						<div class="modal-header mb-3">
-							<h5 class="modal-title">
-								재무제표
-							</h5>
-							<button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body p-0">
-							<div class="m-3 mt-0">
-								<div class="loading-div">
-									<div class="loading-area d-flex justify-content-center align-items-center flex-column">
-										<div class="spinner-border" role="status">
-											<span class="visually-hidden">Loading...</span>
-										</div>
-										<p>불러오는 중</p>
+		<div class="modal fade" tabindex="-1" id="fsmodal">
+			<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header mb-3">
+						<h5 class="modal-title">
+							재무제표
+						</h5>
+						<button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body p-0">
+						<div class="p-3 pt-0 mt-0 scroll-x">
+							<div class="loading-div">
+								<div class="loading-area d-flex justify-content-center align-items-center flex-column">
+									<div class="spinner-border" role="status">
+										<span class="visually-hidden">Loading...</span>
 									</div>
+									<p>불러오는 중</p>
 								</div>
-								<table id="fsTable" class="table table-hover table-striped">
-									<thead class="table-secondary">
-										<tr>
-											<th>날짜</th>
-											<th>재무제표<br>유동자산</th>
-											<th>재무제표<br>비유동자산</th>
-											<th>재무제표<br>자산총계</th>
-											<th>재무제표<br>유동부채</th>
-											<th>재무제표<br>비유동부채</th>
-											<th>재무제표<br>부채총계</th>
-											<th>재무제표<br>자본금</th>
-											<th>재무제표<br>이익잉여금</th>
-											<th>재무제표<br>자본총계</th>
-											<th>재무제표<br>매출액</th>
-											<th>재무제표<br>영업이익</th>
-											<th>재무제표<br>법인세차감전 순이익</th>
-											<th>재무제표<br>당기순이익</th>
-											<th>연결재무제표<br>유동자산</th>
-											<th>연결재무제표<br>비유동자산</th>
-											<th>연결재무제표<br>자산총계</th>
-											<th>연결재무제표<br>유동부채</th>
-											<th>연결재무제표<br>비유동부채</th>
-											<th>연결재무제표<br>부채총계</th>
-											<th>연결재무제표<br>자본금</th>
-											<th>연결재무제표<br>이익잉여금</th>
-											<th>연결재무제표<br>자본총계</th>
-											<th>연결재무제표<br>매출액</th>
-											<th>연결재무제표<br>영업이익</th>
-											<th>연결재무제표<br>법인세차감전 순이익</th>
-											<th>연결재무제표<br>당기순이익</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
 							</div>
+							<table id="fsTable" class="table table-hover table-striped">
+								<thead class="table-secondary">
+									<tr>
+										<th>날짜</th>
+										<th>재무제표<br>유동자산</th>
+										<th>재무제표<br>비유동자산</th>
+										<th>재무제표<br>자산총계</th>
+										<th>재무제표<br>유동부채</th>
+										<th>재무제표<br>비유동부채</th>
+										<th>재무제표<br>부채총계</th>
+										<th>재무제표<br>자본금</th>
+										<th>재무제표<br>이익잉여금</th>
+										<th>재무제표<br>자본총계</th>
+										<th>재무제표<br>매출액</th>
+										<th>재무제표<br>영업이익</th>
+										<th>재무제표<br>법인세차감전 순이익</th>
+										<th>재무제표<br>당기순이익</th>
+										<th>연결재무제표<br>유동자산</th>
+										<th>연결재무제표<br>비유동자산</th>
+										<th>연결재무제표<br>자산총계</th>
+										<th>연결재무제표<br>유동부채</th>
+										<th>연결재무제표<br>비유동부채</th>
+										<th>연결재무제표<br>부채총계</th>
+										<th>연결재무제표<br>자본금</th>
+										<th>연결재무제표<br>이익잉여금</th>
+										<th>연결재무제표<br>자본총계</th>
+										<th>연결재무제표<br>매출액</th>
+										<th>연결재무제표<br>영업이익</th>
+										<th>연결재무제표<br>법인세차감전 순이익</th>
+										<th>연결재무제표<br>당기순이익</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary btn-sm modal-close" data-bs-dismiss="modal">Close</button>
-						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-sm modal-close" data-bs-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
+		</div>
 		<%-- footer include--%>
 		<%@ include file="/WEB-INF/views/trading/inc/footer.jsp" %>
 		<%-- footer include--%>

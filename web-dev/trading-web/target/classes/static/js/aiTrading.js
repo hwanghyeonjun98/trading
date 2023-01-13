@@ -6,7 +6,7 @@ const nowMin = date.getHours() * 60;
 // 실기간 트레이딩
 if (account !== "") {
 	// 장 시작, 끝 시간 이후 메세지 표시
-	if (nowMin < 570 || nowMin > 931) {
+	if (nowMin < 570 || nowMin > 831) {
 		badge.attr("class", "badge bg-secondary");
 		badge.text("closed");
 		tradingDataTableBdoy.html("<tr><td colspan='7'>종료되었습니다.</td></tr>");
