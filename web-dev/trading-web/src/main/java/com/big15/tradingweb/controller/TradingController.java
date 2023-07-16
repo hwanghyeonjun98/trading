@@ -17,7 +17,7 @@ import java.util.Locale;
 @Slf4j
 @Controller
 @AllArgsConstructor
-@RequestMapping(value = {"/", "/index"})
+@RequestMapping(value = { "/", "/index" })
 public class TradingController {
 
 	private IndexdataMapper indexdataMapper;
@@ -28,20 +28,20 @@ public class TradingController {
 	@GetMapping("")
 	public String Index(HttpServletRequest request, Locale locale, Model model) {
 		String userAgent = request.getHeader("User-Agent");
+		log.info(userAgent);
 
 		if (userAgent.indexOf("Trident") > -1) {
 			model.addAttribute("msg", "Internet Explorer는 호환되지 않는 브라우저 입니다.");
 			return "/errors/browser_info";
 		}
-		
+
 		List<InvestingDto> kospi_ = indexdataMapper.kospidata();
-		model.addAttribute("kospidata",kospi_);
+		model.addAttribute("kospidata", kospi_);
 
 		List<NewsDto> news = indexdataMapper.newsdata();
 		model.addAttribute("nnews", news);
-		
+
 		return "/index";
 	}
-
 
 }
